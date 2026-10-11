@@ -1,0 +1,33 @@
+# Python virtual environment
+.venv/
+venv/
+env/
+ENV/
+
+# Python bytecode & cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.pytest_cache/
+
+# SQLite databases (local data)
+*.db
+*.sqlite
+*.sqlite3
+database/*.db
+
+# Operating system files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+
+# IDE and Editor configurations
+.vscode/
+.idea/
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+
