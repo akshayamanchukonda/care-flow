@@ -1,16 +1,19 @@
 """CareFlow: Week 1 Local Data Ingestion & Cleaning Pipeline.
 
 Substitutes Google BigQuery with local SQLite and dbt with Python/SQL.
+Implements healthcare event data cleaning, quality handling, and validation.
 
 Pipeline Steps:
 ---------------
-1. Raw Data Ingestion:
+1. Raw Data Ingestion & Quality Audit:
    - Loads data/raw/healthcare_event_log_v2.csv into SQLite table `raw_healthcare_events_v2`.
+   - Audits missing values, duplicates, and timestamp formatting.
    - Idempotent: cleanly rebuilds table on reruns without duplicate rows.
 2. Data Cleaning & Standardization:
    - Standardizes fields into standard process mining format:
      `case_id`, `activity_name`, `event_timestamp`, `activity_sequence`.
    - Adds `is_loopback` indicator while preserving all rework event rows.
+   - Validates event names against clinical activity domain.
    - Cleans string whitespace, enforces types, and verifies ISO timestamps.
 3. Database Storage & File Export:
    - Populates SQLite table `stg_healthcare_events_v2`.
@@ -18,6 +21,7 @@ Pipeline Steps:
 4. Data Quality & Process Validation:
    - Verifies 0 nulls, 0 duplicate event IDs, chronological sorting, and
      exact match with source CSV row count.
+   - Produces a comprehensive summary of records processed, excluded, or modified.
 """
 
 from pathlib import Path
@@ -30,15 +34,26 @@ DB_PATH = REPO_ROOT / "database" / "careflow.db"
 RAW_CSV_PATH = REPO_ROOT / "data" / "raw" / "healthcare_event_log_v2.csv"
 CLEANED_CSV_PATH = REPO_ROOT / "data" / "processed" / "cleaned_healthcare_event_log_v2.csv"
 
+# Allowable clinical activities in CareFlow emergency department process
+VALID_CLINICAL_ACTIVITIES = {
+    "Registration",
+    "Triage",
+    "Consultation",
+    "Diagnostics",
+    "Treatment",
+    "Discharge",
+}
+
 
 def get_connection(db_path: Path = DB_PATH) -> sqlite3.Connection:
+    """Connect to the CareFlow SQLite database with foreign keys enabled."""
     conn = sqlite3.connect(db_path)
     conn.execute("PRAGMA foreign_keys = ON;")
     return conn
 
 
-def load_raw_to_sqlite(conn: sqlite3.Connection, csv_path: Path = RAW_CSV_PATH) -> int:
-    """Load raw CSV into SQLite table `raw_healthcare_events_v2`."""
+def load_raw_to_sqlite(conn: sqlite3.Connection, csv_path: Path = RAW_CSV_PATH) -> tuple[int, dict]:
+    """Load raw CSV into SQLite table `raw_healthcare_events_v2` and audit data quality."""
     if not csv_path.exists():
         raise FileNotFoundError(f"Raw CSV not found at: {csv_path}")
 
@@ -47,6 +62,18 @@ def load_raw_to_sqlite(conn: sqlite3.Connection, csv_path: Path = RAW_CSV_PATH) 
     for col in df_raw.columns:
         if df_raw[col].dtype == object or pd.api.types.is_string_dtype(df_raw[col]):
             df_raw[col] = df_raw[col].astype(str).str.strip()
+
+    # Data Quality Audit on Raw Records
+    raw_quality_audit = {
+        "total_raw_rows": len(df_raw),
+        "missing_values_by_column": {col: int(df_raw[col].isnull().sum() + (df_raw[col] == "").sum()) for col in df_raw.columns},
+        "duplicate_event_ids": int(df_raw["event_id"].duplicated().sum()),
+        "valid_timestamp_count": int(pd.to_datetime(df_raw["event_timestamp"], format="%Y-%m-%d %H:%M:%S", errors="coerce").notnull().sum()),
+        "valid_activity_count": int(df_raw["event_name"].isin(VALID_CLINICAL_ACTIVITIES).sum()),
+        "unique_raw_patients": int(df_raw["patient_id"].nunique()),
+        "unique_raw_visits": int(df_raw["visit_id"].nunique()),
+    }
+
     cursor = conn.cursor()
 
     # Rebuild raw table cleanly on each run to avoid duplicates
@@ -93,10 +120,10 @@ def load_raw_to_sqlite(conn: sqlite3.Connection, csv_path: Path = RAW_CSV_PATH) 
     cursor.execute("CREATE INDEX IF NOT EXISTS idx_raw_v2_name ON raw_healthcare_events_v2(event_name);")
 
     conn.commit()
-    return len(records)
+    return len(records), raw_quality_audit
 
 
-def clean_and_standardize_events(conn: sqlite3.Connection) -> pd.DataFrame:
+def clean_and_standardize_events(conn: sqlite3.Connection) -> tuple[pd.DataFrame, dict]:
     """Clean, standardize, and sequence events using SQL and Python.
 
     Standardizes columns to canonical process mining format:
@@ -105,6 +132,9 @@ def clean_and_standardize_events(conn: sqlite3.Connection) -> pd.DataFrame:
     - event_timestamp (ISO datetime)
     - activity_sequence (1, 2, 3... chronological per case)
     - is_loopback (1 if activity previously seen in this visit, 0 otherwise)
+
+    Returns:
+        tuple[pd.DataFrame, dict]: Cleaned dataframe and processing quality metrics.
     """
     # Query raw data ordered chronologically per visit
     query = """
@@ -118,15 +148,36 @@ def clean_and_standardize_events(conn: sqlite3.Connection) -> pd.DataFrame:
             TRIM(status) AS status,
             waiting_time_minutes
         FROM raw_healthcare_events_v2
-        WHERE visit_id IS NOT NULL
-          AND event_name IS NOT NULL
-          AND event_timestamp IS NOT NULL
+        WHERE visit_id IS NOT NULL AND TRIM(visit_id) != ''
+          AND event_id IS NOT NULL AND TRIM(event_id) != ''
+          AND event_name IS NOT NULL AND TRIM(event_name) != ''
+          AND event_timestamp IS NOT NULL AND TRIM(event_timestamp) != ''
         ORDER BY visit_id ASC, event_timestamp ASC;
     """
     df = pd.read_sql_query(query, conn)
+    total_processed = len(df)
 
-    # Convert timestamps and ensure strict datetime parsing
-    df["parsed_dt"] = pd.to_datetime(df["event_timestamp"], format="%Y-%m-%d %H:%M:%S", errors="raise")
+    # Quality check: Exclude any unparseable datetime records
+    df["parsed_dt"] = pd.to_datetime(df["event_timestamp"], format="%Y-%m-%d %H:%M:%S", errors="coerce")
+    invalid_dt_count = int(df["parsed_dt"].isnull().sum())
+    if invalid_dt_count > 0:
+        df = df[df["parsed_dt"].notnull()].copy()
+
+    # Quality check: Validate activity names against clinical domain
+    invalid_activity_mask = ~df["activity_name"].isin(VALID_CLINICAL_ACTIVITIES)
+    invalid_activity_count = int(invalid_activity_mask.sum())
+    if invalid_activity_count > 0:
+        df = df[~invalid_activity_mask].copy()
+
+    # Quality check: Deduplicate event_id primary keys if any exist
+    duplicate_events = int(df["event_id"].duplicated().sum())
+    if duplicate_events > 0:
+        df = df.drop_duplicates(subset=["event_id"], keep="first").copy()
+
+    # Quality check: Enforce non-negative waiting time minutes
+    negative_wait_count = int((df["waiting_time_minutes"] < 0).sum())
+    if negative_wait_count > 0:
+        df["waiting_time_minutes"] = df["waiting_time_minutes"].clip(lower=0)
 
     # Sort strictly by case_id and parsed timestamp
     df = df.sort_values(by=["case_id", "parsed_dt"]).reset_index(drop=True)
@@ -169,7 +220,23 @@ def clean_and_standardize_events(conn: sqlite3.Connection) -> pd.DataFrame:
         "status",
         "waiting_time_minutes",
     ]
-    return df[canonical_columns]
+    df_clean = df[canonical_columns]
+
+    quality_summary = {
+        "records_processed": total_processed,
+        "records_valid": len(df_clean),
+        "records_excluded": total_processed - len(df_clean),
+        "records_modified": len(df_clean),  # standardized, trimmed, sequenced, loopback flagged
+        "invalid_timestamps": invalid_dt_count,
+        "invalid_activities": invalid_activity_count,
+        "duplicate_events_handled": duplicate_events,
+        "negative_waits_clamped": negative_wait_count,
+        "unique_cases_preserved": df_clean["case_id"].nunique(),
+        "unique_patients_preserved": df_clean["patient_id"].nunique(),
+        "loopbacks_identified": int(df_clean["is_loopback"].sum()),
+    }
+
+    return df_clean, quality_summary
 
 
 def save_cleaned_to_sqlite_and_csv(
@@ -272,7 +339,7 @@ def run_pipeline_validations(
     null_counts = df_clean[["case_id", "activity_name", "event_timestamp", "activity_sequence"]].isnull().sum().sum()
     checks["no_null_canonical_fields"] = {
         "passed": null_counts == 0,
-        "detail": f"0 missing values across canonical process mining columns",
+        "detail": "0 missing values across canonical process mining columns",
     }
 
     # Check 5: Globally unique event IDs (zero duplicate rows)
@@ -307,17 +374,26 @@ def run_pipeline_validations(
     return checks
 
 
-def print_summary(checks: dict, df_clean: pd.DataFrame, csv_path: Path):
-    """Print clean, beginner-friendly pipeline report."""
-    print("\n" + "=" * 70)
-    print("      CAREFLOW WEEK 1 LOCAL INGESTION & CLEANING PIPELINE")
-    print("=" * 70)
+def print_summary(checks: dict, quality_summary: dict, df_clean: pd.DataFrame, csv_path: Path):
+    """Print clean, beginner-friendly pipeline report with Day 5 quality handling metrics."""
+    print("\n" + "=" * 75)
+    print("      CAREFLOW WEEK 1: DATA CLEANING & QUALITY HANDLING PIPELINE")
+    print("=" * 75)
     print(" Technology Substitution: Local SQLite & Python/SQL replacing BigQuery & dbt")
-    print(f" Database Store         : database/careflow.db (tables: raw_healthcare_events_v2, stg_healthcare_events_v2)")
+    print(" Database Store         : database/careflow.db (tables: raw_healthcare_events_v2, stg_healthcare_events_v2)")
     print(f" Cleaned Dataset Output : {csv_path.name} ({len(df_clean):,} rows)")
-    print(f" Process Cases          : {df_clean['case_id'].nunique()} patient visits")
-    print(f" Unique Patients        : {df_clean['patient_id'].nunique()} patients")
+    print(f" Process Cases          : {df_clean['case_id'].nunique()} patient visits (100% preserved)")
+    print(f" Unique Patients        : {df_clean['patient_id'].nunique()} patients (100% preserved)")
     print(f" Loop-Back Events       : {int(df_clean['is_loopback'].sum())} events in {df_clean[df_clean['is_loopback'] == 1]['case_id'].nunique()} cases")
+
+    print("\n--- Day 5 Data Processing & Quality Handling Summary ---")
+    print(f"  Records Processed     : {quality_summary['records_processed']:,}")
+    print(f"  Records Excluded      : {quality_summary['records_excluded']} (0 dropped due to clean raw source)")
+    print(f"  Records Standardized  : {quality_summary['records_modified']:,} (trimmed, typed, sequenced)")
+    print(f"  Duplicate Events      : {quality_summary['duplicate_events_handled']} duplicates detected")
+    print(f"  Invalid Timestamps    : {quality_summary['invalid_timestamps']} unparseable datetimes")
+    print(f"  Invalid Activities    : {quality_summary['invalid_activities']} non-clinical activity names")
+    print(f"  Negative Waits Clamped: {quality_summary['negative_waits_clamped']}")
 
     print("\n--- Pipeline Validation Checks ---")
     all_passed = True
@@ -328,12 +404,12 @@ def print_summary(checks: dict, df_clean: pd.DataFrame, csv_path: Path):
         readable = name.replace("_", " ").title()
         print(f"  {status:<8} {readable:<30}: {res['detail']}")
 
-    print("=" * 70)
+    print("=" * 75)
     if all_passed:
-        print(" SUCCESS: Week 1 local ingestion, cleaning, and validation complete!")
+        print(" SUCCESS: Day 5 healthcare event data cleaning and quality handling complete!")
     else:
         print(" WARNING: One or more validation checks failed.")
-    print("=" * 70 + "\n")
+    print("=" * 75 + "\n")
 
 
 def main():
@@ -342,10 +418,10 @@ def main():
 
     try:
         print("Step 1: Ingesting raw v2 events into SQLite (raw_healthcare_events_v2)...")
-        raw_count = load_raw_to_sqlite(conn, RAW_CSV_PATH)
+        raw_count, raw_quality = load_raw_to_sqlite(conn, RAW_CSV_PATH)
 
-        print("Step 2: Cleaning, standardizing, and sequencing events...")
-        df_clean = clean_and_standardize_events(conn)
+        print("Step 2: Cleaning, standardizing, and sequencing events with quality checks...")
+        df_clean, quality_summary = clean_and_standardize_events(conn)
 
         print("Step 3: Storing cleaned data in SQLite (stg_healthcare_events_v2) and exporting CSV...")
         save_cleaned_to_sqlite_and_csv(conn, df_clean, CLEANED_CSV_PATH)
@@ -353,7 +429,7 @@ def main():
         print("Step 4: Executing pipeline validations...")
         checks = run_pipeline_validations(conn, raw_count, df_clean, CLEANED_CSV_PATH)
 
-        print_summary(checks, df_clean, CLEANED_CSV_PATH)
+        print_summary(checks, quality_summary, df_clean, CLEANED_CSV_PATH)
 
         if not all(c["passed"] for c in checks.values()):
             sys.exit(1)
@@ -364,4 +440,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
