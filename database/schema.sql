@@ -5,6 +5,7 @@ PRAGMA foreign_keys = ON;
 
 -- Clean drop in reverse dependency order (child tables and dependent views first)
 DROP VIEW IF EXISTS raw_healthcare_events;
+DROP TABLE IF EXISTS stg_healthcare_events_v2;
 DROP TABLE IF EXISTS events;
 DROP TABLE IF EXISTS visits;
 DROP TABLE IF EXISTS patients;
@@ -60,3 +61,23 @@ SELECT
     status,
     waiting_time_minutes
 FROM events;
+
+-- 5. Staging Table: Standardized healthcare event log for process mining
+CREATE TABLE IF NOT EXISTS stg_healthcare_events_v2 (
+    case_id TEXT NOT NULL,
+    activity_name TEXT NOT NULL,
+    event_timestamp TEXT NOT NULL,
+    activity_sequence INTEGER NOT NULL,
+    is_loopback INTEGER NOT NULL CHECK (is_loopback IN (0, 1)),
+    patient_id TEXT NOT NULL,
+    event_id TEXT PRIMARY KEY NOT NULL,
+    department TEXT NOT NULL,
+    status TEXT NOT NULL,
+    waiting_time_minutes INTEGER NOT NULL CHECK (waiting_time_minutes >= 0)
+);
+
+-- Staging table indexes for downstream analytics and process mining queries
+CREATE INDEX IF NOT EXISTS idx_stg_case ON stg_healthcare_events_v2 (case_id);
+CREATE INDEX IF NOT EXISTS idx_stg_activity ON stg_healthcare_events_v2 (activity_name);
+CREATE INDEX IF NOT EXISTS idx_stg_time ON stg_healthcare_events_v2 (event_timestamp);
+CREATE INDEX IF NOT EXISTS idx_stg_seq ON stg_healthcare_events_v2 (case_id, activity_sequence);

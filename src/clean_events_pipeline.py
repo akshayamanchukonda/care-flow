@@ -255,12 +255,12 @@ def save_cleaned_to_sqlite_and_csv(
             activity_name TEXT NOT NULL,
             event_timestamp TEXT NOT NULL,
             activity_sequence INTEGER NOT NULL,
-            is_loopback INTEGER NOT NULL,
+            is_loopback INTEGER NOT NULL CHECK (is_loopback IN (0, 1)),
             patient_id TEXT NOT NULL,
             event_id TEXT PRIMARY KEY NOT NULL,
             department TEXT NOT NULL,
             status TEXT NOT NULL,
-            waiting_time_minutes INTEGER NOT NULL
+            waiting_time_minutes INTEGER NOT NULL CHECK (waiting_time_minutes >= 0)
         );
     """)
 
