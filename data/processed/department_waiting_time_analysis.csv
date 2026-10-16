@@ -1,0 +1,14 @@
+department,event_count,unique_visits_served,min_wait_minutes,q25_wait_minutes,median_wait_minutes,mean_wait_minutes,q75_wait_minutes,p90_wait_minutes,max_wait_minutes,std_dev_minutes,total_waiting_minutes,pct_of_total_waiting_time,department_rank
+Outpatient Clinic,138,138,5,19.0,33.5,37.4,50.0,68.0,120,24.24,5161,9.69,1
+General Emergency Care,316,316,5,19.0,30.0,33.77,44.25,60.0,120,20.05,10672,20.04,2
+Pediatric Emergency,46,46,6,21.0,27.5,32.96,45.0,49.5,95,17.52,1516,2.85,3
+Cardiology Diagnostics,67,67,5,18.5,28.0,31.45,40.0,54.4,90,18.32,2107,3.96,4
+Pathology Lab,92,92,6,17.0,27.5,30.67,41.25,55.8,76,16.83,2822,5.3,5
+Radiology / Imaging,164,164,5,16.0,24.0,28.83,37.0,51.0,90,16.33,4728,8.88,6
+Observation Ward,73,73,5,11.0,18.0,20.77,29.0,37.4,60,12.18,1516,2.85,7
+Urgent Treatment Unit,148,148,5,10.75,17.0,19.86,28.0,37.0,57,11.77,2940,5.52,8
+Acute Treatment Unit,279,279,5,10.5,16.0,18.66,24.0,34.0,60,11.27,5205,9.77,9
+Patient Transfer Desk,81,81,3,7.0,12.0,13.48,18.0,23.0,38,8.21,1092,2.05,10
+Discharge Lounge,419,419,3,6.0,11.0,12.99,18.0,24.0,45,8.59,5443,10.22,11
+Emergency Triage,500,500,2,7.0,11.0,12.03,16.0,21.0,45,7.58,6016,11.3,12
+Admissions & Registration,500,500,1,3.0,6.5,8.08,11.0,17.0,30,6.28,4038,7.58,13

@@ -1,0 +1,27 @@
+# CareFlow dbt Profile Configuration Template
+# Copy this file to ~/.dbt/profiles.yml (on Windows: %USERPROFILE%\.dbt\profiles.yml)
+# NEVER commit personal credentials or private key files to git.
+
+careflow_bigquery:
+  target: dev
+  outputs:
+    # Option A: OAuth authentication (Recommended for local interactive use with gcloud)
+    dev:
+      type: bigquery
+      method: oauth
+      project: "{{ env_var('BIGQUERY_PROJECT_ID', 'your-gcp-project-id') }}"
+      dataset: careflow_dbt_dev
+      threads: 4
+      timeout_seconds: 300
+      location: US
+
+    # Option B: Service Account JSON Key authentication (Recommended for automated pipelines)
+    # dev_service_account:
+    #   type: bigquery
+    #   method: service-account
+    #   project: "{{ env_var('BIGQUERY_PROJECT_ID', 'your-gcp-project-id') }}"
+    #   dataset: careflow_dbt_dev
+    #   keyfile: "{{ env_var('GOOGLE_APPLICATION_CREDENTIALS', 'C:/path/to/service-account.json') }}"
+    #   threads: 4
+    #   timeout_seconds: 300
+    #   location: US

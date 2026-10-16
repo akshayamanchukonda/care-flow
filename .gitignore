@@ -31,3 +31,9 @@ build/
 dist/
 *.egg-info/
 
+# dbt artifacts
+dbt/target/
+dbt/dbt_packages/
+dbt/logs/
+target/
+logs/

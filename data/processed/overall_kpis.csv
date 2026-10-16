@@ -1,0 +1,14 @@
+kpi_name,value,unit,category,description
+Total Unique Patients,420,Patients,Volume,Total unique patients served in 30-day window
+Total Visits,500,Visits,Volume,Total patient visits completed
+Total Events Recorded,2823,Events,Volume,Total process stages executed across all visits
+Overall Average Waiting Time,18.87,Minutes,Queues,Average queue delay recorded across all process events
+Overall Median Waiting Time,14.0,Minutes,Queues,Median queue delay across all process events
+Overall 90th Percentile Wait Time,39.8,Minutes,Queues,90% of all events have wait times at or below this value
+Primary Bottleneck Stage,Consultation (34.7m avg),Stage,Bottlenecks,Care stage with the highest average queue waiting time
+Diagnostics Utilization Rate,64.6%,Percentage,Pathways,Proportion of visits requiring diagnostic imaging/labs
+Average Journey Duration,231.46,Minutes,Throughput,Average elapsed time from registration to discharge
+Median Journey Duration,230.0,Minutes,Throughput,Median elapsed time from registration to discharge
+Events with Wait > 30 Mins,510 (18.07%),Events,Delays,Process events experiencing moderate queue delay
+Events with Wait > 60 Mins,71 (2.52%),Events,Delays,Process events experiencing severe queue delay
+Statistical Outlier Events (1.5x IQR),146 (5.17%),Events,Outliers,Events with wait > 50.5 mins (1.5x IQR rule)

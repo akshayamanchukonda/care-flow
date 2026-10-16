@@ -1,0 +1,27 @@
+version: 2
+
+sources:
+  - name: careflow_raw
+    description: "Raw ingested healthcare event logs in Google BigQuery"
+    database: "{{ env_var('BIGQUERY_PROJECT_ID', 'careflow-project') }}"
+    schema: careflow_raw
+    tables:
+      - name: raw_healthcare_events
+        description: "Raw patient journey event log table uploaded from healthcare_event_log_v2.csv"
+        columns:
+          - name: patient_id
+            description: "Fictional patient identifier (e.g. P0001)"
+          - name: visit_id
+            description: "Fictional patient visit / case identifier (e.g. V0001)"
+          - name: event_id
+            description: "Unique event identifier (e.g. EVT00001)"
+          - name: event_name
+            description: "Healthcare activity/stage name"
+          - name: event_timestamp
+            description: "Timestamp when the event occurred"
+          - name: department
+            description: "Hospital department where the activity took place"
+          - name: status
+            description: "Clinical status or final disposition"
+          - name: waiting_time_minutes
+            description: "Recorded queue waiting delay before service"

@@ -1,0 +1,7 @@
+stage,total_events,waits_over_30_min_count,waits_over_30_min_pct,waits_over_60_min_count,waits_over_60_min_pct,p90_wait_minutes,iqr_outlier_threshold_minutes,statistical_outliers_count,statistical_outliers_pct
+Consultation,500,252,50.4,52,10.4,61.1,84.62,18,3.6
+Diagnostics,323,136,42.11,19,5.88,54.0,72.0,6,1.86
+Treatment,500,84,16.8,0,0.0,35.1,48.88,12,2.4
+Discharge,500,24,4.8,0,0.0,24.0,36.0,9,1.8
+Triage,500,14,2.8,0,0.0,21.0,29.5,16,3.2
+Registration,500,0,0.0,0,0.0,17.0,23.0,16,3.2
