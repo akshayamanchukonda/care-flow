@@ -1,0 +1,25 @@
+digraph {
+	graph [bgcolor=white rankdir=LR]
+	node [shape=box]
+	-1133743298595825608 [label="Registration (527)" fillcolor="#BABAFF" fontsize=12 style=filled]
+	-8025543732432190611 [label="Triage (527)" fillcolor="#BABAFF" fontsize=12 style=filled]
+	6425868689238393170 [label="Consultation (616)" fillcolor="#9B9BFF" fontsize=12 style=filled]
+	2645175326182278595 [label="Diagnostics (331)" fillcolor="#FFFFFF" fontsize=12 style=filled]
+	-8880970750138413311 [label="Treatment (529)" fillcolor="#B9B9FF" fontsize=12 style=filled]
+	4786050099234216865 [label="Discharge (500)" fillcolor="#C3C3FF" fontsize=12 style=filled]
+	-1133743298595825608 -> -8025543732432190611 [label=527 fontsize=12 penwidth=2.5999999680000005]
+	-8025543732432190611 -> -1133743298595825608 [label=27 fontsize=12 penwidth=1.0]
+	-8025543732432190611 -> 6425868689238393170 [label=500 fontsize=12 penwidth=2.513599969728001]
+	6425868689238393170 -> 2645175326182278595 [label=302 fontsize=12 penwidth=1.8799999824000004]
+	6425868689238393170 -> -8880970750138413311 [label=314 fontsize=12 penwidth=1.9183999816320005]
+	2645175326182278595 -> 6425868689238393170 [label=116 fontsize=12 penwidth=1.284799994304]
+	2645175326182278595 -> -8880970750138413311 [label=215 fontsize=12 penwidth=1.6015999879680003]
+	-8880970750138413311 -> 2645175326182278595 [label=29 fontsize=12 penwidth=1.006399999872]
+	-8880970750138413311 -> 4786050099234216865 [label=500 fontsize=12 penwidth=2.513599969728001]
+	"@@startnode" [label=<&#9679;> fontsize=34 shape=circle]
+	"@@startnode" -> -1133743298595825608 [label=500 fontsize=12 penwidth=2.513599969728001]
+	"@@endnode" [label=<&#9632;> fontsize=32 shape=doublecircle]
+	4786050099234216865 -> "@@endnode" [label=500 fontsize=12 penwidth=2.513599969728001]
+	overlap=false
+	fontsize=11
+}
