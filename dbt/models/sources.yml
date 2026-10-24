@@ -3,11 +3,11 @@ version: 2
 sources:
   - name: careflow_raw
     description: "Raw ingested healthcare event logs in Google BigQuery"
-    database: "{{ env_var('BIGQUERY_PROJECT_ID', 'careflow-project') }}"
-    schema: careflow_raw
+    database: "{{ env_var('BIGQUERY_PROJECT_ID', 'care-flow-analytics') }}"
+    schema: Careflow_raw
     tables:
-      - name: raw_healthcare_events
-        description: "Raw patient journey event log table uploaded from healthcare_event_log_v2.csv"
+      - name: healthcare_event_log_raw
+        description: "Raw patient journey event log table in Google BigQuery"
         columns:
           - name: patient_id
             description: "Fictional patient identifier (e.g. P0001)"

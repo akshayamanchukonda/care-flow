@@ -1,0 +1,17 @@
+digraph AsIsHealthcareProcess {
+    rankdir=LR;
+    node [shape=box, style=filled, fillcolor="#E3F2FD", fontname="Helvetica", fontsize=10];
+    edge [fontname="Helvetica", fontsize=9];
+
+    START [shape=circle, fillcolor="#4CAF50", fontcolor=white, style=filled, label="START"];
+    END [shape=doublecircle, fillcolor="#F44336", fontcolor=white, style=filled, label="END"];
+
+    START -> "Registration" [label="500", color="#2E7D32", penwidth=2.0];
+    "Registration" -> "Triage" [label="500", color="#1565C0", penwidth=1.5];
+    "Treatment" -> "Discharge" [label="500", color="#1565C0", penwidth=1.5];
+    "Triage" -> "Consultation" [label="500", color="#1565C0", penwidth=1.5];
+    "Consultation" -> "Diagnostics" [label="323", color="#1565C0", penwidth=1.5];
+    "Diagnostics" -> "Treatment" [label="323", color="#1565C0", penwidth=1.5];
+    "Consultation" -> "Treatment" [label="177", color="#1565C0", penwidth=1.5];
+    "Discharge" -> END [label="500", color="#C62828", penwidth=2.0];
+}

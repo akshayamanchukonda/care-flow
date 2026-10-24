@@ -21,4 +21,6 @@ models:
   careflow_analytics:
     staging:
       +materialized: view
-      +schema: staging
+    marts:
+      +materialized: view
+

@@ -127,3 +127,139 @@ This section documents the deliverables for **Week 1** of the official internshi
   * `raw_healthcare_events_v2`: Raw event storage table.
   * `stg_healthcare_events_v2`: Cleaned and standardized staging table.
 * **Preservation:** The original baseline dataset (`data/raw/healthcare_event_log.csv`) remains untouched with verified SHA-256 integrity.
+
+## Official Week 2 Deliverables: Process Discovery & As-Is Process Mining (PM4Py)
+
+This section documents the deliverables for **Week 2** of the official internship requirements: As-Is process discovery, event log standardization, pathway variant analysis, rework loop quantification, workflow inefficiency identification, and directed process map visualization.
+
+> [!NOTE]
+> **Implementation Architecture & Technology Stack:**
+> The complete Week 2 analysis was executed locally using Python (`.venv`), **SQLite** (`database/careflow.db`), PM4Py (Process Mining for Python), and Graphviz. As in Week 1, Google BigQuery was not used in the active data pipeline and dbt transformations were not executed in the cloud. All process-mining metrics and inefficiency statistics are mathematically derived and verified from the local SQLite database and standardized CSV event logs.
+
+### Week 2 Workflow Execution Commands
+
+1. **Run As-Is Process Discovery & Visualization Pipeline:**
+   ```powershell
+   .\.venv\Scripts\python.exe src/process_discovery.py
+   ```
+2. **Run Workflow Inefficiencies & Disparities Analysis Pipeline:**
+   ```powershell
+   .\.venv\Scripts\python.exe src/workflow_inefficiencies.py
+   ```
+3. **Run Comprehensive Week 2 Verification Suite (Days 1–6):**
+   ```powershell
+   .\.venv\Scripts\python.exe src/verify_week2.py
+   ```
+
+### Week 2 Key Findings & Process Mining Metrics
+
+* **Canonical Event Standardization:** Standardized event log created at `data/processed/standardized_event_log_v2.csv` with standard process mining fields: `Case_ID`, `Activity_Name`, and `Timestamp`, preserving 100% of event metadata (`patient_id`, `department`, `waiting_time_minutes`, `is_loopback`).
+* **Process Scale:** Exactly 500 patient cases, 420 unique patients, 3,030 total events, and 2,530 observed consecutive transitions ($3,030 \text{ events} - 500 \text{ cases} = 2,530$).
+* **Clinical Boundary Adherence:**
+  * **Start Activity:** 100% of patient journeys (500 cases) start at `Registration`.
+  * **End Activity:** 100% of patient journeys (500 cases) conclude at `Discharge`.
+* **Clinical Activities (6 Stages):** `Registration`, `Triage`, `Consultation`, `Diagnostics`, `Treatment`, `Discharge`.
+* **Discovered Pathway Variants:** 11 unique patient journey variants discovered via PM4Py trace extraction:
+  * **Clean Cohort (Variants V1 & V2):** 346 visits (**69.2%**) follow standard linear paths with zero loop-backs.
+  * **Rework Cohort (Variants V3–V11):** 154 visits (**30.8%**) encounter 1, 2, or 3 loop-backs.
+* **Directly-Follows Graph (DFG) Transitions (9 Distinct Types):**
+  | Transition | Volume | % of Source Stage | % of All Transitions | Pathway Classification |
+  | :--- | :---: | :---: | :---: | :--- |
+  | `Registration -> Triage` | 527 | 100.0% | 20.83% | Standard Forward Flow |
+  | `Treatment -> Discharge` | 500 | 94.52% | 19.76% | Standard Forward Flow |
+  | `Triage -> Consultation` | 500 | 94.88% | 19.76% | Standard Forward Flow |
+  | `Consultation -> Treatment` | 314 | 50.97% | 12.41% | Direct Treatment Path |
+  | `Consultation -> Diagnostics` | 302 | 49.03% | 11.94% | Diagnostic Workup Path |
+  | `Diagnostics -> Treatment` | 215 | 64.95% | 8.50% | Post-Diagnostic Treatment |
+  | `Diagnostics -> Consultation` | 116 | 35.05% | 4.58% | **Clinical Loop-Back (Lab/imaging review)** |
+  | `Treatment -> Diagnostics` | 29 | 5.48% | 1.15% | **Clinical Loop-Back (In-treatment diagnostic workup)** |
+  | `Triage -> Registration` | 27 | 5.12% | 1.07% | **Operational Loop-Back (Admin/triage rework)** |
+
+### Identified Workflow Inefficiencies & Disparities
+
+The Week 2 Day 5 analysis quantified the operational friction introduced by the 172 loop-back transitions across the 154 rework visits:
+* **Administrative Intake Rework (`Triage -> Registration`):** 27 visits (5.4% of cases), generating 54 extra events (27 repeat registrations + 27 repeat triages).
+* **Diagnostic Review Queue Contention (`Diagnostics -> Consultation`):** 116 visits (23.2% of cases), generating 116 extra consultations and inflating consultation demand to 616 events (+23.2% physician load on the primary hospital bottleneck).
+* **In-Treatment Diagnostic Escalation (`Treatment -> Diagnostics`):** 29 visits (5.8% of cases), generating 58 extra events (29 secondary diagnostics + 29 resumed treatments).
+* **Stage Queue Waiting-Time Penalty:** Rework visits endure **150.52 min** of queue delays vs. **100.66 min** for clean visits (**+49.85 min / +49.5% delay**).
+* **Elapsed Journey Length-of-Stay Penalty:** Rework visits average **328.53 min (5.48h)** vs. **220.12 min (3.67h)** for clean visits (**+108.40 min / +49.2% longer stay**).
+
+### Visual, Analytical & Data Artifacts Produced
+
+* **As-Is Directed Process Map:** `reports/as_is_process_map.png` (High-resolution publication-quality 300 DPI pathway diagram illustrating forward flow vs. loop-back arcs).
+* **Graphviz DOT Language Model:** `reports/as_is_process_map.dot` (Standard Graphviz directed graph specification export).
+* **Transition Metrics Table:** `reports/dfg_transitions.csv` (Tabular export of discovered DFG transition volumes and stage percentages).
+* **Standardized Event Log:** `data/processed/standardized_event_log_v2.csv` (Standardized event log ready for advanced process mining and conformance checking).
+* **Clinical Pathway Analysis Summary Report:** `reports/week2_process_analysis_summary.md` (Comprehensive 241-line Markdown report detailing all 11 pathway variants, bottlenecks, and clinical hypotheses).
+* **Workflow Inefficiencies Summary:** `reports/workflow_inefficiencies.csv` (Structured catalog of identified rework categories, affected cases, and empirical queue impacts).
+* **Week 2 Comprehensive Verification Runner:** `src/verify_week2.py` (Automated verification runner checking baseline preservation, dependencies, event log integrity, DFG discovery, deliverable artifacts, summary report, inefficiencies catalog, and unit tests).
+
+## Cloud Analytics: Google BigQuery & dbt Integration (Weeks 1 & 2)
+
+This section documents the end-to-end cloud data warehouse architecture implemented in **Google BigQuery** and **dbt Core**:
+
+### Cloud Infrastructure & Warehouse Setup
+* **GCP Project ID:** `care-flow-analytics` (Region: `asia-south1`)
+* **Raw Data Store:** `care-flow-analytics.Careflow_raw.healthcare_event_log_raw` (2,823 verified events, 500 cases, 420 patients).
+* **dbt Transformations:** Managed under `dbt/` and executed using `dbt-bigquery`.
+
+### Materialized Cloud Models (`careflow_staging`)
+1. **Staging Event Log (`stg_healthcare_events`):** Standardizes raw hospital events into process-mining format (`case_id`, `activity_name`, `event_timestamp`, `activity_sequence`, `waiting_time_minutes`).
+2. **Canonical Process Mining Event Log (`fct_standardized_event_log`):** Canonical event log conforming to PM4Py standards (`case_id`, `activity_name`, `event_timestamp`, `activity_sequence`, `is_loopback`).
+3. **Clinical Pathway Transitions Mart (`fct_pathway_transitions`):** Directly-Follows Graph (DFG) handover metrics between consecutive clinical activities (volumes, avg, min, and max handover minutes).
+
+### Cloud-to-Process-Mining Workflow Execution
+```powershell
+# 1. Test BigQuery connectivity and profile
+dbt debug --project-dir dbt
+
+# 2. Compile and execute dbt transformations in BigQuery
+dbt run --project-dir dbt
+
+# 3. Execute cloud-to-PM4Py discovery pipeline
+.\.venv\Scripts\python.exe src/process_discovery_bigquery.py
+```
+
+### Cloud Deliverable Artifacts Produced
+* **Standardized Cloud Event Log:** `data/processed/bigquery_standardized_event_log.csv` (2,823 events extracted from BigQuery).
+* **Cloud DFG Transitions Metric:** `reports/dfg_transitions_bigquery.csv` (100% exact numerical parity with baseline).
+* **Cloud As-Is Process Map:** `reports/as_is_process_map_bigquery.png` and `reports/as_is_process_map_bigquery.dot`.
+* **Cloud Process Discovery Report:** `reports/week2_bigquery_process_mining_summary.md`.
+
+## Official Week 3 Deliverables: Pathway Transition Time Analysis (SQL & Python)
+
+This section documents the deliverables for **Week 3** of the official internship requirements: calculating average transition and handover times between healthcare process stages using SQL and Python.
+
+### Week 3 Workflow Execution Commands
+
+1. **Run Transition Time Analysis Pipeline:**
+   ```powershell
+   .\.venv\Scripts\python.exe src/transition_analysis.py
+   ```
+2. **Run Comprehensive Week 3 Verification Suite:**
+   ```powershell
+   .\.venv\Scripts\python.exe src/verify_week3.py
+   ```
+
+### Week 3 Discovered Transition Times (Process Mining Pathways)
+
+| Transition Pathway | Count | % of All | Loop? | Mean (min) | Median (min) | Std Dev (min) | Min (min) | Max (min) |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| `Registration -> Triage` | 527 | 20.83% | No | **19.64** | 18.0 | 8.55 | 6.0 | 55.0 |
+| `Triage -> Consultation` | 500 | 19.76% | No | **46.71** | 43.0 | 18.98 | 13.0 | 129.0 |
+| `Treatment -> Discharge` | 500 | 19.76% | No | **71.32** | 73.0 | 21.35 | 29.0 | 130.0 |
+| `Consultation -> Treatment` | 314 | 12.41% | No | **48.39** | 47.0 | 14.34 | 21.0 | 87.0 |
+| `Consultation -> Diagnostics` | 302 | 11.94% | No | **59.25** | 57.0 | 18.72 | 21.0 | 123.0 |
+| `Diagnostics -> Treatment` | 215 | 8.50% | No | **59.74** | 59.0 | 16.27 | 26.0 | 120.0 |
+| `Diagnostics -> Consultation` | 116 | 4.58% | **Yes** | **73.20** | 71.5 | 24.14 | 25.0 | 149.0 |
+| `Treatment -> Diagnostics` | 29 | 1.15% | **Yes** | **86.34** | 91.0 | 23.95 | 48.0 | 141.0 |
+| `Triage -> Registration` | 27 | 1.07% | **Yes** | **17.22** | 17.0 | 3.80 | 11.0 | 24.0 |
+
+### Week 3 Deliverable Artifacts Produced
+
+* **Process Mining Transition Summary:** `data/processed/transition_time_analysis.csv` (Full statistical breakdown for all 9 discovered clinical pathways).
+* **Baseline Transition Summary:** `data/processed/baseline_transition_times.csv` (Handover metrics across the 6 baseline relational pathways).
+* **Granular Transition Records:** `data/processed/visit_transitions_detail.csv` (2,530 individual event-pair transition records).
+* **SQL Query Files:** `sql/queries/11_transition_times.sql` and `sql/queries/12_process_mining_transition_times.sql`.
+* **Reusable SQL Views:** `sql/views/v_transition_times.sql` and `sql/views/v_process_mining_transition_times.sql`.
+* **Analysis Summary Report:** `reports/week3_transition_time_analysis.md`.

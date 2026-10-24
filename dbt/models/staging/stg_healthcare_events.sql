@@ -17,7 +17,7 @@ WITH source_data AS (
         TRIM(CAST(status AS STRING)) AS status,
         CAST(waiting_time_minutes AS INT64) AS waiting_time_minutes
 
-    FROM {{ source('careflow_raw', 'raw_healthcare_events') }}
+    FROM {{ source('careflow_raw', 'healthcare_event_log_raw') }}
 ),
 
 deduplicated_and_sequenced AS (
