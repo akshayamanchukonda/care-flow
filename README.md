@@ -1,116 +1,225 @@
-# care-flow
-CareFlow – Healthcare Data Analytics
+# CareFlow — Hospital Patient Pathway Optimization & Clinical Process Mining
 
-CareFlow is a healthcare data analytics project that uses Python and process mining to analyze patient journeys, identify bottlenecks, and understand hospital waiting times. It aims to help healthcare professionals gain insights into hospital workflows and improve operational efficiency.
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/)
+[![dbt Core 1.13](https://img.shields.io/badge/dbt--core-1.13-orange.svg)](https://www.getdbt.com/)
+[![Google BigQuery](https://img.shields.io/badge/Google%20BigQuery-cloud%20warehouse-blue.svg)](https://cloud.google.com/bigquery)
+[![PM4Py 2.7](https://img.shields.io/badge/PM4Py-2.7-green.svg)](https://pm4py.fit.fraunhofer.de/)
+[![SQLite 3](https://img.shields.io/badge/SQLite-3-lightgrey.svg)](https://www.sqlite.org/)
 
-## Stage 2: Synthetic Healthcare Event Data Generation
+CareFlow is an end-to-end healthcare data analytics and clinical process-mining platform designed to analyze patient journeys, identify operational bottlenecks, quantify queue waiting delays, and discover As-Is clinical pathways.
 
-To generate the reproducible synthetic event log (500 patient journeys), run the following command from the repository root:
+The platform processes emergency and outpatient encounters through a 6-stage clinical pathway (`Registration` $\rightarrow$ `Triage` $\rightarrow$ `Consultation` $\rightarrow$ `Diagnostics` $\rightarrow$ `Treatment` $\rightarrow$ `Discharge`) to uncover operational rework loops and length-of-stay disparities.
 
+---
+
+## Executive Summary & Quick Links
+
+CareFlow operates with a **dual-layer architecture**:
+1. **Local Analytics Engine (SQLite + Python + PM4Py):** A self-contained, offline environment for reproducible local analysis, SQL querying, and continuous integration testing.
+2. **Cloud Analytics Pipeline (Google BigQuery + dbt Core + PM4Py):** A cloud data warehouse pipeline processing synthetic hospital logs through automated staging transformations, canonical marts, schema constraint tests, and direct PM4Py cloud ingestion.
+
+### Key Operational & Clinical Findings
+
+* **Primary Hospital Bottleneck:** `Consultation` exhibits the longest waiting delay, averaging **34.70 minutes** (median 31.0 mins), representing **32.58%** of total hospital queue time.
+* **Diagnostics Queue:** `Diagnostics` is the second-longest waiting stage at **29.90 minutes** (median 27.0 mins) with a **64.6%** patient utilization rate.
+* **Operational Rework Penalty:** Visits encountering rework loops endure **150.52 minutes** of queue delay vs. **100.66 minutes** for clean visits (**+49.85 min / +49.5% delay**), extending total length of stay from **3.67 hours** to **5.48 hours** (**+49.2% longer stay**).
+* **Clinical Pathways Discovered:** PM4Py process discovery revealed **11 distinct clinical variants**: a clean cohort of 346 visits (69.2%) and a rework cohort of 154 visits (30.8%).
+
+### Key Project Artifacts & Direct Links
+
+| Deliverable Artifact | Category | Format | Description |
+| :--- | :--- | :---: | :--- |
+| [**Week 1 & 2 Final Completion Report**](reports/week1_week2_final_completion_report.md) | Audit & Handoff | Markdown | Comprehensive audit of all requirements, mathematical reconciliations, and test proofs. |
+| [**Enhanced Cloud Process Map**](reports/as_is_process_map_bigquery.png) | Process Discovery | PNG (340 KB) | 9-transition As-Is process map with 3 highlighted rework loops generated from BigQuery. |
+| [**Enhanced Cloud Process Model**](reports/as_is_process_map_bigquery.dot) | Process Discovery | Graphviz DOT | Machine-readable DOT specification for the 9-transition enhanced model. |
+| [**Baseline Cloud Process Map**](reports/as_is_process_map_bigquery_baseline.png) | Process Discovery | PNG (291 KB) | 6-transition linear baseline process map generated from BigQuery. |
+| [**Baseline Cloud Process Model**](reports/as_is_process_map_bigquery_baseline.dot) | Process Discovery | Graphviz DOT | Machine-readable DOT specification for the 6-transition baseline model. |
+| [**Local As-Is Process Map**](reports/as_is_process_map.png) | Process Discovery | PNG (307 KB) | Local 9-transition process map discovered from SQLite via PM4Py. |
+| [**Local Process Analysis Report**](reports/week2_process_analysis_summary.md) | Clinical Analysis | Markdown | Comprehensive 241-line clinical pathway report detailing all 11 variants and hypotheses. |
+| [**Cloud Process Mining Summary**](reports/week2_bigquery_process_mining_summary.md) | Cloud Analysis | Markdown | Process discovery summary report derived directly from dbt BigQuery marts. |
+| [**Cloud Baseline Mining Summary**](reports/week2_bigquery_process_mining_baseline_summary.md) | Cloud Analysis | Markdown | Baseline process discovery summary report from BigQuery baseline views. |
+| [**Workflow Inefficiencies Catalog**](reports/workflow_inefficiencies.csv) | Process Mining | CSV | Structured catalog of 4 identified rework categories, affected visits, and wait penalties. |
+| [**Cloud DFG Transitions Table**](reports/dfg_transitions_bigquery.csv) | Transition Metrics | CSV | Empirical transition volumes and source-activity percentages from BigQuery. |
+
+---
+
+## Dual-Workflow Architecture
+
+CareFlow maintains two complementary, independently verified workflows:
+
+```
+┌────────────────────────────────────────────────────────────────────────────────────────┐
+│                                   CARE FLOW ARCHITECTURE                               │
+└────────────────────────────────────────────────────────────────────────────────────────┘
+                               │                                       │
+              ┌────────────────┴──────────────────┐   ┌────────────────┴──────────────────┐
+              │          LOCAL WORKFLOW           │   │          CLOUD WORKFLOW           │
+              │   (Offline Testing & Analysis)    │   │  (Cloud Data Warehouse & dbt)     │
+              └───────────────────────────────────┘   └───────────────────────────────────┘
+                               │                                       │
+             • Python Simulation Generator           • Python Raw Uploader
+               src/data_generator.py                   src/upload_to_bigquery.py
+               src/data_generator_v2.py                                │
+                               │                                       ▼
+                               ▼                     • Google BigQuery Raw Store
+             • Relational SQLite Storage               care-flow-analytics.Careflow_raw
+               database/careflow.db                    - healthcare_event_log_raw (2,823)
+               - raw_healthcare_events_v2              - healthcare_event_log_v2_raw (3,030)
+               - stg_healthcare_events_v2                              │
+                               │                                       ▼
+                               ▼                     • dbt Core Staging Layer
+             • SQL Operational Analytics               careflow_staging.stg_healthcare_events
+               sql/queries/ (01..10)                   careflow_staging.stg_healthcare_events_v2
+               sql/views/ (4 reusable views)           (event_id deduplication & sequencing)
+                               │                                       │
+                               ▼                                       ▼
+             • Local Staging & Discovery             • dbt Core Marts Layer
+               src/clean_events_pipeline.py            careflow_staging.fct_standardized_event_log*
+               src/process_discovery.py                careflow_staging.fct_pathway_transitions*
+               src/workflow_inefficiencies.py                          │
+                               │                                       ▼
+                               ▼                     • Direct BigQuery -> PM4Py Ingestion
+             • Local Process Map & Reports             src/process_discovery_bigquery.py
+               reports/as_is_process_map.png           reports/as_is_process_map_bigquery.png
+               reports/week2_process_analysis_summary  reports/as_is_process_map_bigquery_baseline
+```
+
+### A. Local Workflow (Offline Testing & Analysis Engine)
+- **Synthetic Simulation:** Python generators create raw event logs with realistic queues, clinical stages, and rework loops.
+- **Relational Storage:** SQLite database at `database/careflow.db` enforces relational integrity, check constraints, foreign keys, and indexes across `patients`, `visits`, and `events`.
+- **SQL Analysis:** 10 analytical SQL queries and 4 reusable views compute departmental queues, bottleneck rankings, arrival patterns, and journey durations.
+- **Offline Process Mining:** Python engine cleans staging tables, computes process KPIs, discovers PM4Py Directly-Follows Graphs (DFGs), and exports local publication-ready maps.
+
+### B. Cloud Workflow (Google BigQuery & dbt Core Pipeline)
+- **Raw Data Ingestion:** Automated ingestion uploads raw event logs into Google BigQuery dataset `Careflow_raw`.
+- **dbt Transformation Pipeline:** dbt Core manages modular transformations:
+  - Staging views with native `QUALIFY ROW_NUMBER() OVER (PARTITION BY event_id ...)` deduplication and deterministic timestamp sequencing.
+  - Standardized marts conforming to canonical process mining standards (`case_id`, `activity_name`, `event_timestamp`, `is_loopback`).
+  - Transition marts computing handover durations (average, min, max) using SQL window functions (`LEAD()`).
+- **Cloud-to-PM4Py Discovery:** Python client directly queries BigQuery views via the BigQuery REST API, formats event logs, and generates publication-quality As-Is process models with zero intermediate local shortcuts.
+
+---
+
+## Dataset Architecture: Baseline vs. Enhanced Datasets
+
+CareFlow maintains a strict separation between two distinct datasets to support both forward-only baseline analysis and advanced rework loop discovery:
+
+| Dataset Dimension | Baseline Dataset | Enhanced Dataset |
+| :--- | :--- | :--- |
+| **Total Event Records** | **2,823 events** | **3,030 events** |
+| **Unique Patient Visits (Cases)** | 500 patient visits | 500 patient visits |
+| **Unique Patients** | 420 unique patients | 420 unique patients |
+| **Clinical Flow Pattern** | Forward-only linear pathways | Linear flow + 3 operational & clinical rework loops |
+| **Rework Events (`is_loopback == 1`)**| 0 events | **214 repeat events** across **154 visits** (30.8% of cases) |
+| **Discovered DFG Transitions** | **6 transition types** (2,323 handovers) | **9 transition types** (2,530 handovers) |
+| **Clinical Journey Variants** | 2 variants | 11 variants |
+| **Raw CSV File** | `data/raw/healthcare_event_log.csv` | `data/raw/healthcare_event_log_v2.csv` |
+| **BigQuery Raw Table** | `Careflow_raw.healthcare_event_log_raw` | `Careflow_raw.healthcare_event_log_v2_raw` |
+| **dbt Staging Model** | `stg_healthcare_events` | `stg_healthcare_events_v2` |
+| **dbt Canonical Mart** | `fct_standardized_event_log` | `fct_standardized_event_log_v2` |
+| **dbt Transitions Mart** | `fct_pathway_transitions` | `fct_pathway_transitions_v2` |
+| **Standardized CSV Export** | `bigquery_standardized_event_log_baseline.csv` | `bigquery_standardized_event_log.csv` |
+| **As-Is Process Map** | `as_is_process_map_bigquery_baseline.png` | `as_is_process_map_bigquery.png` |
+
+### Precision Terminology for Loop-Back & Rework Metrics
+
+To eliminate ambiguity, metrics are rigorously classified into three distinct concepts:
+1. **Rework Event Records ($N = 214$):** The total count of activity rows flagged with `is_loopback == 1`. These occur across $154$ distinct patient visits ($30.8\%$ rework rate):
+   - `Consultation`: 116 repeat events (from diagnostic review returns)
+   - `Treatment`: 29 repeat events (from treatment resumption post-escalation)
+   - `Registration`: 27 repeat events (from triage administrative returns)
+   - `Triage`: 27 repeat events (from re-triage post-registration)
+   - `Diagnostics`: 15 repeat events (from secondary diagnostic workups)
+   - *Sum:* $116 + 29 + 27 + 27 + 15 = 214$ repeat records.
+2. **Directed Backward DFG Transitions ($N = 172$):** The count of consecutive event-pair transitions that hand off from a later clinical stage back to an earlier stage:
+   - `Diagnostics -> Consultation`: 116 transitions
+   - `Treatment -> Diagnostics`: 29 transitions
+   - `Triage -> Registration`: 27 transitions
+   - *Sum:* $116 + 29 + 27 = 172$ directed backward transitions.
+3. **Net Row Count Difference ($3,030 - 2,823 = 207$):**
+   In `src/data_generator_v2.py`, evaluating `has_triage_loop` prior to `requires_diagnostics` shifted the pseudo-random sequence, causing 316 cases to receive initial diagnostics in v2 versus 323 in v1 ($323 - 316 = 7$).
+   $$\text{Net Difference} = 214 \text{ (rework events)} - 7 \text{ (fewer initial diagnostics)} = 207$$
+
+---
+
+## Testing & Verification Suite
+
+All local test suites and cloud verification runners have been executed and verified. The table below lists the exact commands, targets, checks performed, and empirical results:
+
+| Verification Suite | Exact Command | Scope / Components Checked | Result & Status | Execution Evidence |
+| :--- | :--- | :--- | :---: | :--- |
+| **Python Unit Tests** | `python -m unittest discover tests` | Core algorithms, data generators, staging cleaners, sequencing, and loop-back flags across 5 modules. | **65 PASS / 0 FAIL**<br>`[OK]` | Freshly verified this session (3.44s) |
+| **Week 1 Verification Runner** | `python src/verify_week1.py` | Baseline CSV preservation, SQLite tables (`raw_healthcare_events_v2`, `stg_healthcare_events_v2`), null checks, and loop-back counts. | **5 PASS / 0 FAIL**<br>`[100% OPERATIONAL]` | Freshly verified this session (~1.5s) |
+| **Week 2 Verification Runner** | `python src/verify_week2.py` | PM4Py DFG discovery (9 edges), variants (11 paths), artifact existence, inefficiency catalog, and 41 internal unit tests. | **8 CHECKS (41 TESTS) PASS**<br>`[ALL 41 PASSED]` | Freshly verified this session (1.49s) |
+| **dbt BigQuery Debug** | `dbt debug --project-dir dbt` | Profile validation (`profiles.yml`), project config (`dbt_project.yml`), Git dependency, and BigQuery connection test. | **ALL 4 CHECKS PASSED**<br>`[Connection OK]` | Verified this session (~19s, exit code 0) |
+| **dbt DAG Compilation** | `dbt compile --project-dir dbt` | SQL syntax, Jinja templating, dependency graph, and model compilation for 6 models, 52 tests, and 2 sources. | **ALL COMPILED**<br>`[0 Errors]` | Verified this session (~14s, exit code 0) |
+| **dbt Model Materialization** | `dbt run --project-dir dbt` | Recreates/updates 6 BigQuery staging and mart views in `care-flow-analytics.careflow_staging`. | **PASS=6 / TOTAL=6**<br>`[0 Errors]` | Verified this session (32.48s, exit code 0) |
+| **dbt Schema Data Tests** | `dbt test --project-dir dbt` | Validates 52 schema tests (`not_null`, `unique`, `accepted_values`) across all 6 models in BigQuery. | **PASS=52 FAIL=0 ERROR=0**<br>`[TOTAL=52 PASS]` | Verified this session via BigQuery (151.49s, task-3543 log & `dbt/target/run_results.json`) |
+| **Git Diff Whitespace Check** | `git diff --check` | Validates that no trailing whitespace or CRLF formatting corruptions exist in modified files. | **CLEAN**<br>`[Exit code: 0]` | Freshly verified this session (<1s) |
+
+> [!NOTE]
+> All commands use the project virtual environment (`.\.venv\Scripts\python.exe` or `.\.venv\Scripts\dbt.exe` on Windows). Cloud dbt commands require active Google Cloud Application Default Credentials (`gcloud auth application-default login`).
+
+---
+
+## Detailed Project Stages & Local Analytics Execution
+
+### Stage 2: Synthetic Healthcare Event Data Generation
+To generate the reproducible synthetic event log (500 patient journeys), run from the repository root:
 ```powershell
 .\.venv\Scripts\python.exe src/data_generator.py
 ```
+- Generates 500 patient journeys across emergency and outpatient care stages.
+- Models queue waiting times, department pathways, and discharge dispositions.
+- Saves output to `data/raw/healthcare_event_log.csv` (2,823 rows).
+- Runs built-in validations: column completeness, zero missing values, unique IDs, non-negative wait times, chronological ordering.
 
-This script:
-- Generates 500 patient journeys across emergency and outpatient care stages (`Registration`, `Triage`, `Consultation`, `Diagnostics`, `Treatment`, `Discharge`).
-- Models realistic queue waiting times, department pathways, and discharge dispositions.
-- Saves the output to `data/raw/healthcare_event_log.csv`.
-- Runs built-in data validation checks for column completeness, missing values, unique identifiers, non-negative wait times, and chronological order.
-
-## Stage 3: SQLite Database Schema and Data Ingestion
-
-To build the relational SQLite database and ingest the validated event log dataset, run the following command from the repository root:
-
+### Stage 3: SQLite Database Schema & Data Ingestion
+To build the relational SQLite database and ingest the baseline dataset:
 ```powershell
 .\.venv\Scripts\python.exe src/db_manager.py
 ```
+- Creates local database at `database/careflow.db`.
+- Applies relational schema in `database/schema.sql` (defining `patients`, `visits`, `events` with keys, constraints, and indexes).
+- Enforces foreign keys (`PRAGMA foreign_keys = ON`) and transactional atomic inserts.
+- Ingests 420 patients, 500 visits, and 2,823 events without duplication upon reruns.
 
-This script:
-- Creates the local database file at `database/careflow.db`.
-- Applies the relational schema in `database/schema.sql` (defining `patients`, `visits`, and `events` tables with primary/foreign keys, check constraints, and performance indexes).
-- Enforces SQLite foreign keys (`PRAGMA foreign_keys = ON`) and performs all inserts within an atomic transaction.
-- Ingests 420 patients, 500 visits, and 2,823 events without data loss or duplication upon reruns.
-- Verifies row counts, foreign key integrity, and absence of unexpected nulls.
-
-## Stage 4: SQL Operational Analysis
-
-To run all analytical SQL queries and apply reusable views against `database/careflow.db`, run:
-
+### Stage 4: SQL Operational Analysis
+To run all analytical SQL queries and apply reusable views against `database/careflow.db`:
 ```powershell
 .\.venv\Scripts\python.exe src/run_sql_analysis.py
 ```
-
-### Analytical Queries & Views Created
-
 * **Queries (`sql/queries/`):**
-  1. `01_overall_summary.sql`: High-level operational dataset statistics.
-  2. `02_waiting_time_by_stage.sql`: Average and exact median waiting time by care stage.
-  3. `03_department_waiting_times.sql`: Waiting-time statistics across all hospital departments.
-  4. `04_bottleneck_ranking.sql`: Stages ranked by average queue delay and share of total hospital wait time.
+  1. `01_overall_summary.sql`: Operational dataset totals and averages.
+  2. `02_waiting_time_by_stage.sql`: Average and exact median waiting time by stage.
+  3. `03_department_waiting_times.sql`: Waiting statistics across all 13 hospital units.
+  4. `04_bottleneck_ranking.sql`: Care stages ranked by average queue delay and total wait share.
   5. `05_arrivals_by_hour.sql`: Hourly patient arrival distribution.
   6. `06_visit_outcomes.sql`: Visit outcomes and disposition breakdown.
   7. `07_visit_durations.sql`: Total observed journey duration from arrival to discharge.
   8. `08_diagnostics_rate.sql`: Diagnostics utilization and skip rates.
   9. `09_event_counts_and_avg_wait.sql`: Stage volumes and patient coverage.
-  10. `10_visit_level_summary.sql`: Consolidated visit-level metrics prepared for BI dashboarding.
-* **Reusable Views (`sql/views/`):**
-  * `v_stage_waiting_times`: Stage volume and waiting time metrics.
-  * `v_department_performance`: Department operational volume and wait load.
-  * `v_visit_summary`: Complete visit-level operational metrics.
-  * `v_visit_outcomes`: Disposition volume and duration averages.
+  10. `10_visit_level_summary.sql`: Consolidated visit-level metrics for BI reporting.
+* **Reusable Views (`sql/views/`):** `v_stage_waiting_times`, `v_department_performance`, `v_visit_summary`, `v_visit_outcomes`.
 
-### Key Operational Findings
-
-1. **Dataset Totals:** 420 unique patients, 500 visits, and 2,823 process events recorded between Oct 1 and Oct 31, 2026.
-2. **Primary Bottleneck:** `Consultation` has the longest queue delay, averaging **34.70 minutes** (median 31.0 mins), representing **32.58%** of all recorded waiting time in the hospital.
-3. **Diagnostics Queue:** `Diagnostics` is the second-longest waiting stage at **29.90 minutes** (median 27.0 mins).
-4. **Diagnostics Utilization:** 64.6% of visits (323 visits) utilized Diagnostics; 35.4% (177 visits) safely skipped Diagnostics.
-5. **Observed Journey Durations:** The average patient journey lasts **231.5 minutes (~3.86 hours)** from check-in to discharge.
-6. **Patient Outcomes:** 73.8% Discharged Home, 19.8% Admitted to Inpatient Ward, 6.4% Transferred to Specialist Care.
-
-## Stage 5: Python Statistical and Process Analysis
-
-To execute the statistical process analysis and export the 6 Power BI-ready datasets, run:
-
+### Stage 5: Python Statistical & Queue Analysis
+To execute statistical queue analysis and export BI-ready datasets:
 ```powershell
 .\.venv\Scripts\python.exe src/process_analysis.py
 ```
+* **Calculations:** Mean, median, standard deviation, and percentiles (25th, 75th, 90th) across care stages and departments; 1.5x IQR outlier detection (>50.5 min threshold); diagnostics duration impact (257.6 min with diagnostics vs. 183.8 min without).
+* **Exported Datasets (`data/processed/`):** `stage_waiting_time_analysis.csv`, `department_waiting_time_analysis.csv`, `visit_level_analysis.csv`, `long_wait_analysis.csv`, `diagnostics_analysis.csv`, `overall_kpis.csv`.
 
-### What This Script Calculates
+---
 
-1. **Data Quality Assurance:** Verifies database completeness (420 patients, 500 visits, 2,823 events), zero missing values, non-negative wait times, and chronological integrity.
-2. **Descriptive Statistics:** Calculates count, mean, median, standard deviation, and percentiles (25th, 75th, 90th) for waiting times across care stages and departments.
-3. **Stage & Bottleneck Analysis:** Ranks stages by average waiting time and determines each stage's percentage of total hospital waiting time.
-4. **Department Load & Queue Patterns:** Analyzes patient volume, queue distributions, and waiting loads across all 13 hospital units.
-5. **Visit-Level Metrics:** Synthesizes journey durations, total waiting minutes, and arrival hours for each of the 500 individual visits.
-6. **Long-Wait & Outlier Detection:** Identifies events with wait times exceeding 30 minutes, 60 minutes, and statistical outliers using the standard 1.5x IQR rule (threshold: 50.5 minutes).
-7. **Diagnostics Impact:** Quantifies how diagnostics utilization affects overall journey duration (visits requiring diagnostics average 257.6 mins vs. 183.8 mins for visits skipping diagnostics).
-
-### Exported Datasets (`data/processed/`)
-
-| Exported File | Rows | Description |
-| :--- | :---: | :--- |
-| `stage_waiting_time_analysis.csv` | 6 | Care stages ranked by bottleneck severity with full percentile distributions. |
-| `department_waiting_time_analysis.csv` | 13 | Department-level operational volumes, queues, and percentage wait load. |
-| `visit_level_analysis.csv` | 500 | Consolidated visit table (1 row per visit) with duration, arrival hour, and outcomes. |
-| `long_wait_analysis.csv` | 6 | Care stages broken down by moderate delays (>30m), severe delays (>60m), and statistical outliers. |
-| `diagnostics_analysis.csv` | 2 | Comparison of visits with vs. without diagnostics and their duration impact. |
-| `overall_kpis.csv` | 13 | Executive KPI summary table (Volume, Queues, Bottlenecks, Delays, Throughput). |
-
-## Official Week 1 Deliverables: Clinical Pathway Process Mining
-
-This section documents the deliverables for **Week 1** of the official internship requirements.
-
-> [!NOTE]
-> **Technology Substitution Notice:** Due to cloud resource constraints on Google Cloud project creation, **SQLite** was utilized as the queryable data store (substituting Google BigQuery) and a **Python/SQL pipeline** was used for data cleaning and standardization (substituting dbt). Full dbt and BigQuery configurations are prepared in `dbt/` and `src/upload_to_bigquery.py` for future cloud deployment.
+## Official Week 1 & Week 2 Deliverables: Process Mining & Inefficiencies
 
 ### Week 1 Workflow Execution Commands
-
-1. **Generate Revised Event Log with Loop-Backs (Rework Loops):**
+1. **Generate Revised Event Log with Loop-Backs:**
    ```powershell
    .\.venv\Scripts\python.exe src/data_generator_v2.py
    ```
-2. **Execute Ingestion & Cleaning Pipeline (SQLite & Python/SQL):**
+2. **Execute Ingestion & Cleaning Pipeline (SQLite):**
    ```powershell
    .\.venv\Scripts\python.exe src/clean_events_pipeline.py
    ```
@@ -119,26 +228,8 @@ This section documents the deliverables for **Week 1** of the official internshi
    .\.venv\Scripts\python.exe src/verify_week1.py
    ```
 
-### Week 1 Outputs & Process Mining Standardization
-
-* **Revised Raw Event Log:** `data/raw/healthcare_event_log_v2.csv` (500 visits, 420 patients, 3,030 events, 214 loop-backs across 154 cases).
-* **Cleaned Standardized Event Log:** `data/processed/cleaned_healthcare_event_log_v2.csv` (3,030 events normalized with canonical process mining fields: `case_id`, `activity_name`, `event_timestamp`, `activity_sequence`, `is_loopback`).
-* **SQLite Relational Storage:** `database/careflow.db`:
-  * `raw_healthcare_events_v2`: Raw event storage table.
-  * `stg_healthcare_events_v2`: Cleaned and standardized staging table.
-* **Preservation:** The original baseline dataset (`data/raw/healthcare_event_log.csv`) remains untouched with verified SHA-256 integrity.
-
-## Official Week 2 Deliverables: Process Discovery & As-Is Process Mining (PM4Py)
-
-This section documents the deliverables for **Week 2** of the official internship requirements: As-Is process discovery, event log standardization, pathway variant analysis, rework loop quantification, workflow inefficiency identification, and directed process map visualization.
-
-> [!NOTE]
-> **Implementation Architecture & Technology Stack:**
-> The complete Week 2 analysis was executed locally using Python (`.venv`), **SQLite** (`database/careflow.db`), PM4Py (Process Mining for Python), and Graphviz. As in Week 1, Google BigQuery was not used in the active data pipeline and dbt transformations were not executed in the cloud. All process-mining metrics and inefficiency statistics are mathematically derived and verified from the local SQLite database and standardized CSV event logs.
-
 ### Week 2 Workflow Execution Commands
-
-1. **Run As-Is Process Discovery & Visualization Pipeline:**
+1. **Run Local As-Is Process Discovery & Visualization Pipeline:**
    ```powershell
    .\.venv\Scripts\python.exe src/process_discovery.py
    ```
@@ -146,67 +237,45 @@ This section documents the deliverables for **Week 2** of the official internshi
    ```powershell
    .\.venv\Scripts\python.exe src/workflow_inefficiencies.py
    ```
-3. **Run Comprehensive Week 2 Verification Suite (Days 1–6):**
+3. **Run Comprehensive Week 2 Verification Suite:**
    ```powershell
    .\.venv\Scripts\python.exe src/verify_week2.py
    ```
 
-### Week 2 Key Findings & Process Mining Metrics
+### Discovered DFG Transitions (Local SQLite Engine)
+| Transition | Volume | % of Source Stage | % of All Transitions | Pathway Classification |
+| :--- | :---: | :---: | :---: | :--- |
+| `Registration -> Triage` | 527 | 100.0% | 20.83% | Standard Forward Flow |
+| `Treatment -> Discharge` | 500 | 94.52% | 19.76% | Standard Forward Flow |
+| `Triage -> Consultation` | 500 | 94.88% | 19.76% | Standard Forward Flow |
+| `Consultation -> Treatment` | 314 | 50.97% | 12.41% | Direct Treatment Path |
+| `Consultation -> Diagnostics` | 302 | 49.03% | 11.94% | Diagnostic Workup Path |
+| `Diagnostics -> Treatment` | 215 | 64.95% | 8.50% | Post-Diagnostic Treatment |
+| `Diagnostics -> Consultation` | 116 | 35.05% | 4.58% | **Clinical Loop-Back (Lab/imaging review)** |
+| `Treatment -> Diagnostics` | 29 | 5.48% | 1.15% | **Clinical Loop-Back (In-treatment diagnostic workup)** |
+| `Triage -> Registration` | 27 | 5.12% | 1.07% | **Operational Loop-Back (Admin/triage rework)** |
 
-* **Canonical Event Standardization:** Standardized event log created at `data/processed/standardized_event_log_v2.csv` with standard process mining fields: `Case_ID`, `Activity_Name`, and `Timestamp`, preserving 100% of event metadata (`patient_id`, `department`, `waiting_time_minutes`, `is_loopback`).
-* **Process Scale:** Exactly 500 patient cases, 420 unique patients, 3,030 total events, and 2,530 observed consecutive transitions ($3,030 \text{ events} - 500 \text{ cases} = 2,530$).
-* **Clinical Boundary Adherence:**
-  * **Start Activity:** 100% of patient journeys (500 cases) start at `Registration`.
-  * **End Activity:** 100% of patient journeys (500 cases) conclude at `Discharge`.
-* **Clinical Activities (6 Stages):** `Registration`, `Triage`, `Consultation`, `Diagnostics`, `Treatment`, `Discharge`.
-* **Discovered Pathway Variants:** 11 unique patient journey variants discovered via PM4Py trace extraction:
-  * **Clean Cohort (Variants V1 & V2):** 346 visits (**69.2%**) follow standard linear paths with zero loop-backs.
-  * **Rework Cohort (Variants V3–V11):** 154 visits (**30.8%**) encounter 1, 2, or 3 loop-backs.
-* **Directly-Follows Graph (DFG) Transitions (9 Distinct Types):**
-  | Transition | Volume | % of Source Stage | % of All Transitions | Pathway Classification |
-  | :--- | :---: | :---: | :---: | :--- |
-  | `Registration -> Triage` | 527 | 100.0% | 20.83% | Standard Forward Flow |
-  | `Treatment -> Discharge` | 500 | 94.52% | 19.76% | Standard Forward Flow |
-  | `Triage -> Consultation` | 500 | 94.88% | 19.76% | Standard Forward Flow |
-  | `Consultation -> Treatment` | 314 | 50.97% | 12.41% | Direct Treatment Path |
-  | `Consultation -> Diagnostics` | 302 | 49.03% | 11.94% | Diagnostic Workup Path |
-  | `Diagnostics -> Treatment` | 215 | 64.95% | 8.50% | Post-Diagnostic Treatment |
-  | `Diagnostics -> Consultation` | 116 | 35.05% | 4.58% | **Clinical Loop-Back (Lab/imaging review)** |
-  | `Treatment -> Diagnostics` | 29 | 5.48% | 1.15% | **Clinical Loop-Back (In-treatment diagnostic workup)** |
-  | `Triage -> Registration` | 27 | 5.12% | 1.07% | **Operational Loop-Back (Admin/triage rework)** |
-
-### Identified Workflow Inefficiencies & Disparities
-
-The Week 2 Day 5 analysis quantified the operational friction introduced by the 172 loop-back transitions across the 154 rework visits:
-* **Administrative Intake Rework (`Triage -> Registration`):** 27 visits (5.4% of cases), generating 54 extra events (27 repeat registrations + 27 repeat triages).
-* **Diagnostic Review Queue Contention (`Diagnostics -> Consultation`):** 116 visits (23.2% of cases), generating 116 extra consultations and inflating consultation demand to 616 events (+23.2% physician load on the primary hospital bottleneck).
-* **In-Treatment Diagnostic Escalation (`Treatment -> Diagnostics`):** 29 visits (5.8% of cases), generating 58 extra events (29 secondary diagnostics + 29 resumed treatments).
-* **Stage Queue Waiting-Time Penalty:** Rework visits endure **150.52 min** of queue delays vs. **100.66 min** for clean visits (**+49.85 min / +49.5% delay**).
-* **Elapsed Journey Length-of-Stay Penalty:** Rework visits average **328.53 min (5.48h)** vs. **220.12 min (3.67h)** for clean visits (**+108.40 min / +49.2% longer stay**).
-
-### Visual, Analytical & Data Artifacts Produced
-
-* **As-Is Directed Process Map:** `reports/as_is_process_map.png` (High-resolution publication-quality 300 DPI pathway diagram illustrating forward flow vs. loop-back arcs).
-* **Graphviz DOT Language Model:** `reports/as_is_process_map.dot` (Standard Graphviz directed graph specification export).
-* **Transition Metrics Table:** `reports/dfg_transitions.csv` (Tabular export of discovered DFG transition volumes and stage percentages).
-* **Standardized Event Log:** `data/processed/standardized_event_log_v2.csv` (Standardized event log ready for advanced process mining and conformance checking).
-* **Clinical Pathway Analysis Summary Report:** `reports/week2_process_analysis_summary.md` (Comprehensive 241-line Markdown report detailing all 11 pathway variants, bottlenecks, and clinical hypotheses).
-* **Workflow Inefficiencies Summary:** `reports/workflow_inefficiencies.csv` (Structured catalog of identified rework categories, affected cases, and empirical queue impacts).
-* **Week 2 Comprehensive Verification Runner:** `src/verify_week2.py` (Automated verification runner checking baseline preservation, dependencies, event log integrity, DFG discovery, deliverable artifacts, summary report, inefficiencies catalog, and unit tests).
+---
 
 ## Cloud Analytics: Google BigQuery & dbt Integration (Weeks 1 & 2)
 
-This section documents the end-to-end cloud data warehouse architecture implemented in **Google BigQuery** and **dbt Core**:
-
 ### Cloud Infrastructure & Warehouse Setup
 * **GCP Project ID:** `care-flow-analytics` (Region: `asia-south1`)
-* **Raw Data Store:** `care-flow-analytics.Careflow_raw.healthcare_event_log_raw` (2,823 verified events, 500 cases, 420 patients).
+* **Raw Data Store (`Careflow_raw`):**
+  * `healthcare_event_log_raw`: Baseline events (2,823 rows, 500 cases, 420 patients).
+  * `healthcare_event_log_v2_raw`: Enhanced events with rework loops (3,030 rows, 214 loop-backs, 154 affected cases).
 * **dbt Transformations:** Managed under `dbt/` and executed using `dbt-bigquery`.
 
 ### Materialized Cloud Models (`careflow_staging`)
-1. **Staging Event Log (`stg_healthcare_events`):** Standardizes raw hospital events into process-mining format (`case_id`, `activity_name`, `event_timestamp`, `activity_sequence`, `waiting_time_minutes`).
-2. **Canonical Process Mining Event Log (`fct_standardized_event_log`):** Canonical event log conforming to PM4Py standards (`case_id`, `activity_name`, `event_timestamp`, `activity_sequence`, `is_loopback`).
-3. **Clinical Pathway Transitions Mart (`fct_pathway_transitions`):** Directly-Follows Graph (DFG) handover metrics between consecutive clinical activities (volumes, avg, min, and max handover minutes).
+1. **Staging Event Logs:**
+   * `stg_healthcare_events`: Cleans, deduplicates by `event_id`, and sequences baseline events (2,823 rows).
+   * `stg_healthcare_events_v2`: Cleans, deduplicates by `event_id`, and sequences enhanced events with loop-backs (3,030 rows).
+2. **Canonical Process Mining Event Logs:**
+   * `fct_standardized_event_log`: Canonical event log conforming to PM4Py standards for baseline flow (2,823 rows).
+   * `fct_standardized_event_log_v2`: Canonical event log conforming to PM4Py standards for enhanced flow with rework (3,030 rows).
+3. **Clinical Pathway Transitions Marts:**
+   * `fct_pathway_transitions`: Baseline DFG handover metrics (2,323 handovers across 6 clinical stages).
+   * `fct_pathway_transitions_v2`: Enhanced DFG handover metrics (2,530 handovers across 9 pathways including 3 rework loops).
 
 ### Cloud-to-Process-Mining Workflow Execution
 ```powershell
@@ -216,51 +285,83 @@ dbt debug --project-dir dbt
 # 2. Compile and execute dbt transformations in BigQuery
 dbt run --project-dir dbt
 
-# 3. Execute cloud-to-PM4Py discovery pipeline
-.\.venv\Scripts\python.exe src/process_discovery_bigquery.py
+# 3. Execute all 52 data quality tests against BigQuery views
+dbt test --project-dir dbt
+
+# 4. Execute cloud-to-PM4Py discovery pipeline (both baseline and enhanced)
+.\.venv\Scripts\python.exe src/process_discovery_bigquery.py --dataset all
 ```
 
-### Cloud Deliverable Artifacts Produced
-* **Standardized Cloud Event Log:** `data/processed/bigquery_standardized_event_log.csv` (2,823 events extracted from BigQuery).
-* **Cloud DFG Transitions Metric:** `reports/dfg_transitions_bigquery.csv` (100% exact numerical agreement across all 6 baseline pathway transition aggregates).
-* **Cloud As-Is Process Map:** `reports/as_is_process_map_bigquery.png` and `reports/as_is_process_map_bigquery.dot`.
-* **Cloud Process Discovery Report:** `reports/week2_bigquery_process_mining_summary.md`.
-* **Final Week 1 & Week 2 Completion Report:** `reports/week1_week2_final_completion_report.md`.
+---
 
-## Official Week 3 Deliverables: Pathway Transition Time Analysis (SQL & Python)
+## Roadmap & Upcoming Modules
 
-This section documents the deliverables for **Week 3** of the official internship requirements: calculating average transition and handover times between healthcare process stages using SQL and Python.
+* **Week 3 (Pathway Transition Time Analysis):** Handover duration quantifications between clinical stages, granular event-pair transitions, and Streamlit dashboard exploration are under active local development and scheduled for the next release.
+* **Week 4 (Process Conformance & Optimization):** Advanced bottleneck resolution modeling.
 
-### Week 3 Workflow Execution Commands
+---
 
-1. **Run Transition Time Analysis Pipeline:**
-   ```powershell
-   .\.venv\Scripts\python.exe src/transition_analysis.py
-   ```
-2. **Run Comprehensive Week 3 Verification Suite:**
-   ```powershell
-   .\.venv\Scripts\python.exe src/verify_week3.py
-   ```
+## Repository Structure (Weeks 1 & 2 Deliverables)
 
-### Week 3 Discovered Transition Times (Process Mining Pathways)
-
-| Transition Pathway | Count | % of All | Loop? | Mean (min) | Median (min) | Std Dev (min) | Min (min) | Max (min) |
-| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| `Registration -> Triage` | 527 | 20.83% | No | **19.64** | 18.0 | 8.55 | 6.0 | 55.0 |
-| `Triage -> Consultation` | 500 | 19.76% | No | **46.71** | 43.0 | 18.98 | 13.0 | 129.0 |
-| `Treatment -> Discharge` | 500 | 19.76% | No | **71.32** | 73.0 | 21.35 | 29.0 | 130.0 |
-| `Consultation -> Treatment` | 314 | 12.41% | No | **48.39** | 47.0 | 14.34 | 21.0 | 87.0 |
-| `Consultation -> Diagnostics` | 302 | 11.94% | No | **59.25** | 57.0 | 18.72 | 21.0 | 123.0 |
-| `Diagnostics -> Treatment` | 215 | 8.50% | No | **59.74** | 59.0 | 16.27 | 26.0 | 120.0 |
-| `Diagnostics -> Consultation` | 116 | 4.58% | **Yes** | **73.20** | 71.5 | 24.14 | 25.0 | 149.0 |
-| `Treatment -> Diagnostics` | 29 | 1.15% | **Yes** | **86.34** | 91.0 | 23.95 | 48.0 | 141.0 |
-| `Triage -> Registration` | 27 | 1.07% | **Yes** | **17.22** | 17.0 | 3.80 | 11.0 | 24.0 |
-
-### Week 3 Deliverable Artifacts Produced
-
-* **Process Mining Transition Summary:** `data/processed/transition_time_analysis.csv` (Full statistical breakdown for all 9 discovered clinical pathways).
-* **Baseline Transition Summary:** `data/processed/baseline_transition_times.csv` (Handover metrics across the 6 baseline relational pathways).
-* **Granular Transition Records:** `data/processed/visit_transitions_detail.csv` (2,530 individual event-pair transition records).
-* **SQL Query Files:** `sql/queries/11_transition_times.sql` and `sql/queries/12_process_mining_transition_times.sql`.
-* **Reusable SQL Views:** `sql/views/v_transition_times.sql` and `sql/views/v_process_mining_transition_times.sql`.
-* **Analysis Summary Report:** `reports/week3_transition_time_analysis.md`.
+```text
+care-flow/
+├── README.md                                             (Project documentation & architecture guide)
+├── requirements.txt                                      (Python package dependencies)
+├── data/
+│   ├── raw/
+│   │   ├── healthcare_event_log.csv                      (2,823 rows baseline raw dataset)
+│   │   └── healthcare_event_log_v2.csv                   (3,030 rows enhanced dataset with loop-backs)
+│   └── processed/
+│       ├── cleaned_healthcare_event_log_v2.csv           (3,030 rows local cleaned log)
+│       ├── standardized_event_log_v2.csv                 (3,030 rows local standardized log)
+│       ├── bigquery_standardized_event_log.csv           (3,030 rows extracted from BigQuery v2)
+│       └── bigquery_standardized_event_log_baseline.csv  (2,823 rows extracted from BigQuery baseline)
+├── database/
+│   ├── careflow.db                                       (Local SQLite database - excluded from Git via .gitignore)
+│   └── schema.sql                                        (Relational schema definitions)
+├── dbt/
+│   ├── dbt_project.yml                                   (dbt project configuration)
+│   ├── profiles.yml.example                              (Sanitized profile configuration template)
+│   └── models/
+│       ├── sources.yml                                   (BigQuery source definitions: baseline & v2)
+│       ├── staging/
+│       │   ├── schema.yml                                (Staging constraint tests)
+│       │   ├── stg_healthcare_events.sql                 (Baseline staging view)
+│       │   └── stg_healthcare_events_v2.sql              (Enhanced staging view with event_id deduplication)
+│       └── marts/
+│           ├── schema.yml                                (Mart constraint tests)
+│           ├── fct_standardized_event_log.sql            (Baseline standardized event log)
+│           ├── fct_standardized_event_log_v2.sql         (Enhanced standardized event log)
+│           ├── fct_pathway_transitions.sql               (Baseline pathway transitions)
+│           └── fct_pathway_transitions_v2.sql            (Enhanced pathway transitions)
+├── reports/
+│   ├── as_is_process_map.png                             (Local 9-edge As-Is process map PNG)
+│   ├── as_is_process_map.dot                             (Local 9-edge As-Is process map DOT)
+│   ├── as_is_process_map_bigquery.png                    (Cloud 9-edge enhanced process map PNG)
+│   ├── as_is_process_map_bigquery.dot                    (Cloud 9-edge enhanced process map DOT)
+│   ├── as_is_process_map_bigquery_baseline.png           (Cloud 6-edge baseline process map PNG)
+│   ├── as_is_process_map_bigquery_baseline.dot          (Cloud 6-edge baseline process map DOT)
+│   ├── dfg_transitions.csv                               (Local transition frequency table)
+│   ├── dfg_transitions_bigquery.csv                      (Cloud enhanced transition frequency table)
+│   ├── dfg_transitions_bigquery_baseline.csv             (Cloud baseline transition frequency table)
+│   ├── week2_process_analysis_summary.md                 (Local clinical pathway discovery report)
+│   ├── week2_bigquery_process_mining_summary.md          (Cloud enhanced process discovery report)
+│   ├── week2_bigquery_process_mining_baseline_summary.md (Cloud baseline process discovery report)
+│   ├── workflow_inefficiencies.csv                       (Workflow inefficiencies catalog)
+│   └── week1_week2_final_completion_report.md            (Definitive audit and verification report)
+├── sql/
+│   ├── queries/                                          (Analytical KPI queries 01 to 10)
+│   └── views/                                            (Reusable analytical views)
+├── src/
+│   ├── data_generator.py                                 (Baseline mock data generator)
+│   ├── data_generator_v2.py                              (Enhanced generator with loop-backs)
+│   ├── upload_to_bigquery.py                             (BigQuery raw table ingestion script)
+│   ├── clean_events_pipeline.py                          (Local staging & cleaning pipeline)
+│   ├── process_analysis.py                               (Statistical queue & bottleneck analysis)
+│   ├── process_discovery.py                              (Local PM4Py discovery engine)
+│   ├── process_discovery_bigquery.py                     (Cloud BigQuery -> dbt -> PM4Py engine)
+│   ├── workflow_inefficiencies.py                        (Workflow inefficiency calculations)
+│   ├── verify_week1.py                                   (Week 1 automated verification runner)
+│   └── verify_week2.py                                   (Week 2 automated verification runner)
+└── tests/                                                (65 automated Python unit tests)
+```

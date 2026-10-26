@@ -20,7 +20,28 @@ WITH source_data AS (
     FROM {{ source('careflow_raw', 'healthcare_event_log_v2_raw') }}
 ),
 
-deduplicated_and_sequenced AS (
+deduplicated_events AS (
+    SELECT
+        case_id,
+        patient_id,
+        event_id,
+        activity_name,
+        event_timestamp,
+        department,
+        status,
+        waiting_time_minutes
+
+    FROM source_data
+    WHERE case_id IS NOT NULL
+      AND activity_name IS NOT NULL
+      AND event_timestamp IS NOT NULL
+    QUALIFY ROW_NUMBER() OVER (
+        PARTITION BY event_id
+        ORDER BY event_timestamp ASC
+    ) = 1
+),
+
+sequenced_events AS (
     SELECT
         case_id,
         patient_id,
@@ -31,16 +52,13 @@ deduplicated_and_sequenced AS (
         status,
         waiting_time_minutes,
 
-        -- Process Mining Sequence Index (chronological ordering per case)
+        -- Deterministic Process Mining Sequence Index (chronological ordering per case with event_id tie-breaker)
         ROW_NUMBER() OVER (
             PARTITION BY case_id
-            ORDER BY event_timestamp ASC
+            ORDER BY event_timestamp ASC, event_id ASC
         ) AS activity_sequence
 
-    FROM source_data
-    WHERE case_id IS NOT NULL
-      AND activity_name IS NOT NULL
-      AND event_timestamp IS NOT NULL
+    FROM deduplicated_events
 )
 
-SELECT * FROM deduplicated_and_sequenced
+SELECT * FROM sequenced_events
