@@ -1,17 +1,27 @@
 digraph AsIsHealthcareProcess {
     rankdir=LR;
-    node [shape=box, style=filled, fillcolor="#E3F2FD", fontname="Helvetica", fontsize=10];
+    node [shape=box, style="rounded,filled", fillcolor="#FFFFFF", color="#0284C7", penwidth=2.0, fontname="Helvetica-Bold", fontsize=11];
     edge [fontname="Helvetica", fontsize=9];
 
-    START [shape=circle, fillcolor="#4CAF50", fontcolor=white, style=filled, label="START"];
-    END [shape=doublecircle, fillcolor="#F44336", fontcolor=white, style=filled, label="END"];
+    START [shape=circle, fillcolor="#16A34A", fontcolor=white, style=filled, color="#15803D", label="START"];
+    END [shape=doublecircle, fillcolor="#DC2626", fontcolor=white, style=filled, color="#991B1B", label="END"];
 
-    START -> "Registration" [label="500", color="#2E7D32", penwidth=2.0];
-    "Registration" -> "Triage" [label="500", color="#1565C0", penwidth=1.5];
-    "Treatment" -> "Discharge" [label="500", color="#1565C0", penwidth=1.5];
-    "Triage" -> "Consultation" [label="500", color="#1565C0", penwidth=1.5];
-    "Consultation" -> "Diagnostics" [label="323", color="#1565C0", penwidth=1.5];
-    "Diagnostics" -> "Treatment" [label="323", color="#1565C0", penwidth=1.5];
-    "Consultation" -> "Treatment" [label="177", color="#1565C0", penwidth=1.5];
-    "Discharge" -> END [label="500", color="#C62828", penwidth=2.0];
+    "Registration" [label="Registration\n(527 events)", shape=box, style="rounded,filled", fillcolor="#FFFFFF", color="#0284C7", penwidth=2.0, fontname="Helvetica-Bold", fontsize=11];
+    "Triage" [label="Triage\n(527 events)", shape=box, style="rounded,filled", fillcolor="#FFFFFF", color="#0284C7", penwidth=2.0, fontname="Helvetica-Bold", fontsize=11];
+    "Consultation" [label="Consultation\n(616 events)", shape=box, style="rounded,filled", fillcolor="#FFFFFF", color="#0284C7", penwidth=2.0, fontname="Helvetica-Bold", fontsize=11];
+    "Diagnostics" [label="Diagnostics\n(331 events)", shape=box, style="rounded,filled", fillcolor="#FFFFFF", color="#0284C7", penwidth=2.0, fontname="Helvetica-Bold", fontsize=11];
+    "Treatment" [label="Treatment\n(529 events)", shape=box, style="rounded,filled", fillcolor="#FFFFFF", color="#0284C7", penwidth=2.0, fontname="Helvetica-Bold", fontsize=11];
+    "Discharge" [label="Discharge\n(500 events)", shape=box, style="rounded,filled", fillcolor="#FFFFFF", color="#0284C7", penwidth=2.0, fontname="Helvetica-Bold", fontsize=11];
+
+    START -> "Registration" [label="500", color="#16A34A", penwidth=2.2];
+    "Registration" -> "Triage" [label="527", color="#1E3A8A", penwidth=1.8];
+    "Treatment" -> "Discharge" [label="500", color="#1E3A8A", penwidth=1.8];
+    "Triage" -> "Consultation" [label="500", color="#1E3A8A", penwidth=1.8];
+    "Consultation" -> "Treatment" [label="314", color="#1E3A8A", penwidth=1.8];
+    "Consultation" -> "Diagnostics" [label="302", color="#1E3A8A", penwidth=1.8];
+    "Diagnostics" -> "Treatment" [label="215", color="#1E3A8A", penwidth=1.8];
+    "Diagnostics" -> "Consultation" [label="Loop: 116", color="#DC2626", style=dashed, penwidth=2.0, fontcolor="#DC2626"];
+    "Treatment" -> "Diagnostics" [label="Loop: 29", color="#DC2626", style=dashed, penwidth=2.0, fontcolor="#DC2626"];
+    "Triage" -> "Registration" [label="Loop: 27", color="#DC2626", style=dashed, penwidth=2.0, fontcolor="#DC2626"];
+    "Discharge" -> END [label="500", color="#DC2626", penwidth=2.2];
 }

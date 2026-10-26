@@ -7,7 +7,26 @@ sources:
     schema: Careflow_raw
     tables:
       - name: healthcare_event_log_raw
-        description: "Raw patient journey event log table in Google BigQuery"
+        description: "Raw baseline patient journey event log table in Google BigQuery (2,823 events)"
+        columns:
+          - name: patient_id
+            description: "Fictional patient identifier (e.g. P0001)"
+          - name: visit_id
+            description: "Fictional patient visit / case identifier (e.g. V0001)"
+          - name: event_id
+            description: "Unique event identifier (e.g. EVT00001)"
+          - name: event_name
+            description: "Healthcare activity/stage name"
+          - name: event_timestamp
+            description: "Timestamp when the event occurred"
+          - name: department
+            description: "Hospital department where the activity took place"
+          - name: status
+            description: "Clinical status or final disposition"
+          - name: waiting_time_minutes
+            description: "Recorded queue waiting delay before service"
+      - name: healthcare_event_log_v2_raw
+        description: "Raw enhanced patient journey event log table with rework loop-backs in Google BigQuery (3,030 events)"
         columns:
           - name: patient_id
             description: "Fictional patient identifier (e.g. P0001)"

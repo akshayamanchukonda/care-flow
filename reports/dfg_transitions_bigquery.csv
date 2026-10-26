@@ -1,7 +1,10 @@
-source_activity,target_activity,transition_count,pct_of_source_activity,pct_of_total_transitions
-Registration,Triage,500,100.0,21.52
-Treatment,Discharge,500,100.0,21.52
-Triage,Consultation,500,100.0,21.52
-Consultation,Diagnostics,323,64.6,13.9
-Diagnostics,Treatment,323,100.0,13.9
-Consultation,Treatment,177,35.4,7.62
+source_activity,target_activity,transition_count,is_loopback_transition,pct_of_source_activity,pct_of_total_transitions
+Registration,Triage,527,0,100.0,20.83
+Treatment,Discharge,500,0,94.52,19.76
+Triage,Consultation,500,0,94.88,19.76
+Consultation,Treatment,314,0,50.97,12.41
+Consultation,Diagnostics,302,0,49.03,11.94
+Diagnostics,Treatment,215,0,64.95,8.5
+Diagnostics,Consultation,116,1,35.05,4.58
+Treatment,Diagnostics,29,1,5.48,1.15
+Triage,Registration,27,1,5.12,1.07

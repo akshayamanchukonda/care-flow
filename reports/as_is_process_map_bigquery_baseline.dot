@@ -1,0 +1,24 @@
+digraph AsIsHealthcareProcess {
+    rankdir=LR;
+    node [shape=box, style="rounded,filled", fillcolor="#FFFFFF", color="#0284C7", penwidth=2.0, fontname="Helvetica-Bold", fontsize=11];
+    edge [fontname="Helvetica", fontsize=9];
+
+    START [shape=circle, fillcolor="#16A34A", fontcolor=white, style=filled, color="#15803D", label="START"];
+    END [shape=doublecircle, fillcolor="#DC2626", fontcolor=white, style=filled, color="#991B1B", label="END"];
+
+    "Registration" [label="Registration\n(500 events)", shape=box, style="rounded,filled", fillcolor="#FFFFFF", color="#0284C7", penwidth=2.0, fontname="Helvetica-Bold", fontsize=11];
+    "Triage" [label="Triage\n(500 events)", shape=box, style="rounded,filled", fillcolor="#FFFFFF", color="#0284C7", penwidth=2.0, fontname="Helvetica-Bold", fontsize=11];
+    "Consultation" [label="Consultation\n(500 events)", shape=box, style="rounded,filled", fillcolor="#FFFFFF", color="#0284C7", penwidth=2.0, fontname="Helvetica-Bold", fontsize=11];
+    "Diagnostics" [label="Diagnostics\n(323 events)", shape=box, style="rounded,filled", fillcolor="#FFFFFF", color="#0284C7", penwidth=2.0, fontname="Helvetica-Bold", fontsize=11];
+    "Treatment" [label="Treatment\n(500 events)", shape=box, style="rounded,filled", fillcolor="#FFFFFF", color="#0284C7", penwidth=2.0, fontname="Helvetica-Bold", fontsize=11];
+    "Discharge" [label="Discharge\n(500 events)", shape=box, style="rounded,filled", fillcolor="#FFFFFF", color="#0284C7", penwidth=2.0, fontname="Helvetica-Bold", fontsize=11];
+
+    START -> "Registration" [label="500", color="#16A34A", penwidth=2.2];
+    "Registration" -> "Triage" [label="500", color="#1E3A8A", penwidth=1.8];
+    "Treatment" -> "Discharge" [label="500", color="#1E3A8A", penwidth=1.8];
+    "Triage" -> "Consultation" [label="500", color="#1E3A8A", penwidth=1.8];
+    "Consultation" -> "Diagnostics" [label="323", color="#1E3A8A", penwidth=1.8];
+    "Diagnostics" -> "Treatment" [label="323", color="#1E3A8A", penwidth=1.8];
+    "Consultation" -> "Treatment" [label="177", color="#1E3A8A", penwidth=1.8];
+    "Discharge" -> END [label="500", color="#DC2626", penwidth=2.2];
+}

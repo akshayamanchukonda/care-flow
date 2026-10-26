@@ -222,9 +222,10 @@ dbt run --project-dir dbt
 
 ### Cloud Deliverable Artifacts Produced
 * **Standardized Cloud Event Log:** `data/processed/bigquery_standardized_event_log.csv` (2,823 events extracted from BigQuery).
-* **Cloud DFG Transitions Metric:** `reports/dfg_transitions_bigquery.csv` (100% exact numerical parity with baseline).
+* **Cloud DFG Transitions Metric:** `reports/dfg_transitions_bigquery.csv` (100% exact numerical agreement across all 6 baseline pathway transition aggregates).
 * **Cloud As-Is Process Map:** `reports/as_is_process_map_bigquery.png` and `reports/as_is_process_map_bigquery.dot`.
 * **Cloud Process Discovery Report:** `reports/week2_bigquery_process_mining_summary.md`.
+* **Final Week 1 & Week 2 Completion Report:** `reports/week1_week2_final_completion_report.md`.
 
 ## Official Week 3 Deliverables: Pathway Transition Time Analysis (SQL & Python)
 

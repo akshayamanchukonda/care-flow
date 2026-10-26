@@ -45,3 +45,48 @@ models:
         description: "Chronological sequence number of the activity within the patient journey."
         tests:
           - not_null
+
+  - name: stg_healthcare_events_v2
+    description: >
+      Cleaned and standardized enhanced hospital event log table with rework loop-backs.
+      Normalized for process mining algorithms with case_id, activity_name,
+      and event_timestamp.
+    columns:
+      - name: case_id
+        description: "Primary case identifier representing an individual patient journey (visit_id)."
+        tests:
+          - not_null
+
+      - name: event_id
+        description: "Globally unique event identifier."
+        tests:
+          - not_null
+          - unique
+
+      - name: activity_name
+        description: "Standardized healthcare activity/stage name."
+        tests:
+          - not_null
+          - accepted_values:
+              values:
+                - 'Registration'
+                - 'Triage'
+                - 'Consultation'
+                - 'Diagnostics'
+                - 'Treatment'
+                - 'Discharge'
+
+      - name: event_timestamp
+        description: "Exact timestamp when the event occurred in UTC/local time."
+        tests:
+          - not_null
+
+      - name: waiting_time_minutes
+        description: "Queue delay before service commenced (must be non-negative)."
+        tests:
+          - not_null
+
+      - name: activity_sequence
+        description: "Chronological sequence number of the activity within the patient journey."
+        tests:
+          - not_null

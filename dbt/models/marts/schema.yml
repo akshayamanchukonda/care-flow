@@ -103,3 +103,107 @@ models:
         description: "Maximum elapsed transition duration in minutes."
         tests:
           - not_null
+
+  - name: fct_standardized_event_log_v2
+    description: >
+      Canonical process mining event log transformed from staged enhanced healthcare events.
+      Features standard process mining fields (case_id, activity_name, event_timestamp),
+      deterministic sequencing (activity_sequence), and operational loop-back detection (is_loopback).
+    columns:
+      - name: case_id
+        description: "Primary case identifier representing an individual patient journey."
+        tests:
+          - not_null
+
+      - name: activity_name
+        description: "Standardized healthcare activity/stage name."
+        tests:
+          - not_null
+          - accepted_values:
+              values:
+                - 'Registration'
+                - 'Triage'
+                - 'Consultation'
+                - 'Diagnostics'
+                - 'Treatment'
+                - 'Discharge'
+
+      - name: event_timestamp
+        description: "Exact timestamp when the event occurred in UTC/local time."
+        tests:
+          - not_null
+
+      - name: event_id
+        description: "Unique event identifier."
+        tests:
+          - not_null
+          - unique
+
+      - name: activity_sequence
+        description: "Sequential index of the activity within the patient journey."
+        tests:
+          - not_null
+
+      - name: is_loopback
+        description: "Indicator flag (0 or 1) indicating whether stage represents a rework loop."
+        tests:
+          - not_null
+          - accepted_values:
+              values: [0, 1]
+              quote: false
+
+      - name: waiting_time_minutes
+        description: "Queue wait delay before activity commenced."
+        tests:
+          - not_null
+
+  - name: fct_pathway_transitions_v2
+    description: >
+      Discovered clinical pathway transitions (Directly-Follows Graph)
+      between consecutive healthcare activities for the enhanced rework log,
+      including all 9 forward and backward loop-back transitions.
+    columns:
+      - name: from_activity
+        description: "Source clinical stage."
+        tests:
+          - not_null
+          - accepted_values:
+              values:
+                - 'Registration'
+                - 'Triage'
+                - 'Consultation'
+                - 'Diagnostics'
+                - 'Treatment'
+
+      - name: to_activity
+        description: "Target clinical stage."
+        tests:
+          - not_null
+          - accepted_values:
+              values:
+                - 'Registration'
+                - 'Triage'
+                - 'Consultation'
+                - 'Diagnostics'
+                - 'Treatment'
+                - 'Discharge'
+
+      - name: transition_count
+        description: "Total observed transitions between source and target stages."
+        tests:
+          - not_null
+
+      - name: avg_transition_time_minutes
+        description: "Average elapsed transition duration in minutes."
+        tests:
+          - not_null
+
+      - name: min_transition_time_minutes
+        description: "Minimum elapsed transition duration in minutes."
+        tests:
+          - not_null
+
+      - name: max_transition_time_minutes
+        description: "Maximum elapsed transition duration in minutes."
+        tests:
+          - not_null
