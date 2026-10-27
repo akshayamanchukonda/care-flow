@@ -1,0 +1,7 @@
+from_activity,to_activity,transition_count,pct_of_total_transitions,avg_transition_time_minutes,median_transition_time_minutes,std_dev_minutes,min_transition_time_minutes,max_transition_time_minutes,p25_minutes,p75_minutes,iqr_minutes
+Treatment,Discharge,500,21.52,70.8,72.0,21.41,29.0,126.0,52.0,89.0,37.0
+Triage,Consultation,500,21.52,46.87,43.0,21.48,15.0,134.0,31.0,58.0,27.0
+Registration,Triage,500,21.52,18.99,18.0,7.78,6.0,55.0,14.0,23.0,9.0
+Consultation,Diagnostics,323,13.9,59.89,56.0,19.23,23.0,125.0,46.0,71.0,25.0
+Diagnostics,Treatment,323,13.9,59.4,59.0,16.39,28.0,116.0,48.0,69.5,21.5
+Consultation,Treatment,177,7.62,50.12,48.0,14.41,23.0,98.0,40.0,59.0,19.0
