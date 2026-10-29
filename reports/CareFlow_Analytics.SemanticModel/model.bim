@@ -1,0 +1,462 @@
+{
+  "name": "CareFlow_Analytics",
+  "compatibilityLevel": 1550,
+  "model": {
+    "culture": "en-US",
+    "dataAccessOptions": {
+      "legacyRedirects": true,
+      "returnErrorValuesAsNull": true
+    },
+    "defaultPowerBIDataSourceVersion": "powerBI_V3",
+    "relationships": [
+      {
+        "name": "rel_events_visits",
+        "fromTable": "Events",
+        "fromColumn": "case_id",
+        "toTable": "Visits_Conformance",
+        "toColumn": "case_id",
+        "crossFilteringBehavior": "bothDirections"
+      },
+      {
+        "name": "rel_transitions_visits",
+        "fromTable": "Transitions",
+        "fromColumn": "case_id",
+        "toTable": "Visits_Conformance",
+        "toColumn": "case_id",
+        "crossFilteringBehavior": "bothDirections"
+      }
+    ],
+    "tables": [
+      {
+        "name": "Events",
+        "columns": [
+          {
+            "name": "event_id",
+            "dataType": "string",
+            "sourceColumn": "event_id"
+          },
+          {
+            "name": "case_id",
+            "dataType": "string",
+            "sourceColumn": "case_id"
+          },
+          {
+            "name": "patient_id",
+            "dataType": "string",
+            "sourceColumn": "patient_id"
+          },
+          {
+            "name": "activity_name",
+            "dataType": "string",
+            "sourceColumn": "activity_name"
+          },
+          {
+            "name": "activity_sequence",
+            "dataType": "int64",
+            "sourceColumn": "activity_sequence"
+          },
+          {
+            "name": "event_timestamp",
+            "dataType": "dateTime",
+            "sourceColumn": "event_timestamp"
+          },
+          {
+            "name": "department",
+            "dataType": "string",
+            "sourceColumn": "department"
+          },
+          {
+            "name": "status",
+            "dataType": "string",
+            "sourceColumn": "status"
+          },
+          {
+            "name": "waiting_time_minutes",
+            "dataType": "int64",
+            "sourceColumn": "waiting_time_minutes"
+          },
+          {
+            "name": "is_loopback",
+            "dataType": "int64",
+            "sourceColumn": "is_loopback"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Events_Partition",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = Csv.Document(File.Contents(\"C:/Users/Dell/OneDrive/Documents/GitHub/care-flow/data/processed/cleaned_healthcare_event_log_v2.csv\"), [Delimiter=\",\", Columns=10, Encoding=65001, QuoteStyle=QuoteStyle.None]),",
+                "    #\"Promoted Headers\" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),",
+                "    #\"Changed Type\" = Table.TransformColumnTypes(#\"Promoted Headers\", {{ \"case_id\", type text }, { \"activity_name\", type text }, { \"event_timestamp\", type datetime }, { \"activity_sequence\", Int64.Type }, { \"is_loopback\", Int64.Type }, { \"patient_id\", type text }, { \"event_id\", type text }, { \"department\", type text }, { \"status\", type text }, { \"waiting_time_minutes\", Int64.Type }})",
+                "in",
+                "    #\"Changed Type\" "
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Transitions",
+        "columns": [
+          {
+            "name": "case_id",
+            "dataType": "string",
+            "sourceColumn": "case_id"
+          },
+          {
+            "name": "patient_id",
+            "dataType": "string",
+            "sourceColumn": "patient_id"
+          },
+          {
+            "name": "from_activity",
+            "dataType": "string",
+            "sourceColumn": "from_activity"
+          },
+          {
+            "name": "to_activity",
+            "dataType": "string",
+            "sourceColumn": "to_activity"
+          },
+          {
+            "name": "pathway",
+            "dataType": "string",
+            "sourceColumn": "pathway"
+          },
+          {
+            "name": "from_timestamp",
+            "dataType": "dateTime",
+            "sourceColumn": "from_timestamp"
+          },
+          {
+            "name": "to_timestamp",
+            "dataType": "dateTime",
+            "sourceColumn": "to_timestamp"
+          },
+          {
+            "name": "transition_time_minutes",
+            "dataType": "double",
+            "sourceColumn": "transition_time_minutes"
+          },
+          {
+            "name": "is_rework_loop",
+            "dataType": "int64",
+            "sourceColumn": "is_rework_loop"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Transitions_Partition",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = Csv.Document(File.Contents(\"C:/Users/Dell/OneDrive/Documents/GitHub/care-flow/data/processed/visit_transitions_detail.csv\"), [Delimiter=\",\", Columns=8, Encoding=65001, QuoteStyle=QuoteStyle.None]),",
+                "    #\"Promoted Headers\" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),",
+                "    #\"Changed Type\" = Table.TransformColumnTypes(#\"Promoted Headers\", {{ \"case_id\", type text }, { \"patient_id\", type text }, { \"from_activity\", type text }, { \"to_activity\", type text }, { \"from_timestamp\", type datetime }, { \"to_timestamp\", type datetime }, { \"transition_time_minutes\", type number }, { \"is_rework_loop\", Int64.Type }}),",
+                "    #\"Added Pathway Column\" = Table.AddColumn(#\"Changed Type\", \"pathway\", each [from_activity] & \" -> \" & [to_activity], type text)",
+                "in",
+                "    #\"Added Pathway Column\" "
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Visits_Conformance",
+        "columns": [
+          {
+            "name": "case_id",
+            "dataType": "string",
+            "sourceColumn": "case_id"
+          },
+          {
+            "name": "patient_id",
+            "dataType": "string",
+            "sourceColumn": "patient_id"
+          },
+          {
+            "name": "department",
+            "dataType": "string",
+            "sourceColumn": "department"
+          },
+          {
+            "name": "is_conformant",
+            "dataType": "int64",
+            "sourceColumn": "is_conformant"
+          },
+          {
+            "name": "conformance_status",
+            "dataType": "string",
+            "sourceColumn": "conformance_status"
+          },
+          {
+            "name": "conformance_category",
+            "dataType": "string",
+            "sourceColumn": "conformance_category"
+          },
+          {
+            "name": "trace_pattern",
+            "dataType": "string",
+            "sourceColumn": "trace_pattern"
+          },
+          {
+            "name": "event_count",
+            "dataType": "int64",
+            "sourceColumn": "event_count"
+          },
+          {
+            "name": "transition_count",
+            "dataType": "int64",
+            "sourceColumn": "transition_count"
+          },
+          {
+            "name": "rework_loop_count",
+            "dataType": "int64",
+            "sourceColumn": "rework_loop_count"
+          },
+          {
+            "name": "primary_deviation",
+            "dataType": "string",
+            "sourceColumn": "primary_deviation"
+          },
+          {
+            "name": "trace_fitness",
+            "dataType": "double",
+            "sourceColumn": "trace_fitness"
+          },
+          {
+            "name": "journey_duration_minutes",
+            "dataType": "double",
+            "sourceColumn": "journey_duration_minutes"
+          },
+          {
+            "name": "total_waiting_minutes",
+            "dataType": "int64",
+            "sourceColumn": "total_waiting_minutes"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Visits_Conformance_Partition",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = Csv.Document(File.Contents(\"C:/Users/Dell/OneDrive/Documents/GitHub/care-flow/data/processed/conformance_analysis.csv\"), [Delimiter=\",\", Columns=14, Encoding=65001, QuoteStyle=QuoteStyle.None]),",
+                "    #\"Promoted Headers\" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),",
+                "    #\"Changed Type\" = Table.TransformColumnTypes(#\"Promoted Headers\", {{ \"case_id\", type text }, { \"patient_id\", type text }, { \"department\", type text }, { \"is_conformant\", Int64.Type }, { \"conformance_status\", type text }, { \"conformance_category\", type text }, { \"trace_pattern\", type text }, { \"event_count\", Int64.Type }, { \"transition_count\", Int64.Type }, { \"rework_loop_count\", Int64.Type }, { \"primary_deviation\", type text }, { \"trace_fitness\", type number }, { \"journey_duration_minutes\", type number }, { \"total_waiting_minutes\", Int64.Type }})",
+                "in",
+                "    #\"Changed Type\" "
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Pathway_Benchmark",
+        "columns": [
+          {
+            "name": "from_activity",
+            "dataType": "string",
+            "sourceColumn": "from_activity"
+          },
+          {
+            "name": "to_activity",
+            "dataType": "string",
+            "sourceColumn": "to_activity"
+          },
+          {
+            "name": "pathway",
+            "dataType": "string",
+            "sourceColumn": "pathway"
+          },
+          {
+            "name": "transition_count",
+            "dataType": "int64",
+            "sourceColumn": "transition_count"
+          },
+          {
+            "name": "is_loopback",
+            "dataType": "int64",
+            "sourceColumn": "is_loopback"
+          },
+          {
+            "name": "pct_of_total_transitions",
+            "dataType": "double",
+            "sourceColumn": "pct_of_total_transitions"
+          },
+          {
+            "name": "avg_transition_time_minutes",
+            "dataType": "double",
+            "sourceColumn": "avg_transition_time_minutes"
+          },
+          {
+            "name": "median_transition_time_minutes",
+            "dataType": "double",
+            "sourceColumn": "median_transition_time_minutes"
+          },
+          {
+            "name": "std_dev_minutes",
+            "dataType": "double",
+            "sourceColumn": "std_dev_minutes"
+          },
+          {
+            "name": "min_transition_time_minutes",
+            "dataType": "double",
+            "sourceColumn": "min_transition_time_minutes"
+          },
+          {
+            "name": "max_transition_time_minutes",
+            "dataType": "double",
+            "sourceColumn": "max_transition_time_minutes"
+          },
+          {
+            "name": "iqr_minutes",
+            "dataType": "double",
+            "sourceColumn": "iqr_minutes"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Pathway_Benchmark_Partition",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = Csv.Document(File.Contents(\"C:/Users/Dell/OneDrive/Documents/GitHub/care-flow/data/processed/transition_time_analysis.csv\"), [Delimiter=\",\", Columns=13, Encoding=65001, QuoteStyle=QuoteStyle.None]),",
+                "    #\"Promoted Headers\" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),",
+                "    #\"Changed Type\" = Table.TransformColumnTypes(#\"Promoted Headers\", {{ \"from_activity\", type text }, { \"to_activity\", type text }, { \"transition_count\", Int64.Type }, { \"is_loopback\", Int64.Type }, { \"pct_of_total_transitions\", type number }, { \"avg_transition_time_minutes\", type number }, { \"median_transition_time_minutes\", type number }, { \"std_dev_minutes\", type number }, { \"min_transition_time_minutes\", type number }, { \"max_transition_time_minutes\", type number }, { \"p25_minutes\", type number }, { \"p75_minutes\", type number }, { \"iqr_minutes\", type number }}),",
+                "    #\"Added Pathway\" = Table.AddColumn(#\"Changed Type\", \"pathway\", each [from_activity] & \" -> \" & [to_activity], type text)",
+                "in",
+                "    #\"Added Pathway\" "
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "CareFlow_Measures",
+        "partitions": [
+          {
+            "name": "CareFlow_Measures_Partition",
+            "mode": "import",
+            "source": {
+              "type": "calculated",
+              "expression": "ROW(\"Measure_Group\", \"CareFlow Operational Metrics\")"
+            }
+          }
+        ],
+        "columns": [
+          {
+            "name": "Measure_Group",
+            "dataType": "string",
+            "isDataTypeInferred": true,
+            "isHidden": true,
+            "sourceColumn": "[Measure_Group]",
+            "type": "calculatedTableColumn"
+          }
+        ],
+        "measures": [
+          {
+            "name": "Total Events",
+            "expression": "COUNTROWS('Events')",
+            "formatString": "#,0"
+          },
+          {
+            "name": "Total Visits",
+            "expression": "DISTINCTCOUNT('Events'[case_id])",
+            "formatString": "#,0"
+          },
+          {
+            "name": "Unique Patients",
+            "expression": "DISTINCTCOUNT('Events'[patient_id])",
+            "formatString": "#,0"
+          },
+          {
+            "name": "Conformant Visits",
+            "expression": "CALCULATE(COUNTROWS('Visits_Conformance'), 'Visits_Conformance'[is_conformant] = 1)",
+            "formatString": "#,0"
+          },
+          {
+            "name": "Conformance Rate",
+            "expression": "DIVIDE([Conformant Visits], [Total Visits], 0)",
+            "formatString": "0.0%"
+          },
+          {
+            "name": "Rework Visits",
+            "expression": "CALCULATE(COUNTROWS('Visits_Conformance'), 'Visits_Conformance'[is_conformant] = 0)",
+            "formatString": "#,0"
+          },
+          {
+            "name": "Rework Rate",
+            "expression": "DIVIDE([Rework Visits], [Total Visits], 0)",
+            "formatString": "0.0%"
+          },
+          {
+            "name": "Total Transitions",
+            "expression": "COUNTROWS('Transitions')",
+            "formatString": "#,0"
+          },
+          {
+            "name": "Rework Loop Transitions",
+            "expression": "CALCULATE(COUNTROWS('Transitions'), 'Transitions'[is_rework_loop] = 1)",
+            "formatString": "#,0"
+          },
+          {
+            "name": "Rework Transition Pct",
+            "expression": "DIVIDE([Rework Loop Transitions], [Total Transitions], 0)",
+            "formatString": "0.0%"
+          },
+          {
+            "name": "Avg Journey Duration Mins",
+            "expression": "AVERAGE('Visits_Conformance'[journey_duration_minutes])",
+            "formatString": "0.0"
+          },
+          {
+            "name": "Median Journey Duration Mins",
+            "expression": "MEDIAN('Visits_Conformance'[journey_duration_minutes])",
+            "formatString": "0.0"
+          },
+          {
+            "name": "Avg Waiting Time Mins",
+            "expression": "AVERAGE('Events'[waiting_time_minutes])",
+            "formatString": "0.0"
+          },
+          {
+            "name": "Median Waiting Time Mins",
+            "expression": "MEDIAN('Events'[waiting_time_minutes])",
+            "formatString": "0.0"
+          },
+          {
+            "name": "Conformant Avg Journey Mins",
+            "expression": "CALCULATE(AVERAGE('Visits_Conformance'[journey_duration_minutes]), 'Visits_Conformance'[is_conformant] = 1)",
+            "formatString": "0.0"
+          },
+          {
+            "name": "Non-Conformant Avg Journey Mins",
+            "expression": "CALCULATE(AVERAGE('Visits_Conformance'[journey_duration_minutes]), 'Visits_Conformance'[is_conformant] = 0)",
+            "formatString": "0.0"
+          },
+          {
+            "name": "Delay Penalty Mins",
+            "expression": "[Non-Conformant Avg Journey Mins] - [Conformant Avg Journey Mins]",
+            "formatString": "+0.0;-0.0;0.0"
+          },
+          {
+            "name": "Delay Penalty Pct",
+            "expression": "DIVIDE([Delay Penalty Mins], [Conformant Avg Journey Mins], 0)",
+            "formatString": "0.0%"
+          }
+        ]
+      }
+    ]
+  }
+}

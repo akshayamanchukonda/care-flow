@@ -1,0 +1,220 @@
+{
+  "config": "{\"version\": \"5.59\", \"themeCollection\": {\"baseTheme\": {\"name\": \"CareFlowTheme\", \"version\": \"5.59\", \"type\": 2}}, \"activeSectionIndex\": 0, \"defaultDrillFilterOtherVisuals\": true}",
+  "layoutOptimization": 0,
+  "theme": {
+    "name": "CareFlow Healthcare Theme",
+    "dataColors": [
+      "#1E3A8A",
+      "#0D9488",
+      "#0284C7",
+      "#D97706",
+      "#E11D48",
+      "#059669",
+      "#64748B",
+      "#7C3AED"
+    ],
+    "background": "#FFFFFF",
+    "foreground": "#0F172A",
+    "tableAccent": "#1E3A8A"
+  },
+  "sections": [
+    {
+      "name": "Section_Overview",
+      "displayName": "Executive Overview & KPIs",
+      "filters": "[]",
+      "ordinal": 0,
+      "visualContainers": [
+        {
+          "x": 20.0,
+          "y": 25.0,
+          "z": 0.0,
+          "width": 230.0,
+          "height": 115.0,
+          "config": "{\"name\": \"card_total_events\", \"layouts\": [{\"id\": 0, \"position\": {\"x\": 20.0, \"y\": 25.0, \"z\": 0.0, \"width\": 230.0, \"height\": 115.0, \"tabOrder\": 1}}], \"singleVisual\": {\"visualType\": \"card\", \"projections\": {\"Values\": [{\"queryRef\": \"CareFlow_Measures.Total Events\"}]}, \"prototypeQuery\": {\"Version\": 2, \"From\": [{\"Name\": \"t\", \"Entity\": \"CareFlow_Measures\", \"Type\": 0}], \"Select\": [{\"Measure\": {\"Expression\": {\"SourceRef\": {\"Source\": \"t\"}}, \"Property\": \"Total Events\"}, \"Name\": \"CareFlow_Measures.Total Events\", \"NativeReferenceName\": \"Total Events\"}]}, \"objects\": {\"title\": [{\"properties\": {\"show\": {\"expr\": {\"Literal\": {\"Value\": \"true\"}}}, \"text\": {\"expr\": {\"Literal\": {\"Value\": \"'Total Clinical Events'\"}}}}}]}}}"
+        },
+        {
+          "x": 270.0,
+          "y": 25.0,
+          "z": 0.0,
+          "width": 230.0,
+          "height": 115.0,
+          "config": "{\"name\": \"card_total_visits\", \"layouts\": [{\"id\": 0, \"position\": {\"x\": 270.0, \"y\": 25.0, \"z\": 0.0, \"width\": 230.0, \"height\": 115.0, \"tabOrder\": 2}}], \"singleVisual\": {\"visualType\": \"card\", \"projections\": {\"Values\": [{\"queryRef\": \"CareFlow_Measures.Total Visits\"}]}, \"prototypeQuery\": {\"Version\": 2, \"From\": [{\"Name\": \"t\", \"Entity\": \"CareFlow_Measures\", \"Type\": 0}], \"Select\": [{\"Measure\": {\"Expression\": {\"SourceRef\": {\"Source\": \"t\"}}, \"Property\": \"Total Visits\"}, \"Name\": \"CareFlow_Measures.Total Visits\", \"NativeReferenceName\": \"Total Visits\"}]}, \"objects\": {\"title\": [{\"properties\": {\"show\": {\"expr\": {\"Literal\": {\"Value\": \"true\"}}}, \"text\": {\"expr\": {\"Literal\": {\"Value\": \"'Total Patient Visits'\"}}}}}]}}}"
+        },
+        {
+          "x": 520.0,
+          "y": 25.0,
+          "z": 0.0,
+          "width": 230.0,
+          "height": 115.0,
+          "config": "{\"name\": \"card_unique_patients\", \"layouts\": [{\"id\": 0, \"position\": {\"x\": 520.0, \"y\": 25.0, \"z\": 0.0, \"width\": 230.0, \"height\": 115.0, \"tabOrder\": 3}}], \"singleVisual\": {\"visualType\": \"card\", \"projections\": {\"Values\": [{\"queryRef\": \"CareFlow_Measures.Unique Patients\"}]}, \"prototypeQuery\": {\"Version\": 2, \"From\": [{\"Name\": \"t\", \"Entity\": \"CareFlow_Measures\", \"Type\": 0}], \"Select\": [{\"Measure\": {\"Expression\": {\"SourceRef\": {\"Source\": \"t\"}}, \"Property\": \"Unique Patients\"}, \"Name\": \"CareFlow_Measures.Unique Patients\", \"NativeReferenceName\": \"Unique Patients\"}]}, \"objects\": {\"title\": [{\"properties\": {\"show\": {\"expr\": {\"Literal\": {\"Value\": \"true\"}}}, \"text\": {\"expr\": {\"Literal\": {\"Value\": \"'Unique Patients'\"}}}}}]}}}"
+        },
+        {
+          "x": 770.0,
+          "y": 25.0,
+          "z": 0.0,
+          "width": 230.0,
+          "height": 115.0,
+          "config": "{\"name\": \"card_conformance_rate\", \"layouts\": [{\"id\": 0, \"position\": {\"x\": 770.0, \"y\": 25.0, \"z\": 0.0, \"width\": 230.0, \"height\": 115.0, \"tabOrder\": 4}}], \"singleVisual\": {\"visualType\": \"card\", \"projections\": {\"Values\": [{\"queryRef\": \"CareFlow_Measures.Conformance Rate\"}]}, \"prototypeQuery\": {\"Version\": 2, \"From\": [{\"Name\": \"t\", \"Entity\": \"CareFlow_Measures\", \"Type\": 0}], \"Select\": [{\"Measure\": {\"Expression\": {\"SourceRef\": {\"Source\": \"t\"}}, \"Property\": \"Conformance Rate\"}, \"Name\": \"CareFlow_Measures.Conformance Rate\", \"NativeReferenceName\": \"Conformance Rate\"}]}, \"objects\": {\"title\": [{\"properties\": {\"show\": {\"expr\": {\"Literal\": {\"Value\": \"true\"}}}, \"text\": {\"expr\": {\"Literal\": {\"Value\": \"'Pathway Conformance Rate'\"}}}}}]}}}"
+        },
+        {
+          "x": 1020.0,
+          "y": 25.0,
+          "z": 0.0,
+          "width": 240.0,
+          "height": 115.0,
+          "config": "{\"name\": \"card_rework_rate\", \"layouts\": [{\"id\": 0, \"position\": {\"x\": 1020.0, \"y\": 25.0, \"z\": 0.0, \"width\": 240.0, \"height\": 115.0, \"tabOrder\": 5}}], \"singleVisual\": {\"visualType\": \"card\", \"projections\": {\"Values\": [{\"queryRef\": \"CareFlow_Measures.Rework Rate\"}]}, \"prototypeQuery\": {\"Version\": 2, \"From\": [{\"Name\": \"t\", \"Entity\": \"CareFlow_Measures\", \"Type\": 0}], \"Select\": [{\"Measure\": {\"Expression\": {\"SourceRef\": {\"Source\": \"t\"}}, \"Property\": \"Rework Rate\"}, \"Name\": \"CareFlow_Measures.Rework Rate\", \"NativeReferenceName\": \"Rework Rate\"}]}, \"objects\": {\"title\": [{\"properties\": {\"show\": {\"expr\": {\"Literal\": {\"Value\": \"true\"}}}, \"text\": {\"expr\": {\"Literal\": {\"Value\": \"'Operational Rework Rate'\"}}}}}]}}}"
+        },
+        {
+          "x": 20.0,
+          "y": 160.0,
+          "z": 0.0,
+          "width": 480.0,
+          "height": 530.0,
+          "config": "{\"name\": \"chart_activity_volumes\", \"layouts\": [{\"id\": 0, \"position\": {\"x\": 20.0, \"y\": 160.0, \"z\": 0.0, \"width\": 480.0, \"height\": 530.0, \"tabOrder\": 6}}], \"singleVisual\": {\"visualType\": \"clusteredBarChart\", \"projections\": {\"Category\": [{\"queryRef\": \"Events.activity_name\", \"active\": true}], \"Y\": [{\"queryRef\": \"CareFlow_Measures.Total Events\"}]}, \"prototypeQuery\": {\"Version\": 2, \"From\": [{\"Name\": \"c\", \"Entity\": \"Events\", \"Type\": 0}, {\"Name\": \"m\", \"Entity\": \"CareFlow_Measures\", \"Type\": 0}], \"Select\": [{\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"c\"}}, \"Property\": \"activity_name\"}, \"Name\": \"Events.activity_name\", \"NativeReferenceName\": \"activity_name\"}, {\"Measure\": {\"Expression\": {\"SourceRef\": {\"Source\": \"m\"}}, \"Property\": \"Total Events\"}, \"Name\": \"CareFlow_Measures.Total Events\", \"NativeReferenceName\": \"Total Events\"}]}, \"objects\": {\"title\": [{\"properties\": {\"show\": {\"expr\": {\"Literal\": {\"Value\": \"true\"}}}, \"text\": {\"expr\": {\"Literal\": {\"Value\": \"'Clinical Activity Volumes (Total Events)'\"}}}}}]}}}"
+        },
+        {
+          "x": 520.0,
+          "y": 160.0,
+          "z": 0.0,
+          "width": 480.0,
+          "height": 530.0,
+          "config": "{\"name\": \"chart_conformance_cohorts\", \"layouts\": [{\"id\": 0, \"position\": {\"x\": 520.0, \"y\": 160.0, \"z\": 0.0, \"width\": 480.0, \"height\": 530.0, \"tabOrder\": 7}}], \"singleVisual\": {\"visualType\": \"clusteredColumnChart\", \"projections\": {\"Category\": [{\"queryRef\": \"Visits_Conformance.conformance_category\", \"active\": true}], \"Y\": [{\"queryRef\": \"CareFlow_Measures.Total Visits\"}]}, \"prototypeQuery\": {\"Version\": 2, \"From\": [{\"Name\": \"c\", \"Entity\": \"Visits_Conformance\", \"Type\": 0}, {\"Name\": \"m\", \"Entity\": \"CareFlow_Measures\", \"Type\": 0}], \"Select\": [{\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"c\"}}, \"Property\": \"conformance_category\"}, \"Name\": \"Visits_Conformance.conformance_category\", \"NativeReferenceName\": \"conformance_category\"}, {\"Measure\": {\"Expression\": {\"SourceRef\": {\"Source\": \"m\"}}, \"Property\": \"Total Visits\"}, \"Name\": \"CareFlow_Measures.Total Visits\", \"NativeReferenceName\": \"Total Visits\"}]}, \"objects\": {\"title\": [{\"properties\": {\"show\": {\"expr\": {\"Literal\": {\"Value\": \"true\"}}}, \"text\": {\"expr\": {\"Literal\": {\"Value\": \"'Patient Volume by Conformance Cohort'\"}}}}}]}}}"
+        },
+        {
+          "x": 1020.0,
+          "y": 160.0,
+          "z": 0.0,
+          "width": 240.0,
+          "height": 255.0,
+          "config": "{\"name\": \"slicer_department\", \"layouts\": [{\"id\": 0, \"position\": {\"x\": 1020.0, \"y\": 160.0, \"z\": 0.0, \"width\": 240.0, \"height\": 255.0, \"tabOrder\": 8}}], \"singleVisual\": {\"visualType\": \"slicer\", \"projections\": {\"Values\": [{\"queryRef\": \"Events.department\", \"active\": true}]}, \"prototypeQuery\": {\"Version\": 2, \"From\": [{\"Name\": \"s\", \"Entity\": \"Events\", \"Type\": 0}], \"Select\": [{\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"department\"}, \"Name\": \"Events.department\", \"NativeReferenceName\": \"department\"}]}, \"objects\": {\"title\": [{\"properties\": {\"show\": {\"expr\": {\"Literal\": {\"Value\": \"true\"}}}, \"text\": {\"expr\": {\"Literal\": {\"Value\": \"'Filter: Department'\"}}}}}]}}}"
+        },
+        {
+          "x": 1020.0,
+          "y": 435.0,
+          "z": 0.0,
+          "width": 240.0,
+          "height": 255.0,
+          "config": "{\"name\": \"slicer_conformance_status\", \"layouts\": [{\"id\": 0, \"position\": {\"x\": 1020.0, \"y\": 435.0, \"z\": 0.0, \"width\": 240.0, \"height\": 255.0, \"tabOrder\": 9}}], \"singleVisual\": {\"visualType\": \"slicer\", \"projections\": {\"Values\": [{\"queryRef\": \"Visits_Conformance.conformance_status\", \"active\": true}]}, \"prototypeQuery\": {\"Version\": 2, \"From\": [{\"Name\": \"s\", \"Entity\": \"Visits_Conformance\", \"Type\": 0}], \"Select\": [{\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"conformance_status\"}, \"Name\": \"Visits_Conformance.conformance_status\", \"NativeReferenceName\": \"conformance_status\"}]}, \"objects\": {\"title\": [{\"properties\": {\"show\": {\"expr\": {\"Literal\": {\"Value\": \"true\"}}}, \"text\": {\"expr\": {\"Literal\": {\"Value\": \"'Filter: Conformance Status'\"}}}}}]}}}"
+        }
+      ],
+      "width": 1280.0,
+      "height": 720.0
+    },
+    {
+      "name": "Section_Transitions",
+      "displayName": "Process Flow & Rework Analysis",
+      "filters": "[]",
+      "ordinal": 1,
+      "visualContainers": [
+        {
+          "x": 20.0,
+          "y": 25.0,
+          "z": 0.0,
+          "width": 290.0,
+          "height": 115.0,
+          "config": "{\"name\": \"card_total_transitions\", \"layouts\": [{\"id\": 0, \"position\": {\"x\": 20.0, \"y\": 25.0, \"z\": 0.0, \"width\": 290.0, \"height\": 115.0, \"tabOrder\": 1}}], \"singleVisual\": {\"visualType\": \"card\", \"projections\": {\"Values\": [{\"queryRef\": \"CareFlow_Measures.Total Transitions\"}]}, \"prototypeQuery\": {\"Version\": 2, \"From\": [{\"Name\": \"t\", \"Entity\": \"CareFlow_Measures\", \"Type\": 0}], \"Select\": [{\"Measure\": {\"Expression\": {\"SourceRef\": {\"Source\": \"t\"}}, \"Property\": \"Total Transitions\"}, \"Name\": \"CareFlow_Measures.Total Transitions\", \"NativeReferenceName\": \"Total Transitions\"}]}, \"objects\": {\"title\": [{\"properties\": {\"show\": {\"expr\": {\"Literal\": {\"Value\": \"true\"}}}, \"text\": {\"expr\": {\"Literal\": {\"Value\": \"'Total Handover Transitions'\"}}}}}]}}}"
+        },
+        {
+          "x": 330.0,
+          "y": 25.0,
+          "z": 0.0,
+          "width": 290.0,
+          "height": 115.0,
+          "config": "{\"name\": \"card_rework_transitions\", \"layouts\": [{\"id\": 0, \"position\": {\"x\": 330.0, \"y\": 25.0, \"z\": 0.0, \"width\": 290.0, \"height\": 115.0, \"tabOrder\": 2}}], \"singleVisual\": {\"visualType\": \"card\", \"projections\": {\"Values\": [{\"queryRef\": \"CareFlow_Measures.Rework Loop Transitions\"}]}, \"prototypeQuery\": {\"Version\": 2, \"From\": [{\"Name\": \"t\", \"Entity\": \"CareFlow_Measures\", \"Type\": 0}], \"Select\": [{\"Measure\": {\"Expression\": {\"SourceRef\": {\"Source\": \"t\"}}, \"Property\": \"Rework Loop Transitions\"}, \"Name\": \"CareFlow_Measures.Rework Loop Transitions\", \"NativeReferenceName\": \"Rework Loop Transitions\"}]}, \"objects\": {\"title\": [{\"properties\": {\"show\": {\"expr\": {\"Literal\": {\"Value\": \"true\"}}}, \"text\": {\"expr\": {\"Literal\": {\"Value\": \"'Rework Loop Transitions'\"}}}}}]}}}"
+        },
+        {
+          "x": 640.0,
+          "y": 25.0,
+          "z": 0.0,
+          "width": 290.0,
+          "height": 115.0,
+          "config": "{\"name\": \"card_rework_share\", \"layouts\": [{\"id\": 0, \"position\": {\"x\": 640.0, \"y\": 25.0, \"z\": 0.0, \"width\": 290.0, \"height\": 115.0, \"tabOrder\": 3}}], \"singleVisual\": {\"visualType\": \"card\", \"projections\": {\"Values\": [{\"queryRef\": \"CareFlow_Measures.Rework Transition Pct\"}]}, \"prototypeQuery\": {\"Version\": 2, \"From\": [{\"Name\": \"t\", \"Entity\": \"CareFlow_Measures\", \"Type\": 0}], \"Select\": [{\"Measure\": {\"Expression\": {\"SourceRef\": {\"Source\": \"t\"}}, \"Property\": \"Rework Transition Pct\"}, \"Name\": \"CareFlow_Measures.Rework Transition Pct\", \"NativeReferenceName\": \"Rework Transition Pct\"}]}, \"objects\": {\"title\": [{\"properties\": {\"show\": {\"expr\": {\"Literal\": {\"Value\": \"true\"}}}, \"text\": {\"expr\": {\"Literal\": {\"Value\": \"'Rework Transition Share'\"}}}}}]}}}"
+        },
+        {
+          "x": 950.0,
+          "y": 25.0,
+          "z": 0.0,
+          "width": 310.0,
+          "height": 115.0,
+          "config": "{\"name\": \"card_median_journey\", \"layouts\": [{\"id\": 0, \"position\": {\"x\": 950.0, \"y\": 25.0, \"z\": 0.0, \"width\": 310.0, \"height\": 115.0, \"tabOrder\": 4}}], \"singleVisual\": {\"visualType\": \"card\", \"projections\": {\"Values\": [{\"queryRef\": \"CareFlow_Measures.Median Journey Duration Mins\"}]}, \"prototypeQuery\": {\"Version\": 2, \"From\": [{\"Name\": \"t\", \"Entity\": \"CareFlow_Measures\", \"Type\": 0}], \"Select\": [{\"Measure\": {\"Expression\": {\"SourceRef\": {\"Source\": \"t\"}}, \"Property\": \"Median Journey Duration Mins\"}, \"Name\": \"CareFlow_Measures.Median Journey Duration Mins\", \"NativeReferenceName\": \"Median Journey Duration Mins\"}]}, \"objects\": {\"title\": [{\"properties\": {\"show\": {\"expr\": {\"Literal\": {\"Value\": \"true\"}}}, \"text\": {\"expr\": {\"Literal\": {\"Value\": \"'Median Journey Duration (min)'\"}}}}}]}}}"
+        },
+        {
+          "x": 20.0,
+          "y": 160.0,
+          "z": 0.0,
+          "width": 650.0,
+          "height": 530.0,
+          "config": "{\"name\": \"table_transition_latency\", \"layouts\": [{\"id\": 0, \"position\": {\"x\": 20.0, \"y\": 160.0, \"z\": 0.0, \"width\": 650.0, \"height\": 530.0, \"tabOrder\": 5}}], \"singleVisual\": {\"visualType\": \"tableEx\", \"projections\": {\"Values\": [{\"queryRef\": \"Pathway_Benchmark.pathway\"}, {\"queryRef\": \"Pathway_Benchmark.transition_count\"}, {\"queryRef\": \"Pathway_Benchmark.median_transition_time_minutes\"}, {\"queryRef\": \"Pathway_Benchmark.avg_transition_time_minutes\"}, {\"queryRef\": \"Pathway_Benchmark.iqr_minutes\"}]}, \"prototypeQuery\": {\"Version\": 2, \"From\": [{\"Name\": \"t0\", \"Entity\": \"Pathway_Benchmark\", \"Type\": 0}], \"Select\": [{\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"t0\"}}, \"Property\": \"pathway\"}, \"Name\": \"Pathway_Benchmark.pathway\", \"NativeReferenceName\": \"pathway\"}, {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"t0\"}}, \"Property\": \"transition_count\"}, \"Name\": \"Pathway_Benchmark.transition_count\", \"NativeReferenceName\": \"transition_count\"}, {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"t0\"}}, \"Property\": \"median_transition_time_minutes\"}, \"Name\": \"Pathway_Benchmark.median_transition_time_minutes\", \"NativeReferenceName\": \"median_transition_time_minutes\"}, {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"t0\"}}, \"Property\": \"avg_transition_time_minutes\"}, \"Name\": \"Pathway_Benchmark.avg_transition_time_minutes\", \"NativeReferenceName\": \"avg_transition_time_minutes\"}, {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"t0\"}}, \"Property\": \"iqr_minutes\"}, \"Name\": \"Pathway_Benchmark.iqr_minutes\", \"NativeReferenceName\": \"iqr_minutes\"}]}, \"objects\": {\"title\": [{\"properties\": {\"show\": {\"expr\": {\"Literal\": {\"Value\": \"true\"}}}, \"text\": {\"expr\": {\"Literal\": {\"Value\": \"'Pathway Transition Latency Benchmark (min)'\"}}}}}]}}}"
+        },
+        {
+          "x": 690.0,
+          "y": 160.0,
+          "z": 0.0,
+          "width": 570.0,
+          "height": 530.0,
+          "config": "{\"name\": \"chart_rework_loops\", \"layouts\": [{\"id\": 0, \"position\": {\"x\": 690.0, \"y\": 160.0, \"z\": 0.0, \"width\": 570.0, \"height\": 530.0, \"tabOrder\": 6}}], \"singleVisual\": {\"visualType\": \"clusteredBarChart\", \"projections\": {\"Category\": [{\"queryRef\": \"Transitions.pathway\", \"active\": true}], \"Y\": [{\"queryRef\": \"CareFlow_Measures.Rework Loop Transitions\"}]}, \"prototypeQuery\": {\"Version\": 2, \"From\": [{\"Name\": \"c\", \"Entity\": \"Transitions\", \"Type\": 0}, {\"Name\": \"m\", \"Entity\": \"CareFlow_Measures\", \"Type\": 0}], \"Select\": [{\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"c\"}}, \"Property\": \"pathway\"}, \"Name\": \"Transitions.pathway\", \"NativeReferenceName\": \"pathway\"}, {\"Measure\": {\"Expression\": {\"SourceRef\": {\"Source\": \"m\"}}, \"Property\": \"Rework Loop Transitions\"}, \"Name\": \"CareFlow_Measures.Rework Loop Transitions\", \"NativeReferenceName\": \"Rework Loop Transitions\"}]}, \"objects\": {\"title\": [{\"properties\": {\"show\": {\"expr\": {\"Literal\": {\"Value\": \"true\"}}}, \"text\": {\"expr\": {\"Literal\": {\"Value\": \"'Rework Loop Pathway Volume'\"}}}}}]}}}"
+        }
+      ],
+      "width": 1280.0,
+      "height": 720.0
+    },
+    {
+      "name": "Section_Bottlenecks",
+      "displayName": "Bottlenecks & Waiting Times",
+      "filters": "[]",
+      "ordinal": 2,
+      "visualContainers": [
+        {
+          "x": 20.0,
+          "y": 25.0,
+          "z": 0.0,
+          "width": 290.0,
+          "height": 115.0,
+          "config": "{\"name\": \"card_avg_wait\", \"layouts\": [{\"id\": 0, \"position\": {\"x\": 20.0, \"y\": 25.0, \"z\": 0.0, \"width\": 290.0, \"height\": 115.0, \"tabOrder\": 1}}], \"singleVisual\": {\"visualType\": \"card\", \"projections\": {\"Values\": [{\"queryRef\": \"CareFlow_Measures.Avg Waiting Time Mins\"}]}, \"prototypeQuery\": {\"Version\": 2, \"From\": [{\"Name\": \"t\", \"Entity\": \"CareFlow_Measures\", \"Type\": 0}], \"Select\": [{\"Measure\": {\"Expression\": {\"SourceRef\": {\"Source\": \"t\"}}, \"Property\": \"Avg Waiting Time Mins\"}, \"Name\": \"CareFlow_Measures.Avg Waiting Time Mins\", \"NativeReferenceName\": \"Avg Waiting Time Mins\"}]}, \"objects\": {\"title\": [{\"properties\": {\"show\": {\"expr\": {\"Literal\": {\"Value\": \"true\"}}}, \"text\": {\"expr\": {\"Literal\": {\"Value\": \"'Average Queue Wait (min)'\"}}}}}]}}}"
+        },
+        {
+          "x": 330.0,
+          "y": 25.0,
+          "z": 0.0,
+          "width": 290.0,
+          "height": 115.0,
+          "config": "{\"name\": \"card_median_wait\", \"layouts\": [{\"id\": 0, \"position\": {\"x\": 330.0, \"y\": 25.0, \"z\": 0.0, \"width\": 290.0, \"height\": 115.0, \"tabOrder\": 2}}], \"singleVisual\": {\"visualType\": \"card\", \"projections\": {\"Values\": [{\"queryRef\": \"CareFlow_Measures.Median Waiting Time Mins\"}]}, \"prototypeQuery\": {\"Version\": 2, \"From\": [{\"Name\": \"t\", \"Entity\": \"CareFlow_Measures\", \"Type\": 0}], \"Select\": [{\"Measure\": {\"Expression\": {\"SourceRef\": {\"Source\": \"t\"}}, \"Property\": \"Median Waiting Time Mins\"}, \"Name\": \"CareFlow_Measures.Median Waiting Time Mins\", \"NativeReferenceName\": \"Median Waiting Time Mins\"}]}, \"objects\": {\"title\": [{\"properties\": {\"show\": {\"expr\": {\"Literal\": {\"Value\": \"true\"}}}, \"text\": {\"expr\": {\"Literal\": {\"Value\": \"'Median Queue Wait (min)'\"}}}}}]}}}"
+        },
+        {
+          "x": 640.0,
+          "y": 25.0,
+          "z": 0.0,
+          "width": 290.0,
+          "height": 115.0,
+          "config": "{\"name\": \"card_delay_penalty\", \"layouts\": [{\"id\": 0, \"position\": {\"x\": 640.0, \"y\": 25.0, \"z\": 0.0, \"width\": 290.0, \"height\": 115.0, \"tabOrder\": 3}}], \"singleVisual\": {\"visualType\": \"card\", \"projections\": {\"Values\": [{\"queryRef\": \"CareFlow_Measures.Delay Penalty Mins\"}]}, \"prototypeQuery\": {\"Version\": 2, \"From\": [{\"Name\": \"t\", \"Entity\": \"CareFlow_Measures\", \"Type\": 0}], \"Select\": [{\"Measure\": {\"Expression\": {\"SourceRef\": {\"Source\": \"t\"}}, \"Property\": \"Delay Penalty Mins\"}, \"Name\": \"CareFlow_Measures.Delay Penalty Mins\", \"NativeReferenceName\": \"Delay Penalty Mins\"}]}, \"objects\": {\"title\": [{\"properties\": {\"show\": {\"expr\": {\"Literal\": {\"Value\": \"true\"}}}, \"text\": {\"expr\": {\"Literal\": {\"Value\": \"'Non-Conformance Delay Penalty (min)'\"}}}}}]}}}"
+        },
+        {
+          "x": 950.0,
+          "y": 25.0,
+          "z": 0.0,
+          "width": 310.0,
+          "height": 115.0,
+          "config": "{\"name\": \"card_delay_penalty_pct\", \"layouts\": [{\"id\": 0, \"position\": {\"x\": 950.0, \"y\": 25.0, \"z\": 0.0, \"width\": 310.0, \"height\": 115.0, \"tabOrder\": 4}}], \"singleVisual\": {\"visualType\": \"card\", \"projections\": {\"Values\": [{\"queryRef\": \"CareFlow_Measures.Delay Penalty Pct\"}]}, \"prototypeQuery\": {\"Version\": 2, \"From\": [{\"Name\": \"t\", \"Entity\": \"CareFlow_Measures\", \"Type\": 0}], \"Select\": [{\"Measure\": {\"Expression\": {\"SourceRef\": {\"Source\": \"t\"}}, \"Property\": \"Delay Penalty Pct\"}, \"Name\": \"CareFlow_Measures.Delay Penalty Pct\", \"NativeReferenceName\": \"Delay Penalty Pct\"}]}, \"objects\": {\"title\": [{\"properties\": {\"show\": {\"expr\": {\"Literal\": {\"Value\": \"true\"}}}, \"text\": {\"expr\": {\"Literal\": {\"Value\": \"'Delay Penalty Percentage'\"}}}}}]}}}"
+        },
+        {
+          "x": 20.0,
+          "y": 160.0,
+          "z": 0.0,
+          "width": 600.0,
+          "height": 530.0,
+          "config": "{\"name\": \"chart_stage_wait\", \"layouts\": [{\"id\": 0, \"position\": {\"x\": 20.0, \"y\": 160.0, \"z\": 0.0, \"width\": 600.0, \"height\": 530.0, \"tabOrder\": 5}}], \"singleVisual\": {\"visualType\": \"clusteredColumnChart\", \"projections\": {\"Category\": [{\"queryRef\": \"Events.activity_name\", \"active\": true}], \"Y\": [{\"queryRef\": \"CareFlow_Measures.Avg Waiting Time Mins\"}]}, \"prototypeQuery\": {\"Version\": 2, \"From\": [{\"Name\": \"c\", \"Entity\": \"Events\", \"Type\": 0}, {\"Name\": \"m\", \"Entity\": \"CareFlow_Measures\", \"Type\": 0}], \"Select\": [{\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"c\"}}, \"Property\": \"activity_name\"}, \"Name\": \"Events.activity_name\", \"NativeReferenceName\": \"activity_name\"}, {\"Measure\": {\"Expression\": {\"SourceRef\": {\"Source\": \"m\"}}, \"Property\": \"Avg Waiting Time Mins\"}, \"Name\": \"CareFlow_Measures.Avg Waiting Time Mins\", \"NativeReferenceName\": \"Avg Waiting Time Mins\"}]}, \"objects\": {\"title\": [{\"properties\": {\"show\": {\"expr\": {\"Literal\": {\"Value\": \"true\"}}}, \"text\": {\"expr\": {\"Literal\": {\"Value\": \"'Queue Dwell Time by Clinical Stage (Avg min)'\"}}}}}]}}}"
+        },
+        {
+          "x": 640.0,
+          "y": 160.0,
+          "z": 0.0,
+          "width": 620.0,
+          "height": 530.0,
+          "config": "{\"name\": \"chart_cohort_los\", \"layouts\": [{\"id\": 0, \"position\": {\"x\": 640.0, \"y\": 160.0, \"z\": 0.0, \"width\": 620.0, \"height\": 530.0, \"tabOrder\": 6}}], \"singleVisual\": {\"visualType\": \"clusteredColumnChart\", \"projections\": {\"Category\": [{\"queryRef\": \"Visits_Conformance.conformance_category\", \"active\": true}], \"Y\": [{\"queryRef\": \"CareFlow_Measures.Avg Journey Duration Mins\"}]}, \"prototypeQuery\": {\"Version\": 2, \"From\": [{\"Name\": \"c\", \"Entity\": \"Visits_Conformance\", \"Type\": 0}, {\"Name\": \"m\", \"Entity\": \"CareFlow_Measures\", \"Type\": 0}], \"Select\": [{\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"c\"}}, \"Property\": \"conformance_category\"}, \"Name\": \"Visits_Conformance.conformance_category\", \"NativeReferenceName\": \"conformance_category\"}, {\"Measure\": {\"Expression\": {\"SourceRef\": {\"Source\": \"m\"}}, \"Property\": \"Avg Journey Duration Mins\"}, \"Name\": \"CareFlow_Measures.Avg Journey Duration Mins\", \"NativeReferenceName\": \"Avg Journey Duration Mins\"}]}, \"objects\": {\"title\": [{\"properties\": {\"show\": {\"expr\": {\"Literal\": {\"Value\": \"true\"}}}, \"text\": {\"expr\": {\"Literal\": {\"Value\": \"'Hospital Length of Stay by Conformance Cohort (Avg min)'\"}}}}}]}}}"
+        }
+      ],
+      "width": 1280.0,
+      "height": 720.0
+    }
+  ]
+}
