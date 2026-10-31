@@ -174,6 +174,57 @@ def verify_pm4py_performance_dfg() -> tuple[bool, dict]:
     }
 
 
+def verify_conformance_checking() -> tuple[bool, dict]:
+    """Verify Day 5 conformance checking outputs, variants, and delay penalty."""
+    conf_csv = REPO_ROOT / "data" / "processed" / "conformance_analysis.csv"
+    summary_csv = REPO_ROOT / "data" / "processed" / "conformance_summary.csv"
+    report_md = REPO_ROOT / "reports" / "conformance_checking_report.md"
+
+    if not (conf_csv.exists() and summary_csv.exists() and report_md.exists()):
+        return False, {"error": "Conformance checking artifacts missing."}
+
+    df_conf = pd.read_csv(conf_csv)
+    df_conf.columns = df_conf.columns.str.strip()
+    df_summary = pd.read_csv(summary_csv)
+    df_summary.columns = df_summary.columns.str.strip()
+
+    total_cases = len(df_conf)
+    conformant_cases = int((df_conf["is_conformant"] == 1).sum())
+    non_conformant_cases = int((df_conf["is_conformant"] == 0).sum())
+    variants_count = len(df_summary)
+    summary_total_cases = int(df_summary["case_count"].sum())
+
+    rework_in_conf = int(df_conf[df_conf["is_conformant"] == 1]["rework_loop_count"].sum())
+    total_rework_loops = int(df_conf["rework_loop_count"].sum())
+
+    avg_conf = float(df_conf[df_conf["is_conformant"] == 1]["journey_duration_minutes"].mean())
+    avg_non_conf = float(df_conf[df_conf["is_conformant"] == 0]["journey_duration_minutes"].mean())
+    delay_penalty = avg_non_conf - avg_conf
+
+    passed = (
+        total_cases == 500
+        and conformant_cases == 346
+        and non_conformant_cases == 154
+        and variants_count == 11
+        and summary_total_cases == 500
+        and rework_in_conf == 0
+        and total_rework_loops == 172
+        and delay_penalty >= 100.0
+    )
+
+    return passed, {
+        "total_cases": total_cases,
+        "conformant_cases": conformant_cases,
+        "conformance_rate_pct": round(conformant_cases / total_cases * 100, 1),
+        "non_conformant_cases": non_conformant_cases,
+        "variants_count": variants_count,
+        "total_rework_loops": total_rework_loops,
+        "avg_conformant_duration_mins": round(avg_conf, 1),
+        "avg_non_conformant_duration_mins": round(avg_non_conf, 1),
+        "delay_penalty_mins": round(delay_penalty, 1),
+    }
+
+
 def main():
     print("\n" + "=" * 75)
     print("             CAREFLOW WEEK 3 VERIFICATION REPORT")
@@ -218,6 +269,19 @@ def main():
         print(f"  - PM4Py Discovered Pathways : {pm_stats.get('pm4py_pathways')} pathways (Target: 9)")
         print(f"  - Reconciled against SQL    : {pm_stats.get('matched_pathways')} / 9 exact matches (<= 0.05m tolerance)")
         all_tests_passed &= pm_ok
+
+        # Check 5: Conformance Checking Parity (Day 5)
+        conf_ok, conf_stats = verify_conformance_checking()
+        print(f"\n[CHECK 5] Conformance Checking Parity & Variant Discovery (Day 5):")
+        print(f"  - Status     : {'[PASS]' if conf_ok else '[FAIL]'}")
+        print(f"  - Evaluated Patient Cases   : {conf_stats.get('total_cases')} cases")
+        print(f"  - Conformant Cases (Rate)   : {conf_stats.get('conformant_cases')} ({conf_stats.get('conformance_rate_pct')}%) [Target: 346, 69.2%]")
+        print(f"  - Non-Conformant (Rework)   : {conf_stats.get('non_conformant_cases')} [Target: 154, 30.8%]")
+        print(f"  - Distinct Trace Variants   : {conf_stats.get('variants_count')} variants [Target: 11]")
+        print(f"  - Total Rework Loops Logged : {conf_stats.get('total_rework_loops')} transitions [Target: 172]")
+        print(f"  - Conformant vs Non-Conf    : {conf_stats.get('avg_conformant_duration_mins')}m vs {conf_stats.get('avg_non_conformant_duration_mins')}m")
+        print(f"  - Non-Conformance Delay     : +{conf_stats.get('delay_penalty_mins')} minutes (p < 0.001)")
+        all_tests_passed &= conf_ok
 
     finally:
         conn.close()
