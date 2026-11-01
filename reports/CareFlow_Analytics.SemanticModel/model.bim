@@ -1,16 +1,15 @@
 {
   "name": "CareFlow_Analytics",
-  "compatibilityLevel": 1550,
+  "compatibilityLevel": 1606,
   "model": {
     "culture": "en-US",
     "dataAccessOptions": {
       "legacyRedirects": true,
-      "returnErrorValuesAsNull": true
+      "fastCombine": false
     },
-    "defaultPowerBIDataSourceVersion": "powerBI_V3",
     "relationships": [
       {
-        "name": "rel_events_visits",
+        "name": "Events_Visits_Rel",
         "fromTable": "Events",
         "fromColumn": "case_id",
         "toTable": "Visits_Conformance",
@@ -18,7 +17,7 @@
         "crossFilteringBehavior": "bothDirections"
       },
       {
-        "name": "rel_transitions_visits",
+        "name": "Transitions_Visits_Rel",
         "fromTable": "Transitions",
         "fromColumn": "case_id",
         "toTable": "Visits_Conformance",
@@ -343,7 +342,93 @@
         ]
       },
       {
+        "name": "Variants_Summary",
+        "columns": [
+          {
+            "name": "variant_id",
+            "dataType": "string",
+            "sourceColumn": "variant_id"
+          },
+          {
+            "name": "trace_pattern",
+            "dataType": "string",
+            "sourceColumn": "trace_pattern"
+          },
+          {
+            "name": "is_conformant",
+            "dataType": "int64",
+            "sourceColumn": "is_conformant"
+          },
+          {
+            "name": "conformance_category",
+            "dataType": "string",
+            "sourceColumn": "conformance_category"
+          },
+          {
+            "name": "case_count",
+            "dataType": "int64",
+            "sourceColumn": "case_count"
+          },
+          {
+            "name": "pct_of_total_cases",
+            "dataType": "double",
+            "sourceColumn": "pct_of_total_cases"
+          },
+          {
+            "name": "rework_loops_per_case",
+            "dataType": "int64",
+            "sourceColumn": "rework_loops_per_case"
+          },
+          {
+            "name": "primary_deviation",
+            "dataType": "string",
+            "sourceColumn": "primary_deviation"
+          },
+          {
+            "name": "avg_journey_minutes",
+            "dataType": "double",
+            "sourceColumn": "avg_journey_minutes"
+          },
+          {
+            "name": "median_journey_minutes",
+            "dataType": "double",
+            "sourceColumn": "median_journey_minutes"
+          },
+          {
+            "name": "avg_waiting_minutes",
+            "dataType": "double",
+            "sourceColumn": "avg_waiting_minutes"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Variants_Summary_Partition",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = Csv.Document(File.Contents(\"C:/Users/Dell/OneDrive/Documents/GitHub/care-flow/data/processed/conformance_summary.csv\"), [Delimiter=\",\", Columns=11, Encoding=65001, QuoteStyle=QuoteStyle.None]),",
+                "    #\"Promoted Headers\" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),",
+                "    #\"Changed Type\" = Table.TransformColumnTypes(#\"Promoted Headers\", {{ \"variant_id\", type text }, { \"trace_pattern\", type text }, { \"is_conformant\", Int64.Type }, { \"conformance_category\", type text }, { \"case_count\", Int64.Type }, { \"pct_of_total_cases\", type number }, { \"rework_loops_per_case\", Int64.Type }, { \"primary_deviation\", type text }, { \"avg_journey_minutes\", type number }, { \"median_journey_minutes\", type number }, { \"avg_waiting_minutes\", type number }})",
+                "in",
+                "    #\"Changed Type\" "
+              ]
+            }
+          }
+        ]
+      },
+      {
         "name": "CareFlow_Measures",
+        "columns": [
+          {
+            "name": "Measure_Group",
+            "dataType": "string",
+            "type": "calculatedTableColumn",
+            "sourceColumn": "[Value]",
+            "isHidden": true
+          }
+        ],
         "partitions": [
           {
             "name": "CareFlow_Measures_Partition",
@@ -352,16 +437,6 @@
               "type": "calculated",
               "expression": "ROW(\"Measure_Group\", \"CareFlow Operational Metrics\")"
             }
-          }
-        ],
-        "columns": [
-          {
-            "name": "Measure_Group",
-            "dataType": "string",
-            "isDataTypeInferred": true,
-            "isHidden": true,
-            "sourceColumn": "[Measure_Group]",
-            "type": "calculatedTableColumn"
           }
         ],
         "measures": [
@@ -453,6 +528,36 @@
           {
             "name": "Delay Penalty Pct",
             "expression": "DIVIDE([Delay Penalty Mins], [Conformant Avg Journey Mins], 0)",
+            "formatString": "0.0%"
+          },
+          {
+            "name": "Avg Length of Stay Hours",
+            "expression": "DIVIDE([Avg Journey Duration Mins], 60, 0)",
+            "formatString": "0.00"
+          },
+          {
+            "name": "Median Length of Stay Hours",
+            "expression": "DIVIDE([Median Journey Duration Mins], 60, 0)",
+            "formatString": "0.00"
+          },
+          {
+            "name": "Conformant ALOS Hours",
+            "expression": "DIVIDE([Conformant Avg Journey Mins], 60, 0)",
+            "formatString": "0.00"
+          },
+          {
+            "name": "Non-Conformant ALOS Hours",
+            "expression": "DIVIDE([Non-Conformant Avg Journey Mins], 60, 0)",
+            "formatString": "0.00"
+          },
+          {
+            "name": "Total Loopback Events",
+            "expression": "CALCULATE(COUNTROWS('Events'), 'Events'[is_loopback] = 1)",
+            "formatString": "#,0"
+          },
+          {
+            "name": "Loopback Event Rate",
+            "expression": "DIVIDE([Total Loopback Events], [Total Events], 0)",
             "formatString": "0.0%"
           }
         ]

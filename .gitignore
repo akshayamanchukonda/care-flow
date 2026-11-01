@@ -37,3 +37,23 @@ dbt/dbt_packages/
 dbt/logs/
 target/
 logs/
+
+# Backup and snapshot archives (preserved on local disk)
+*.bak
+scratch/
+reports/backup_*/
+reports/safety_backup_*/
+reports/archived_*/
+reports/pre_restoration_*/
+reports/preserved_*/
+reports/CareFlow_Analytics_tonight_backup*
+reports/*_BACKUP.md
+reports/cleanup_manifest.json
+
+# Power BI Analysis Services cache
+*.abf
+**/.pbi/cache.abf
+
+# Power BI Analysis Services cache
+*.abf
+**/.pbi/cache.abf

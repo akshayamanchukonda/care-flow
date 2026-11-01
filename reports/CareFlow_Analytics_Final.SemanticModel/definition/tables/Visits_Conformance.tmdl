@@ -1,0 +1,83 @@
+table Visits_Conformance
+	lineageTag: 9db65678-3f76-419a-a604-fd18d466a7c2
+
+	column case_id
+		dataType: string
+		lineageTag: a59644e1-3de6-4398-8007-6735ba8f8eeb
+		sourceColumn: case_id
+
+	column patient_id
+		dataType: string
+		lineageTag: 5d3d8cbc-cf5e-4624-bdd6-8632198a4069
+		sourceColumn: patient_id
+
+	column department
+		dataType: string
+		lineageTag: f3bb89a0-f74e-4268-8d72-f85fb363018d
+		sourceColumn: department
+
+	column is_conformant
+		dataType: int64
+		lineageTag: 88854fc1-79b9-47ce-82aa-99bca717cc2f
+		sourceColumn: is_conformant
+
+	column conformance_status
+		dataType: string
+		lineageTag: f21b6e07-5aa4-4817-a130-aa8c8b4130b7
+		sourceColumn: conformance_status
+
+	column conformance_category
+		dataType: string
+		lineageTag: 590d3b51-f5ba-4cab-9df9-ca2e62573d99
+		sourceColumn: conformance_category
+
+	column trace_pattern
+		dataType: string
+		lineageTag: 1236f078-c1e0-41a8-9880-884e67edf69b
+		sourceColumn: trace_pattern
+
+	column event_count
+		dataType: int64
+		lineageTag: 0ded75c0-ac90-4476-8343-57c8d917a201
+		sourceColumn: event_count
+
+	column transition_count
+		dataType: int64
+		lineageTag: 30b58425-b25e-4389-bd96-8848cc757f1b
+		sourceColumn: transition_count
+
+	column rework_loop_count
+		dataType: int64
+		lineageTag: 77098e09-ab8d-4160-80f7-3fe3822a02c6
+		sourceColumn: rework_loop_count
+
+	column primary_deviation
+		dataType: string
+		lineageTag: 76cd794a-299d-462f-a6de-5c87f5e353e2
+		sourceColumn: primary_deviation
+
+	column trace_fitness
+		dataType: double
+		lineageTag: d2906a33-ef46-4eab-a6ac-c3dfe9c6fb7a
+		sourceColumn: trace_fitness
+
+	column journey_duration_minutes
+		dataType: double
+		lineageTag: 1a89436a-740c-43f9-806a-c183c698bd7e
+		sourceColumn: journey_duration_minutes
+
+	column total_waiting_minutes
+		dataType: int64
+		lineageTag: 3d1f2462-36b0-41f8-b52a-4bc9662e7cf2
+		sourceColumn: total_waiting_minutes
+
+	partition Visits_Conformance_Partition = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:/Users/Dell/OneDrive/Documents/GitHub/care-flow/data/processed/conformance_analysis.csv"), [Delimiter=",", Columns=14, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers", {{ "case_id", type text }, { "patient_id", type text }, { "department", type text }, { "is_conformant", Int64.Type }, { "conformance_status", type text }, { "conformance_category", type text }, { "trace_pattern", type text }, { "event_count", Int64.Type }, { "transition_count", Int64.Type }, { "rework_loop_count", Int64.Type }, { "primary_deviation", type text }, { "trace_fitness", type number }, { "journey_duration_minutes", type number }, { "total_waiting_minutes", Int64.Type }})
+				in
+				    #"Changed Type"
+

@@ -1,0 +1,52 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "desc_p1_cohorts",
+  "position": {
+    "x": 16,
+    "y": 148,
+    "z": 140,
+    "height": 40,
+    "width": 440,
+    "tabOrder": 140
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Patient Journey Cohort Distribution",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Bold",
+                      "fontSize": "10pt",
+                      "fontWeight": "bold",
+                      "color": "#1E3A8A"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "left"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Ideal paths (35.0%), Permitted diagnostics (34.2%), and Rework loopbacks (30.8%)",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "7.5pt",
+                      "color": "#475569"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "left"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,25 @@
+relationship rel_events_visits
+	crossFilteringBehavior: bothDirections
+	fromColumn: Events.case_id
+	toColumn: Visits_Conformance.case_id
+
+relationship rel_transitions_visits
+	crossFilteringBehavior: bothDirections
+	fromColumn: Transitions.case_id
+	toColumn: Visits_Conformance.case_id
+
+relationship 85369408-2b08-4c23-bd7c-64bf1e70d7e4
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Events.event_timestamp
+	toColumn: LocalDateTable_bb456e7c-b9ef-44b3-9c62-2b733da0c4a0.Date
+
+relationship 4e28cc6f-dd61-4058-b649-99b4f869affd
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Transitions.from_timestamp
+	toColumn: LocalDateTable_94222314-39d8-43a1-94e6-21e7993e6fe5.Date
+
+relationship b48a2b50-213c-439f-baba-ca01602954df
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Transitions.to_timestamp
+	toColumn: LocalDateTable_1bafce75-784a-4880-b6e1-5bbfa83168da.Date
+

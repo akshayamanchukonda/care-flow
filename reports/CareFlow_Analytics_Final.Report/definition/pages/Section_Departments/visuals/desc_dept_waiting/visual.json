@@ -1,0 +1,52 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "desc_dept_waiting",
+  "position": {
+    "x": 478,
+    "y": 148,
+    "z": 120,
+    "height": 40,
+    "width": 450,
+    "tabOrder": 120
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Average Waiting Delay by Department",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Bold",
+                      "fontSize": "10pt",
+                      "fontWeight": "bold",
+                      "color": "#1E3A8A"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "left"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Outpatient Clinic (26.6m) and Pediatrics (25.1m) exhibit peak queue dwell",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "7.5pt",
+                      "color": "#475569"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "left"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

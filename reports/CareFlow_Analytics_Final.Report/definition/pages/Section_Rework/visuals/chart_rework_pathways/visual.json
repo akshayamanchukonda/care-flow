@@ -1,0 +1,56 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "chart_rework_pathways",
+  "position": {
+    "x": 398,
+    "y": 190,
+    "z": 150,
+    "height": 514,
+    "width": 460,
+    "tabOrder": 150
+  },
+  "visual": {
+    "visualType": "clusteredBarChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Transitions"
+                    }
+                  },
+                  "Property": "pathway"
+                }
+              },
+              "queryRef": "Transitions.pathway",
+              "nativeQueryRef": "pathway",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "CareFlow_Measures"
+                    }
+                  },
+                  "Property": "Rework Loop Transitions"
+                }
+              },
+              "queryRef": "CareFlow_Measures.Rework Loop Transitions",
+              "nativeQueryRef": "Rework Loop Transitions"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

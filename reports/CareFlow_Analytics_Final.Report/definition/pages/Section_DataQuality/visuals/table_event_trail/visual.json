@@ -1,0 +1,107 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "table_event_trail",
+  "position": {
+    "x": 648,
+    "y": 190,
+    "z": 130,
+    "height": 514,
+    "width": 616,
+    "tabOrder": 130
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Events"
+                    }
+                  },
+                  "Property": "case_id"
+                }
+              },
+              "queryRef": "Events.case_id",
+              "nativeQueryRef": "case_id"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Events"
+                    }
+                  },
+                  "Property": "activity_sequence"
+                }
+              },
+              "queryRef": "Events.activity_sequence",
+              "nativeQueryRef": "activity_sequence"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Events"
+                    }
+                  },
+                  "Property": "activity_name"
+                }
+              },
+              "queryRef": "Events.activity_name",
+              "nativeQueryRef": "activity_name"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Events"
+                    }
+                  },
+                  "Property": "department"
+                }
+              },
+              "queryRef": "Events.department",
+              "nativeQueryRef": "department"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Events"
+                    }
+                  },
+                  "Property": "waiting_time_minutes"
+                }
+              },
+              "queryRef": "Events.waiting_time_minutes",
+              "nativeQueryRef": "waiting_time_minutes"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Events"
+                    }
+                  },
+                  "Property": "is_loopback"
+                }
+              },
+              "queryRef": "Events.is_loopback",
+              "nativeQueryRef": "is_loopback"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "slicer_conformance_status",
+  "position": {
+    "x": 990,
+    "y": 464,
+    "z": 210,
+    "height": 240,
+    "width": 274,
+    "tabOrder": 210
+  },
+  "visual": {
+    "visualType": "slicer",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Visits_Conformance"
+                    }
+                  },
+                  "Property": "conformance_status"
+                }
+              },
+              "queryRef": "Visits_Conformance.conformance_status",
+              "nativeQueryRef": "conformance_status",
+              "active": true
+            }
+          ]
+        }
+      }
+    }
+  }
+}

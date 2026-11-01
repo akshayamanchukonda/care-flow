@@ -1,0 +1,52 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "desc_cohort_los",
+  "position": {
+    "x": 503,
+    "y": 148,
+    "z": 140,
+    "height": 40,
+    "width": 475,
+    "tabOrder": 140
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Journey Duration by Conformance Cohort",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Bold",
+                      "fontSize": "10pt",
+                      "fontWeight": "bold",
+                      "color": "#1E3A8A"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "left"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Clean Standard journeys (220.1 mins / 3.7h) vs Rework journeys (328.5 mins / 5.5h)",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "7.5pt",
+                      "color": "#475569"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "left"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "CareFlowTheme",
+  "dataColors": [
+    "#1E3A8A",
+    "#0D9488",
+    "#0284C7",
+    "#D97706",
+    "#E11D48",
+    "#10B981",
+    "#6366F1",
+    "#F59E0B"
+  ],
+  "background": "#FFFFFF",
+  "foreground": "#1E293B",
+  "tableAccent": "#1E3A8A"
+}

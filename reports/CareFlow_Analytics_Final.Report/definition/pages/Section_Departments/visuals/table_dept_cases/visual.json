@@ -1,0 +1,65 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "table_dept_cases",
+  "position": {
+    "x": 940,
+    "y": 460,
+    "z": 170,
+    "height": 244,
+    "width": 324,
+    "tabOrder": 170
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Visits_Conformance"
+                    }
+                  },
+                  "Property": "department"
+                }
+              },
+              "queryRef": "Visits_Conformance.department",
+              "nativeQueryRef": "department"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Visits_Conformance"
+                    }
+                  },
+                  "Property": "conformance_status"
+                }
+              },
+              "queryRef": "Visits_Conformance.conformance_status",
+              "nativeQueryRef": "conformance_status"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Visits_Conformance"
+                    }
+                  },
+                  "Property": "journey_duration_minutes"
+                }
+              },
+              "queryRef": "Visits_Conformance.journey_duration_minutes",
+              "nativeQueryRef": "journey_duration_minutes"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

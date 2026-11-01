@@ -1,0 +1,98 @@
+table Events
+	lineageTag: c2aab3df-24ba-455c-9e7e-651894190061
+
+	column event_id
+		dataType: string
+		lineageTag: 76fcc0dc-29b9-4a27-82d6-f1e6e77fec1f
+		summarizeBy: none
+		sourceColumn: event_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column case_id
+		dataType: string
+		lineageTag: cec6fcb8-89aa-4972-8b41-e67774bf2330
+		summarizeBy: none
+		sourceColumn: case_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column patient_id
+		dataType: string
+		lineageTag: 0ef8789e-c986-4cdb-bf2f-52fe24e2b92d
+		summarizeBy: none
+		sourceColumn: patient_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column activity_name
+		dataType: string
+		lineageTag: ab8628df-a3da-4899-aacd-1eb00bb87b73
+		summarizeBy: none
+		sourceColumn: activity_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column activity_sequence
+		dataType: int64
+		lineageTag: 7aaddff3-dbc3-4239-a996-2a5287a2aa5e
+		summarizeBy: sum
+		sourceColumn: activity_sequence
+
+		annotation SummarizationSetBy = Automatic
+
+	column event_timestamp
+		dataType: dateTime
+		lineageTag: ded423c3-2c58-4a3a-a872-6b2c6030fc3a
+		summarizeBy: none
+		sourceColumn: event_timestamp
+
+		variation Variation
+			isDefault
+			relationship: 85369408-2b08-4c23-bd7c-64bf1e70d7e4
+			defaultHierarchy: LocalDateTable_bb456e7c-b9ef-44b3-9c62-2b733da0c4a0.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column department
+		dataType: string
+		lineageTag: 826a7407-2481-48df-9a96-20a37875a844
+		summarizeBy: none
+		sourceColumn: department
+
+		annotation SummarizationSetBy = Automatic
+
+	column status
+		dataType: string
+		lineageTag: c73b13a6-e179-4525-bce3-b20275d482c3
+		summarizeBy: none
+		sourceColumn: status
+
+		annotation SummarizationSetBy = Automatic
+
+	column waiting_time_minutes
+		dataType: int64
+		lineageTag: 525b020a-a295-4f27-af75-7a7c2cfcf1f0
+		summarizeBy: sum
+		sourceColumn: waiting_time_minutes
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_loopback
+		dataType: int64
+		lineageTag: bdb619bf-4b42-40fc-99ba-07aa70edf70f
+		summarizeBy: sum
+		sourceColumn: is_loopback
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Events_Partition = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:/Users/Dell/OneDrive/Documents/GitHub/care-flow/data/processed/cleaned_healthcare_event_log_v2.csv"), [Delimiter=",", Columns=10, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers", {{ "case_id", type text }, { "activity_name", type text }, { "event_timestamp", type datetime }, { "activity_sequence", Int64.Type }, { "is_loopback", Int64.Type }, { "patient_id", type text }, { "event_id", type text }, { "department", type text }, { "status", type text }, { "waiting_time_minutes", Int64.Type }})
+				in
+				    #"Changed Type"
+

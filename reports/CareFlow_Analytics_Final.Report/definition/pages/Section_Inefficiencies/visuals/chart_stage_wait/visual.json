@@ -1,0 +1,56 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "chart_stage_wait",
+  "position": {
+    "x": 16,
+    "y": 190,
+    "z": 130,
+    "height": 514,
+    "width": 475,
+    "tabOrder": 130
+  },
+  "visual": {
+    "visualType": "clusteredColumnChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Events"
+                    }
+                  },
+                  "Property": "activity_name"
+                }
+              },
+              "queryRef": "Events.activity_name",
+              "nativeQueryRef": "activity_name",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "CareFlow_Measures"
+                    }
+                  },
+                  "Property": "Avg Waiting Time Mins"
+                }
+              },
+              "queryRef": "CareFlow_Measures.Avg Waiting Time Mins",
+              "nativeQueryRef": "Avg Waiting Time Mins"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "chart_pathway_volume",
+  "position": {
+    "x": 692,
+    "y": 190,
+    "z": 130,
+    "height": 226,
+    "width": 572,
+    "tabOrder": 130
+  },
+  "visual": {
+    "visualType": "clusteredBarChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Transitions"
+                    }
+                  },
+                  "Property": "pathway"
+                }
+              },
+              "queryRef": "Transitions.pathway",
+              "nativeQueryRef": "pathway",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "CareFlow_Measures"
+                    }
+                  },
+                  "Property": "Total Transitions"
+                }
+              },
+              "queryRef": "CareFlow_Measures.Total Transitions",
+              "nativeQueryRef": "Total Transitions"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

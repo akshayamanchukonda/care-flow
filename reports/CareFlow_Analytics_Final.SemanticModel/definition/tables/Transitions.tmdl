@@ -1,0 +1,96 @@
+table Transitions
+	lineageTag: 6e8879b2-8bc0-422a-ac13-ffc6adf76550
+
+	column case_id
+		dataType: string
+		lineageTag: cdd61579-a8f7-45a0-8124-17c3118ce463
+		summarizeBy: none
+		sourceColumn: case_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column patient_id
+		dataType: string
+		lineageTag: a22500b1-ae5d-42e9-9ba7-9b8ca1713f71
+		summarizeBy: none
+		sourceColumn: patient_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column from_activity
+		dataType: string
+		lineageTag: bb0884b6-750e-4788-bedc-62057ee290b6
+		summarizeBy: none
+		sourceColumn: from_activity
+
+		annotation SummarizationSetBy = Automatic
+
+	column to_activity
+		dataType: string
+		lineageTag: b4ba2ff5-32ae-4880-8549-ff6285836b2b
+		summarizeBy: none
+		sourceColumn: to_activity
+
+		annotation SummarizationSetBy = Automatic
+
+	column pathway
+		dataType: string
+		lineageTag: 4950ad5e-dcfd-4011-b7dc-1211bfeedcd9
+		summarizeBy: none
+		sourceColumn: pathway
+
+		annotation SummarizationSetBy = Automatic
+
+	column from_timestamp
+		dataType: dateTime
+		lineageTag: e275c4ad-1412-4e76-ae01-b5be9095a22c
+		summarizeBy: none
+		sourceColumn: from_timestamp
+
+		variation Variation
+			isDefault
+			relationship: 4e28cc6f-dd61-4058-b649-99b4f869affd
+			defaultHierarchy: LocalDateTable_94222314-39d8-43a1-94e6-21e7993e6fe5.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column to_timestamp
+		dataType: dateTime
+		lineageTag: eb30bda4-e10c-42b5-9dda-20bd17b3d210
+		summarizeBy: none
+		sourceColumn: to_timestamp
+
+		variation Variation
+			isDefault
+			relationship: b48a2b50-213c-439f-baba-ca01602954df
+			defaultHierarchy: LocalDateTable_1bafce75-784a-4880-b6e1-5bbfa83168da.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column transition_time_minutes
+		dataType: double
+		lineageTag: f7fbc190-3868-4e63-a0d6-6114ca0dfd12
+		summarizeBy: sum
+		sourceColumn: transition_time_minutes
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_rework_loop
+		dataType: int64
+		lineageTag: 175d83bf-16eb-4e60-a0c3-b581c5ec1663
+		summarizeBy: sum
+		sourceColumn: is_rework_loop
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Transitions_Partition = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:/Users/Dell/OneDrive/Documents/GitHub/care-flow/data/processed/visit_transitions_detail.csv"), [Delimiter=",", Columns=8, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers", {{ "case_id", type text }, { "patient_id", type text }, { "from_activity", type text }, { "to_activity", type text }, { "from_timestamp", type datetime }, { "to_timestamp", type datetime }, { "transition_time_minutes", type number }, { "is_rework_loop", Int64.Type }}),
+				    #"Added Pathway Column" = Table.AddColumn(#"Changed Type", "pathway", each [from_activity] & " -> " & [to_activity], type text)
+				in
+				    #"Added Pathway Column"
+

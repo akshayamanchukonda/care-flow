@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "slicer_stage",
+  "position": {
+    "x": 990,
+    "y": 190,
+    "z": 170,
+    "height": 514,
+    "width": 274,
+    "tabOrder": 170
+  },
+  "visual": {
+    "visualType": "slicer",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Events"
+                    }
+                  },
+                  "Property": "activity_name"
+                }
+              },
+              "queryRef": "Events.activity_name",
+              "nativeQueryRef": "activity_name",
+              "active": true
+            }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,11 +1,12 @@
 """CareFlow: Unit Tests for Power BI Project (.pbip) Export.
 
 Validates:
-  1. PBIP root, report, and semantic model files exist.
+  1. PBIP root, report, semantic model, .platform, and theme files exist.
   2. JSON syntax and version compliance for .pbip, .pbir, .pbism, model.bim, and report.json.
-  3. Model consistency: tables ('Events', 'Transitions', 'Visits_Conformance', 'Pathway_Benchmark', 'CareFlow_Measures'),
-     relationships, and explicit DAX measures.
+  3. Model consistency: 6 tables ('Events', 'Transitions', 'Visits_Conformance', 'Pathway_Benchmark', 'Variants_Summary', 'CareFlow_Measures'),
+     relationships, and 24 explicit DAX measures.
   4. Theme palette contains required Navy (#1E3A8A), Teal (#0D9488), and Amber (#D97706) colors.
+  5. 6 report pages and 55 visual containers with complete schema referential integrity.
 """
 
 from pathlib import Path
@@ -18,6 +19,7 @@ PBIP_NAME = "CareFlow_Analytics"
 PBIP_FILE = REPORTS_DIR / f"{PBIP_NAME}.pbip"
 REPORT_DIR = REPORTS_DIR / f"{PBIP_NAME}.Report"
 SEMANTIC_DIR = REPORTS_DIR / f"{PBIP_NAME}.SemanticModel"
+THEME_FILE = REPORT_DIR / "StaticResources" / "SharedResources" / "BaseThemes" / "CareFlowTheme.json"
 
 
 class TestPowerBIProjectExport(unittest.TestCase):
@@ -28,8 +30,11 @@ class TestPowerBIProjectExport(unittest.TestCase):
         self.assertTrue(PBIP_FILE.exists(), f"Missing {PBIP_FILE}")
         self.assertTrue((REPORT_DIR / "definition.pbir").exists())
         self.assertTrue((REPORT_DIR / "report.json").exists())
+        self.assertTrue((REPORT_DIR / ".platform").exists())
+        self.assertTrue(THEME_FILE.exists())
         self.assertTrue((SEMANTIC_DIR / "definition.pbism").exists())
         self.assertTrue((SEMANTIC_DIR / "model.bim").exists())
+        self.assertTrue((SEMANTIC_DIR / ".platform").exists())
 
     def test_pbip_root_structure(self):
         """Verify PBIP root points to the valid report directory."""
@@ -64,14 +69,15 @@ class TestPowerBIProjectExport(unittest.TestCase):
             "Transitions",
             "Visits_Conformance",
             "Pathway_Benchmark",
+            "Variants_Summary",
             "CareFlow_Measures",
         }
         self.assertTrue(expected_tables.issubset(set(tables.keys())))
 
-        # Verify all 18 measures are present
+        # Verify all 24 measures are present
         measures_table = tables["CareFlow_Measures"]
         measures = measures_table.get("measures", [])
-        self.assertEqual(len(measures), 18)
+        self.assertEqual(len(measures), 24)
         measure_names = {m["name"] for m in measures}
         expected_measures = {
             "Total Events",
@@ -92,6 +98,12 @@ class TestPowerBIProjectExport(unittest.TestCase):
             "Non-Conformant Avg Journey Mins",
             "Delay Penalty Mins",
             "Delay Penalty Pct",
+            "Avg Length of Stay Hours",
+            "Median Length of Stay Hours",
+            "Conformant ALOS Hours",
+            "Non-Conformant ALOS Hours",
+            "Total Loopback Events",
+            "Loopback Event Rate",
         }
         self.assertEqual(measure_names, expected_measures)
 
@@ -130,11 +142,14 @@ class TestPowerBIProjectExport(unittest.TestCase):
         self.assertIn("#D97706", colors)  # Amber
 
         sections = rep.get("sections", [])
-        self.assertEqual(len(sections), 3)
+        self.assertEqual(len(sections), 6)
         section_titles = [s["displayName"] for s in sections]
-        self.assertIn("Executive Overview & KPIs", section_titles)
-        self.assertIn("Process Flow & Rework Analysis", section_titles)
-        self.assertIn("Bottlenecks & Waiting Times", section_titles)
+        self.assertIn("Executive Overview & Operational KPIs", section_titles)
+        self.assertIn("Patient Workflow & Clinical Progression", section_titles)
+        self.assertIn("Waiting Time & Stage Bottleneck Analysis", section_titles)
+        self.assertIn("Operational Rework & Loop-Back Analysis", section_titles)
+        self.assertIn("Process Mining & Conformance Alignment", section_titles)
+        self.assertIn("Detailed Patient & Case Explorer", section_titles)
 
     def test_report_json_visual_containers_and_referential_integrity(self):
         """Verify real, schema-valid visual objects exist on every page and map to model.bim."""
@@ -148,13 +163,16 @@ class TestPowerBIProjectExport(unittest.TestCase):
         table_meas = {tname: {m["name"] for m in tdata.get("measures", [])} for tname, tdata in tables.items()}
 
         sections = rep.get("sections", [])
-        self.assertEqual(len(sections), 3)
+        self.assertEqual(len(sections), 6)
 
         # Expected visual counts per page
         page_visual_counts = {
-            "Executive Overview & KPIs": 9,
-            "Process Flow & Rework Analysis": 6,
-            "Bottlenecks & Waiting Times": 6,
+            "Executive Overview & Operational KPIs": 13,
+            "Patient Workflow & Clinical Progression": 10,
+            "Waiting Time & Stage Bottleneck Analysis": 9,
+            "Operational Rework & Loop-Back Analysis": 10,
+            "Process Mining & Conformance Alignment": 10,
+            "Detailed Patient & Case Explorer": 10,
         }
 
         total_visuals = 0
@@ -172,7 +190,7 @@ class TestPowerBIProjectExport(unittest.TestCase):
                 cfg = json.loads(v["config"])
                 sv = cfg.get("singleVisual", {})
                 vtype = sv.get("visualType")
-                self.assertIn(vtype, {"card", "clusteredBarChart", "clusteredColumnChart", "tableEx", "slicer"})
+                self.assertIn(vtype, {"card", "clusteredBarChart", "clusteredColumnChart", "donutChart", "tableEx", "slicer"})
 
                 pq = sv.get("prototypeQuery", {})
                 from_entities = {f["Name"]: f["Entity"] for f in pq.get("From", [])}
@@ -191,7 +209,11 @@ class TestPowerBIProjectExport(unittest.TestCase):
                         entity = from_entities[src_alias]
                         self.assertIn(prop, table_meas[entity], f"Measure {entity}[{prop}] not in model")
 
-        self.assertEqual(total_visuals, 21)
+        self.assertEqual(total_visuals, 62)
+
+
+if __name__ == "__main__":
+    unittest.main()
 
 
 if __name__ == "__main__":

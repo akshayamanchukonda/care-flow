@@ -1,0 +1,107 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "table_case_explorer",
+  "position": {
+    "x": 16,
+    "y": 190,
+    "z": 110,
+    "height": 514,
+    "width": 620,
+    "tabOrder": 110
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Visits_Conformance"
+                    }
+                  },
+                  "Property": "case_id"
+                }
+              },
+              "queryRef": "Visits_Conformance.case_id",
+              "nativeQueryRef": "case_id"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Visits_Conformance"
+                    }
+                  },
+                  "Property": "patient_id"
+                }
+              },
+              "queryRef": "Visits_Conformance.patient_id",
+              "nativeQueryRef": "patient_id"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Visits_Conformance"
+                    }
+                  },
+                  "Property": "department"
+                }
+              },
+              "queryRef": "Visits_Conformance.department",
+              "nativeQueryRef": "department"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Visits_Conformance"
+                    }
+                  },
+                  "Property": "conformance_status"
+                }
+              },
+              "queryRef": "Visits_Conformance.conformance_status",
+              "nativeQueryRef": "conformance_status"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Visits_Conformance"
+                    }
+                  },
+                  "Property": "journey_duration_minutes"
+                }
+              },
+              "queryRef": "Visits_Conformance.journey_duration_minutes",
+              "nativeQueryRef": "journey_duration_minutes"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Visits_Conformance"
+                    }
+                  },
+                  "Property": "rework_loop_count"
+                }
+              },
+              "queryRef": "Visits_Conformance.rework_loop_count",
+              "nativeQueryRef": "rework_loop_count"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

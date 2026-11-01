@@ -1,0 +1,108 @@
+table CareFlow_Measures
+	lineageTag: c538200f-585e-493f-b1ec-92077e2a6d0f
+
+	measure 'Total Events' = COUNTROWS('Events')
+		formatString: #,0
+		lineageTag: 531407c4-d25a-4a18-859c-ef1f215ab931
+
+	measure 'Total Visits' = DISTINCTCOUNT('Events'[case_id])
+		formatString: #,0
+		lineageTag: 899c60c0-9b76-4688-9deb-db7e829b0efe
+
+	measure 'Unique Patients' = DISTINCTCOUNT('Events'[patient_id])
+		formatString: #,0
+		lineageTag: d6cccb9c-8889-440b-8843-058bf842f2b1
+
+	measure 'Conformant Visits' = CALCULATE(COUNTROWS('Visits_Conformance'), 'Visits_Conformance'[is_conformant] = 1)
+		formatString: #,0
+		lineageTag: 6cba137c-c655-40e1-ba51-c625c5a94807
+
+	measure 'Conformance Rate' = DIVIDE([Conformant Visits], [Total Visits], 0)
+		formatString: 0.0%
+		lineageTag: e3c6ee1a-a714-4035-b900-645367d37f70
+
+	measure 'Rework Visits' = CALCULATE(COUNTROWS('Visits_Conformance'), 'Visits_Conformance'[is_conformant] = 0)
+		formatString: #,0
+		lineageTag: c957250c-ee7f-4aa6-8b9e-3451a60fe52f
+
+	measure 'Rework Rate' = DIVIDE([Rework Visits], [Total Visits], 0)
+		formatString: 0.0%
+		lineageTag: ce568d90-4971-45f7-ad31-86b48bf4b3af
+
+	measure 'Total Transitions' = COUNTROWS('Transitions')
+		formatString: #,0
+		lineageTag: e3376c91-8bc7-47d8-9bd0-2d1f9f294dca
+
+	measure 'Rework Loop Transitions' = CALCULATE(COUNTROWS('Transitions'), 'Transitions'[is_rework_loop] = 1)
+		formatString: #,0
+		lineageTag: f1572cb7-92f3-4ccd-aae7-539a391d2aa8
+
+	measure 'Rework Transition Pct' = DIVIDE([Rework Loop Transitions], [Total Transitions], 0)
+		formatString: 0.0%
+		lineageTag: 7305a538-5eb4-44b4-8721-5e8b62587d99
+
+	measure 'Avg Journey Duration Mins' = AVERAGE('Visits_Conformance'[journey_duration_minutes])
+		formatString: 0.0
+		lineageTag: bfc5c3a1-118c-4911-9b0c-b257bdbddd64
+
+	measure 'Median Journey Duration Mins' = MEDIAN('Visits_Conformance'[journey_duration_minutes])
+		formatString: 0.0
+		lineageTag: fe736fc2-df22-4090-93e5-e2270146686a
+
+	measure 'Avg Waiting Time Mins' = AVERAGE('Events'[waiting_time_minutes])
+		formatString: 0.0
+		lineageTag: 726bd483-3064-4146-8287-66e89d76ef66
+
+	measure 'Median Waiting Time Mins' = MEDIAN('Events'[waiting_time_minutes])
+		formatString: 0.0
+		lineageTag: 05ab61bf-3c18-4832-bd6d-e1749f021ea7
+
+	measure 'Conformant Avg Journey Mins' = CALCULATE(AVERAGE('Visits_Conformance'[journey_duration_minutes]), 'Visits_Conformance'[is_conformant] = 1)
+		formatString: 0.0
+		lineageTag: 6489421e-fec2-4529-9716-9c3315955cc2
+
+	measure 'Non-Conformant Avg Journey Mins' = CALCULATE(AVERAGE('Visits_Conformance'[journey_duration_minutes]), 'Visits_Conformance'[is_conformant] = 0)
+		formatString: 0.0
+		lineageTag: 7761a1e8-cd93-4bd5-b101-74902474a268
+
+	measure 'Delay Penalty Mins' = [Non-Conformant Avg Journey Mins] - [Conformant Avg Journey Mins]
+		formatString: +0.0;-0.0;0.0
+		lineageTag: 7d25d802-2921-4d4f-9d90-5240c7698860
+
+	measure 'Delay Penalty Pct' = DIVIDE([Delay Penalty Mins], [Conformant Avg Journey Mins], 0)
+		formatString: 0.0%
+		lineageTag: 550669ca-e6b6-4181-9648-1471f9468b22
+
+	measure 'Avg Length of Stay Hours' = DIVIDE([Avg Journey Duration Mins], 60, 0)
+		formatString: 0.00
+		lineageTag: e1b2c3d4-9999-0000-1111-000000000019
+
+	measure 'Median Length of Stay Hours' = DIVIDE([Median Journey Duration Mins], 60, 0)
+		formatString: 0.00
+		lineageTag: e1b2c3d4-9999-0000-1111-000000000020
+
+	measure 'Conformant ALOS Hours' = DIVIDE([Conformant Avg Journey Mins], 60, 0)
+		formatString: 0.00
+		lineageTag: e1b2c3d4-9999-0000-1111-000000000021
+
+	measure 'Non-Conformant ALOS Hours' = DIVIDE([Non-Conformant Avg Journey Mins], 60, 0)
+		formatString: 0.00
+		lineageTag: e1b2c3d4-9999-0000-1111-000000000022
+
+	measure 'Total Loopback Events' = CALCULATE(COUNTROWS('Events'), 'Events'[is_loopback] = 1)
+		formatString: #,0
+		lineageTag: e1b2c3d4-9999-0000-1111-000000000023
+
+	measure 'Loopback Event Rate' = DIVIDE([Total Loopback Events], [Total Events], 0)
+		formatString: 0.0%
+		lineageTag: e1b2c3d4-9999-0000-1111-000000000024
+
+	column Measure_Group
+		isHidden
+		lineageTag: ab41320b-c239-4795-85f8-410be05ef436
+		sourceColumn: [Measure_Group]
+
+	partition CareFlow_Measures_Partition = calculated
+		mode: import
+		source = ROW("Measure_Group", "CareFlow Operational Metrics")
+

@@ -1,0 +1,93 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "table_transition_latency",
+  "position": {
+    "x": 692,
+    "y": 462,
+    "z": 150,
+    "height": 242,
+    "width": 572,
+    "tabOrder": 150
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Pathway_Benchmark"
+                    }
+                  },
+                  "Property": "pathway"
+                }
+              },
+              "queryRef": "Pathway_Benchmark.pathway",
+              "nativeQueryRef": "pathway"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Pathway_Benchmark"
+                    }
+                  },
+                  "Property": "transition_count"
+                }
+              },
+              "queryRef": "Pathway_Benchmark.transition_count",
+              "nativeQueryRef": "transition_count"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Pathway_Benchmark"
+                    }
+                  },
+                  "Property": "median_transition_time_minutes"
+                }
+              },
+              "queryRef": "Pathway_Benchmark.median_transition_time_minutes",
+              "nativeQueryRef": "median_transition_time_minutes"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Pathway_Benchmark"
+                    }
+                  },
+                  "Property": "avg_transition_time_minutes"
+                }
+              },
+              "queryRef": "Pathway_Benchmark.avg_transition_time_minutes",
+              "nativeQueryRef": "avg_transition_time_minutes"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Pathway_Benchmark"
+                    }
+                  },
+                  "Property": "iqr_minutes"
+                }
+              },
+              "queryRef": "Pathway_Benchmark.iqr_minutes",
+              "nativeQueryRef": "iqr_minutes"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,94 @@
+table Pathway_Benchmark
+	lineageTag: dfc12563-f49d-423f-a68a-378380a86e02
+
+	column from_activity
+		dataType: string
+		lineageTag: c8a3921b-b8da-49da-a986-d5ea09ac9474
+		sourceColumn: from_activity
+
+	column to_activity
+		dataType: string
+		lineageTag: eefe6063-1e18-4c93-80ac-d43d3aef597e
+		sourceColumn: to_activity
+
+	column pathway
+		dataType: string
+		lineageTag: c865fe8d-4059-4844-a8a8-36087f2ecc7f
+		sourceColumn: pathway
+
+	column transition_count
+		dataType: int64
+		lineageTag: 9d2fec0c-57f5-41fc-90b5-0e04dbf0f414
+		sourceColumn: transition_count
+
+	column is_loopback
+		dataType: int64
+		lineageTag: a7a8249e-994f-4564-a54e-43ec5cf53496
+		sourceColumn: is_loopback
+
+	column pct_of_total_transitions
+		dataType: double
+		lineageTag: 4878920f-29b5-4b7e-a11a-4778fdaadced
+		sourceColumn: pct_of_total_transitions
+
+	column avg_transition_time_minutes
+		dataType: double
+		lineageTag: 4f26ebff-ef16-4817-a34d-d7739412e332
+		sourceColumn: avg_transition_time_minutes
+
+	column median_transition_time_minutes
+		dataType: double
+		lineageTag: 07954d92-0b37-4170-9547-ae9eb55c1d1a
+		sourceColumn: median_transition_time_minutes
+
+	column std_dev_minutes
+		dataType: double
+		lineageTag: e3764c5a-6f90-479a-b68d-8f96a28d3e9b
+		sourceColumn: std_dev_minutes
+
+	column min_transition_time_minutes
+		dataType: double
+		lineageTag: 060f62d8-5f59-41c4-bc7f-e2770cb74635
+		sourceColumn: min_transition_time_minutes
+
+	column max_transition_time_minutes
+		dataType: double
+		lineageTag: 0b7c43ed-d5f9-496e-935c-e76aaaaef32b
+		sourceColumn: max_transition_time_minutes
+
+	column iqr_minutes
+		dataType: double
+		lineageTag: 9256f4ec-f704-4fa8-9f8b-26fa645bacab
+		sourceColumn: iqr_minutes
+
+	column p25_minutes
+		dataType: double
+		lineageTag: e6df3a36-3c82-4f34-9601-ef0cb5fe7678
+		summarizeBy: sum
+		sourceColumn: p25_minutes
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column p75_minutes
+		dataType: double
+		lineageTag: 31c7b7c8-cc97-4fe8-bbd0-0cb56fac6a2d
+		summarizeBy: sum
+		sourceColumn: p75_minutes
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition Pathway_Benchmark_Partition = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:/Users/Dell/OneDrive/Documents/GitHub/care-flow/data/processed/transition_time_analysis.csv"), [Delimiter=",", Columns=13, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers", {{ "from_activity", type text }, { "to_activity", type text }, { "transition_count", Int64.Type }, { "is_loopback", Int64.Type }, { "pct_of_total_transitions", type number }, { "avg_transition_time_minutes", type number }, { "median_transition_time_minutes", type number }, { "std_dev_minutes", type number }, { "min_transition_time_minutes", type number }, { "max_transition_time_minutes", type number }, { "p25_minutes", type number }, { "p75_minutes", type number }, { "iqr_minutes", type number }}),
+				    #"Added Pathway" = Table.AddColumn(#"Changed Type", "pathway", each [from_activity] & " -> " & [to_activity], type text)
+				in
+				    #"Added Pathway"
+
