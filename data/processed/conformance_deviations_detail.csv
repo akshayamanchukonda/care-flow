@@ -1,0 +1,387 @@
+case_id,patient_id,department,deviation_type,description,step_index,from_activity,to_activity
+V0001,P0069,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0001,P0069,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0004,P0159,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0004,P0159,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0006,P0269,Admissions & Registration,REWORK_LOOPBACK,Administrative Rework (Clerical / Registration Loopback),2,Triage,Registration
+V0006,P0269,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Registration x2),-1,,
+V0006,P0269,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Triage x2),-1,,
+V0017,P0330,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0017,P0330,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0021,P0132,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0021,P0132,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0027,P0349,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0027,P0349,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0033,P0141,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0033,P0141,Admissions & Registration,REWORK_LOOPBACK,In-Treatment Diagnostic Escalation (Secondary Testing),6,Treatment,Diagnostics
+V0033,P0141,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0033,P0141,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Diagnostics x2),-1,,
+V0033,P0141,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Treatment x2),-1,,
+V0039,P0022,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0039,P0022,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0040,P0149,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0040,P0149,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0041,P0263,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0041,P0263,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0050,P0177,Admissions & Registration,REWORK_LOOPBACK,Administrative Rework (Clerical / Registration Loopback),2,Triage,Registration
+V0050,P0177,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),6,Diagnostics,Consultation
+V0050,P0177,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Registration x2),-1,,
+V0050,P0177,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Triage x2),-1,,
+V0050,P0177,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0054,P0076,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0054,P0076,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0056,P0314,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0056,P0314,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0060,P0298,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0060,P0298,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0061,P0089,Admissions & Registration,REWORK_LOOPBACK,Administrative Rework (Clerical / Registration Loopback),2,Triage,Registration
+V0061,P0089,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Registration x2),-1,,
+V0061,P0089,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Triage x2),-1,,
+V0066,P0268,Admissions & Registration,REWORK_LOOPBACK,In-Treatment Diagnostic Escalation (Secondary Testing),5,Treatment,Diagnostics
+V0066,P0268,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Diagnostics x2),-1,,
+V0066,P0268,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Treatment x2),-1,,
+V0071,P0169,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0071,P0169,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0072,P0119,Admissions & Registration,REWORK_LOOPBACK,Administrative Rework (Clerical / Registration Loopback),2,Triage,Registration
+V0072,P0119,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Registration x2),-1,,
+V0072,P0119,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Triage x2),-1,,
+V0073,P0248,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0073,P0248,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0078,P0016,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0078,P0016,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0082,P0088,Admissions & Registration,REWORK_LOOPBACK,Administrative Rework (Clerical / Registration Loopback),2,Triage,Registration
+V0082,P0088,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Registration x2),-1,,
+V0082,P0088,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Triage x2),-1,,
+V0085,P0281,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0085,P0281,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0087,P0377,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0087,P0377,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0091,P0417,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0091,P0417,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0092,P0034,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0092,P0034,Admissions & Registration,REWORK_LOOPBACK,In-Treatment Diagnostic Escalation (Secondary Testing),6,Treatment,Diagnostics
+V0092,P0034,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0092,P0034,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Diagnostics x2),-1,,
+V0092,P0034,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Treatment x2),-1,,
+V0093,P0167,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0093,P0167,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0094,P0288,Admissions & Registration,REWORK_LOOPBACK,Administrative Rework (Clerical / Registration Loopback),2,Triage,Registration
+V0094,P0288,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Registration x2),-1,,
+V0094,P0288,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Triage x2),-1,,
+V0096,P0131,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0096,P0131,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0097,P0365,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0097,P0365,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0102,P0101,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0102,P0101,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0108,P0005,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0108,P0005,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0110,P0075,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0110,P0075,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0111,P0023,Admissions & Registration,REWORK_LOOPBACK,In-Treatment Diagnostic Escalation (Secondary Testing),4,Treatment,Diagnostics
+V0111,P0023,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Treatment x2),-1,,
+V0114,P0368,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0114,P0368,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0115,P0043,Admissions & Registration,REWORK_LOOPBACK,Administrative Rework (Clerical / Registration Loopback),2,Triage,Registration
+V0115,P0043,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),6,Diagnostics,Consultation
+V0115,P0043,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Registration x2),-1,,
+V0115,P0043,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Triage x2),-1,,
+V0115,P0043,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0118,P0087,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0118,P0087,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0121,P0178,Admissions & Registration,REWORK_LOOPBACK,In-Treatment Diagnostic Escalation (Secondary Testing),5,Treatment,Diagnostics
+V0121,P0178,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Diagnostics x2),-1,,
+V0121,P0178,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Treatment x2),-1,,
+V0122,P0045,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0122,P0045,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0127,P0339,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0127,P0339,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0128,P0323,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0128,P0323,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0138,P0052,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0138,P0052,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0139,P0269,Admissions & Registration,REWORK_LOOPBACK,In-Treatment Diagnostic Escalation (Secondary Testing),4,Treatment,Diagnostics
+V0139,P0269,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Treatment x2),-1,,
+V0144,P0231,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0144,P0231,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0145,P0069,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0145,P0069,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0151,P0106,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0151,P0106,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0157,P0179,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0157,P0179,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0185,P0164,Admissions & Registration,REWORK_LOOPBACK,Administrative Rework (Clerical / Registration Loopback),2,Triage,Registration
+V0185,P0164,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),6,Diagnostics,Consultation
+V0185,P0164,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Registration x2),-1,,
+V0185,P0164,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Triage x2),-1,,
+V0185,P0164,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0186,P0239,Admissions & Registration,REWORK_LOOPBACK,In-Treatment Diagnostic Escalation (Secondary Testing),4,Treatment,Diagnostics
+V0186,P0239,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Treatment x2),-1,,
+V0191,P0232,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0191,P0232,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0194,P0014,Admissions & Registration,REWORK_LOOPBACK,In-Treatment Diagnostic Escalation (Secondary Testing),5,Treatment,Diagnostics
+V0194,P0014,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Diagnostics x2),-1,,
+V0194,P0014,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Treatment x2),-1,,
+V0198,P0213,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0198,P0213,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0200,P0176,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0200,P0176,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0201,P0053,Admissions & Registration,REWORK_LOOPBACK,Administrative Rework (Clerical / Registration Loopback),2,Triage,Registration
+V0201,P0053,Admissions & Registration,REWORK_LOOPBACK,In-Treatment Diagnostic Escalation (Secondary Testing),6,Treatment,Diagnostics
+V0201,P0053,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Registration x2),-1,,
+V0201,P0053,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Triage x2),-1,,
+V0201,P0053,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Treatment x2),-1,,
+V0206,P0380,Admissions & Registration,REWORK_LOOPBACK,Administrative Rework (Clerical / Registration Loopback),2,Triage,Registration
+V0206,P0380,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Registration x2),-1,,
+V0206,P0380,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Triage x2),-1,,
+V0210,P0191,Admissions & Registration,REWORK_LOOPBACK,In-Treatment Diagnostic Escalation (Secondary Testing),4,Treatment,Diagnostics
+V0210,P0191,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Treatment x2),-1,,
+V0214,P0279,Admissions & Registration,REWORK_LOOPBACK,In-Treatment Diagnostic Escalation (Secondary Testing),5,Treatment,Diagnostics
+V0214,P0279,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Diagnostics x2),-1,,
+V0214,P0279,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Treatment x2),-1,,
+V0216,P0360,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0216,P0360,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0220,P0171,Admissions & Registration,REWORK_LOOPBACK,Administrative Rework (Clerical / Registration Loopback),2,Triage,Registration
+V0220,P0171,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),6,Diagnostics,Consultation
+V0220,P0171,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Registration x2),-1,,
+V0220,P0171,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Triage x2),-1,,
+V0220,P0171,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0222,P0259,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0222,P0259,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0224,P0270,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0224,P0270,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0225,P0157,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0225,P0157,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0226,P0078,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0226,P0078,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0228,P0140,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0228,P0140,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0233,P0095,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0233,P0095,Admissions & Registration,REWORK_LOOPBACK,In-Treatment Diagnostic Escalation (Secondary Testing),6,Treatment,Diagnostics
+V0233,P0095,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0233,P0095,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Diagnostics x2),-1,,
+V0233,P0095,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Treatment x2),-1,,
+V0237,P0226,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0237,P0226,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0239,P0034,Admissions & Registration,REWORK_LOOPBACK,Administrative Rework (Clerical / Registration Loopback),2,Triage,Registration
+V0239,P0034,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Registration x2),-1,,
+V0239,P0034,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Triage x2),-1,,
+V0241,P0130,Admissions & Registration,REWORK_LOOPBACK,Administrative Rework (Clerical / Registration Loopback),2,Triage,Registration
+V0241,P0130,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Registration x2),-1,,
+V0241,P0130,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Triage x2),-1,,
+V0243,P0138,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0243,P0138,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0244,P0292,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0244,P0292,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0245,P0315,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0245,P0315,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0246,P0145,Admissions & Registration,REWORK_LOOPBACK,Administrative Rework (Clerical / Registration Loopback),2,Triage,Registration
+V0246,P0145,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),6,Diagnostics,Consultation
+V0246,P0145,Admissions & Registration,REWORK_LOOPBACK,In-Treatment Diagnostic Escalation (Secondary Testing),8,Treatment,Diagnostics
+V0246,P0145,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Registration x2),-1,,
+V0246,P0145,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Triage x2),-1,,
+V0246,P0145,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0246,P0145,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Diagnostics x2),-1,,
+V0246,P0145,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Treatment x2),-1,,
+V0247,P0392,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0247,P0392,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0248,P0255,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0248,P0255,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0250,P0019,Admissions & Registration,REWORK_LOOPBACK,In-Treatment Diagnostic Escalation (Secondary Testing),5,Treatment,Diagnostics
+V0250,P0019,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Diagnostics x2),-1,,
+V0250,P0019,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Treatment x2),-1,,
+V0251,P0336,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0251,P0336,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0253,P0238,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0253,P0238,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0256,P0154,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0256,P0154,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0258,P0203,Admissions & Registration,REWORK_LOOPBACK,In-Treatment Diagnostic Escalation (Secondary Testing),4,Treatment,Diagnostics
+V0258,P0203,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Treatment x2),-1,,
+V0259,P0297,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0259,P0297,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0263,P0134,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0263,P0134,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0266,P0325,Admissions & Registration,REWORK_LOOPBACK,Administrative Rework (Clerical / Registration Loopback),2,Triage,Registration
+V0266,P0325,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Registration x2),-1,,
+V0266,P0325,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Triage x2),-1,,
+V0270,P0334,Admissions & Registration,REWORK_LOOPBACK,Administrative Rework (Clerical / Registration Loopback),2,Triage,Registration
+V0270,P0334,Admissions & Registration,REWORK_LOOPBACK,In-Treatment Diagnostic Escalation (Secondary Testing),6,Treatment,Diagnostics
+V0270,P0334,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Registration x2),-1,,
+V0270,P0334,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Triage x2),-1,,
+V0270,P0334,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Treatment x2),-1,,
+V0271,P0121,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0271,P0121,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0272,P0362,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0272,P0362,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0274,P0096,Admissions & Registration,REWORK_LOOPBACK,In-Treatment Diagnostic Escalation (Secondary Testing),4,Treatment,Diagnostics
+V0274,P0096,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Treatment x2),-1,,
+V0275,P0042,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0275,P0042,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0277,P0283,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0277,P0283,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0281,P0245,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0281,P0245,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0295,P0147,Admissions & Registration,REWORK_LOOPBACK,Administrative Rework (Clerical / Registration Loopback),2,Triage,Registration
+V0295,P0147,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),6,Diagnostics,Consultation
+V0295,P0147,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Registration x2),-1,,
+V0295,P0147,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Triage x2),-1,,
+V0295,P0147,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0304,P0353,Admissions & Registration,REWORK_LOOPBACK,In-Treatment Diagnostic Escalation (Secondary Testing),4,Treatment,Diagnostics
+V0304,P0353,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Treatment x2),-1,,
+V0306,P0407,Admissions & Registration,REWORK_LOOPBACK,Administrative Rework (Clerical / Registration Loopback),2,Triage,Registration
+V0306,P0407,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),6,Diagnostics,Consultation
+V0306,P0407,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Registration x2),-1,,
+V0306,P0407,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Triage x2),-1,,
+V0306,P0407,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0307,P0345,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0307,P0345,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0314,P0384,Admissions & Registration,REWORK_LOOPBACK,Administrative Rework (Clerical / Registration Loopback),2,Triage,Registration
+V0314,P0384,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),6,Diagnostics,Consultation
+V0314,P0384,Admissions & Registration,REWORK_LOOPBACK,In-Treatment Diagnostic Escalation (Secondary Testing),8,Treatment,Diagnostics
+V0314,P0384,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Registration x2),-1,,
+V0314,P0384,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Triage x2),-1,,
+V0314,P0384,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0314,P0384,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Diagnostics x2),-1,,
+V0314,P0384,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Treatment x2),-1,,
+V0317,P0039,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0317,P0039,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0318,P0229,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0318,P0229,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0319,P0237,Admissions & Registration,REWORK_LOOPBACK,In-Treatment Diagnostic Escalation (Secondary Testing),4,Treatment,Diagnostics
+V0319,P0237,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Treatment x2),-1,,
+V0325,P0362,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0325,P0362,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0334,P0331,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0334,P0331,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0336,P0154,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0336,P0154,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0338,P0395,Admissions & Registration,REWORK_LOOPBACK,In-Treatment Diagnostic Escalation (Secondary Testing),4,Treatment,Diagnostics
+V0338,P0395,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Treatment x2),-1,,
+V0339,P0182,Admissions & Registration,REWORK_LOOPBACK,Administrative Rework (Clerical / Registration Loopback),2,Triage,Registration
+V0339,P0182,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Registration x2),-1,,
+V0339,P0182,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Triage x2),-1,,
+V0341,P0402,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0341,P0402,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0344,P0098,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0344,P0098,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0346,P0348,Admissions & Registration,REWORK_LOOPBACK,In-Treatment Diagnostic Escalation (Secondary Testing),5,Treatment,Diagnostics
+V0346,P0348,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Diagnostics x2),-1,,
+V0346,P0348,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Treatment x2),-1,,
+V0358,P0264,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0358,P0264,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0359,P0367,Admissions & Registration,REWORK_LOOPBACK,Administrative Rework (Clerical / Registration Loopback),2,Triage,Registration
+V0359,P0367,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Registration x2),-1,,
+V0359,P0367,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Triage x2),-1,,
+V0363,P0371,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0363,P0371,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0365,P0324,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0365,P0324,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0369,P0113,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0369,P0113,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0379,P0062,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0379,P0062,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0382,P0225,Admissions & Registration,REWORK_LOOPBACK,In-Treatment Diagnostic Escalation (Secondary Testing),4,Treatment,Diagnostics
+V0382,P0225,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Treatment x2),-1,,
+V0384,P0333,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0384,P0333,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0387,P0160,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0387,P0160,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0388,P0366,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0388,P0366,Admissions & Registration,REWORK_LOOPBACK,In-Treatment Diagnostic Escalation (Secondary Testing),6,Treatment,Diagnostics
+V0388,P0366,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0388,P0366,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Diagnostics x2),-1,,
+V0388,P0366,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Treatment x2),-1,,
+V0389,P0103,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0389,P0103,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0392,P0354,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0392,P0354,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0393,P0037,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0393,P0037,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0395,P0256,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0395,P0256,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0399,P0085,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0399,P0085,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0401,P0244,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0401,P0244,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0404,P0065,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0404,P0065,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0405,P0393,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0405,P0393,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0408,P0036,Admissions & Registration,REWORK_LOOPBACK,Administrative Rework (Clerical / Registration Loopback),2,Triage,Registration
+V0408,P0036,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Registration x2),-1,,
+V0408,P0036,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Triage x2),-1,,
+V0413,P0291,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0413,P0291,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0415,P0030,Admissions & Registration,REWORK_LOOPBACK,Administrative Rework (Clerical / Registration Loopback),2,Triage,Registration
+V0415,P0030,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Registration x2),-1,,
+V0415,P0030,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Triage x2),-1,,
+V0416,P0123,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0416,P0123,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0418,P0414,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0418,P0414,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0419,P0089,Admissions & Registration,REWORK_LOOPBACK,In-Treatment Diagnostic Escalation (Secondary Testing),5,Treatment,Diagnostics
+V0419,P0089,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Diagnostics x2),-1,,
+V0419,P0089,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Treatment x2),-1,,
+V0424,P0307,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0424,P0307,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0425,P0001,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0425,P0001,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0429,P0083,Admissions & Registration,REWORK_LOOPBACK,Administrative Rework (Clerical / Registration Loopback),2,Triage,Registration
+V0429,P0083,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Registration x2),-1,,
+V0429,P0083,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Triage x2),-1,,
+V0436,P0328,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0436,P0328,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0439,P0321,Admissions & Registration,REWORK_LOOPBACK,Administrative Rework (Clerical / Registration Loopback),2,Triage,Registration
+V0439,P0321,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Registration x2),-1,,
+V0439,P0321,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Triage x2),-1,,
+V0442,P0092,Admissions & Registration,REWORK_LOOPBACK,Administrative Rework (Clerical / Registration Loopback),2,Triage,Registration
+V0442,P0092,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Registration x2),-1,,
+V0442,P0092,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Triage x2),-1,,
+V0443,P0391,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0443,P0391,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0455,P0329,Admissions & Registration,REWORK_LOOPBACK,In-Treatment Diagnostic Escalation (Secondary Testing),4,Treatment,Diagnostics
+V0455,P0329,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Treatment x2),-1,,
+V0456,P0394,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0456,P0394,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0457,P0137,Admissions & Registration,REWORK_LOOPBACK,In-Treatment Diagnostic Escalation (Secondary Testing),4,Treatment,Diagnostics
+V0457,P0137,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Treatment x2),-1,,
+V0461,P0350,Admissions & Registration,REWORK_LOOPBACK,Administrative Rework (Clerical / Registration Loopback),2,Triage,Registration
+V0461,P0350,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Registration x2),-1,,
+V0461,P0350,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Triage x2),-1,,
+V0465,P0006,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0465,P0006,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0466,P0234,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0466,P0234,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0467,P0284,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0467,P0284,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0471,P0273,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0471,P0273,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0472,P0196,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0472,P0196,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0479,P0082,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0479,P0082,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0481,P0079,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0481,P0079,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0488,P0261,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0488,P0261,Admissions & Registration,REWORK_LOOPBACK,In-Treatment Diagnostic Escalation (Secondary Testing),6,Treatment,Diagnostics
+V0488,P0261,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0488,P0261,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Diagnostics x2),-1,,
+V0488,P0261,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Treatment x2),-1,,
+V0489,P0071,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0489,P0071,Admissions & Registration,REWORK_LOOPBACK,In-Treatment Diagnostic Escalation (Secondary Testing),6,Treatment,Diagnostics
+V0489,P0071,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0489,P0071,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Diagnostics x2),-1,,
+V0489,P0071,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Treatment x2),-1,,
+V0490,P0113,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0490,P0113,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0494,P0243,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0494,P0243,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0497,P0383,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0497,P0383,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0498,P0135,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0498,P0135,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0499,P0276,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0499,P0276,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,
+V0500,P0288,Admissions & Registration,REWORK_LOOPBACK,Physician Review Rework (Diagnostic Re-evaluation),4,Diagnostics,Consultation
+V0500,P0288,Admissions & Registration,REPEATED_ACTIVITY,Repeated Activity (Consultation x2),-1,,

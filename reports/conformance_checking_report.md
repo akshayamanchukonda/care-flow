@@ -1,8 +1,8 @@
 # CareFlow: Clinical Conformance Checking & Process Alignment Report
 
 **Project:** CareFlow — Clinical Process Mining & Healthcare Operational Analytics  
-**Deliverable:** Formal Process Conformance Checking Analysis  
-**Environment:** Python 3.13 (`.venv`) & SQLite (`database/careflow.db`)  
+**Deliverable:** Week 4 Task 1 — Process Conformance Checking Analysis  
+**Environment:** Python 3.10+ & SQLite (`database/careflow.db`)  
 **Data Evaluated:** Standardized Healthcare Event Log v2 (`cleaned_healthcare_event_log_v2.csv`)  
 **Scope:** 500 Patient Visits, 3,030 Clinical Events, 11 Observed Journey Variants  
 
@@ -11,7 +11,7 @@
 ## 1. Executive Summary & Purpose
 
 While process discovery (Week 2) maps the **As-Is empirical flow** and transition analysis (Week 3) measures **handover latency**, **conformance checking** evaluates operational governance:
-> **Are patient journeys conforming to established, approved clinical pathways, or are they deviating due to clinical escalation and administrative rework?**
+> **Are patient journeys conforming to established, approved clinical care pathways, or are they deviating due to clinical escalation and administrative rework?**
 
 ### Key Findings at a Glance:
 - **Overall Conformance Rate:** **69.2%** (346 of 500 patient journeys strictly conform to approved normative care pathways).
@@ -25,9 +25,9 @@ While process discovery (Week 2) maps the **As-Is empirical flow** and transitio
 
 ---
 
-## 2. Normative Clinical Care Pathways
+## 2. Reference Clinical Care Pathways
 
-The reference models defined for the emergency care process are based on documented clinical protocols:
+The reference models defined for the emergency and outpatient care process are based on documented project clinical workflows:
 
 ### A. Normative Ideal Standard Care Pathway (Low/Moderate Acuity)
 For patients whose condition is resolved through physical examination and acute treatment without imaging/laboratory tests:
@@ -36,7 +36,7 @@ Registration -> Triage -> Consultation -> Treatment -> Discharge
 ```
 - **Stages:** 5 clinical activities.
 - **Expected Flow:** Strictly forward, single-pass.
-- **Target Population:** Standard acute consultations (e.g. minor injuries, simple medical reviews).
+- **Target Population:** Standard acute consultations (minor injuries, simple medical reviews).
 
 ### B. Normative Permitted Diagnostic Care Pathway (Moderate/High Acuity)
 For patients requiring routine diagnostic investigation (imaging, lab bloodwork) before clinical treatment:
@@ -77,30 +77,30 @@ All 154 non-conforming patient journeys (30.8%) were categorized into 3 verified
 - **Affected Cases:** **116 visits** across Variants 3, 8, 9, 11.
 - **Mechanism:** Patients complete diagnostic tests, but instead of proceeding to nursing treatment, their results trigger a secondary consultation with the physician.
 - **Operational Penalty:** Adds an average handover latency of **73.20 minutes** (median: 71.5 min), leading to a total average visit time of **325.8 minutes** for Variant 3.
-- **Clinical Governance Interpretation:** This is clinical re-evaluation, not a medical error; however, lack of automated result notification forces patients back into general queue waiting.
+- **Clinical Governance Interpretation:** Clinical re-evaluation; lack of automated result notification forces patients back into general queue waiting.
 
 ### 2. In-Treatment Diagnostic Escalation (`Treatment -> Diagnostics`)
 - **Affected Cases:** **29 visits** across Variants 4, 7, 8, 10, 11.
 - **Mechanism:** While undergoing treatment in Acute/Urgent Treatment Units, patients develop unforeseen complications or require secondary verification testing.
 - **Operational Penalty:** Represents the hospital's slowest transition at **86.34 minutes** average (median: 91.0 min). Patients in Variant 4 spend an average of **334.3 minutes** in the facility.
-- **Clinical Governance Interpretation:** Indicates unexpected clinical destabilization; bedside point-of-care testing (POCT) could prevent transporting patients back to central imaging/lab.
+- **Clinical Governance Interpretation:** Unexpected clinical destabilization; bedside point-of-care testing (POCT) could prevent transporting patients back to central imaging/lab.
 
 ### 3. Administrative Intake Rework (`Triage -> Registration`)
 - **Affected Cases:** **27 visits** across Variants 5, 6, 9, 10, 11.
 - **Mechanism:** Triage nurses discover missing insurance, unverified identity, or demographic errors during initial triage assessment, forcing patients to return to the front desk.
 - **Operational Penalty:** Adds **17.22 minutes** average delay before clinical care can restart.
-- **Clinical Governance Interpretation:** Pure administrative waste; remediable via digital front-desk intake verification checklist.
+- **Clinical Governance Interpretation:** Administrative rework; remediable via digital front-desk intake verification checklist.
 
 ---
 
 ## 5. Quantitative Verification & Data Consistency
 
 1. **Mathematical Conservation:**
-   - Conforming Cases ($346$) + Non-Conforming Cases ($154$) = Exactly $500$ visits ($100.0\%$).
-   - Variant 1 ($175$) + Variant 2 ($171$) = Exactly $346$ conformant visits ($69.2\%$).
+   - Conforming Cases (346) + Non-Conforming Cases (154) = Exactly 500 visits (100.0%).
+   - Variant 1 (175) + Variant 2 (171) = Exactly 346 conformant visits (69.2%).
 2. **Trace Length Parity:**
-   - All 346 conformant cases have zero loop-back events ($0$ rework loops).
-   - All 154 non-conformant cases account for all $214$ loop-back event rows in the dataset ($100\%$ accounted for).
+   - All 346 conformant cases have zero loop-back events (0 rework loops).
+   - All 154 non-conformant cases account for all 214 loop-back event rows in the dataset (100% accounted for).
 3. **Trace Fitness Score Distribution:**
    - Conformant Cases: Fitness = **1.00** (exact trace alignment).
    - Non-Conformant Cases: Mean Fitness = **0.82** (range: 0.55 to 0.85).
@@ -111,19 +111,18 @@ All 154 non-conforming patient journeys (30.8%) were categorized into 3 verified
 
 To incorporate this formal conformance checking analysis into Power BI:
 - **Dimension Table:** Use `data/processed/conformance_summary.csv` for Variant slicing (`variant_id`, `conformance_category`, `is_conformant`).
-- **Fact Table Extension:** Join `data/processed/conformance_analysis.csv` to `stg_healthcare_events_v2` on `case_id` to enable cross-filtering between clinical departments and conformance categories.
-- **Recommended DAX Measures:**
+- **Fact Table Extension:** Join `data/processed/conformance_analysis.csv` to `Events` on `case_id` to enable cross-filtering between clinical departments and conformance categories.
+- **DAX Measures:**
   ```dax
   Conformance Rate = 
   DIVIDE(
-      CALCULATE(COUNTROWS('Conformance Analysis'), 'Conformance Analysis'[is_conformant] = 1),
-      COUNTROWS('Conformance Analysis')
+      CALCULATE(COUNTROWS('Visits_Conformance'), 'Visits_Conformance'[is_conformant] = 1),
+      COUNTROWS('Visits_Conformance')
   )
   ```
   ```dax
   Non-Conformance Delay Penalty = 
-  AVERAGEX(FILTER('Conformance Analysis', 'Conformance Analysis'[is_conformant] = 0), 'Conformance Analysis'[journey_duration_minutes]) -
-  AVERAGEX(FILTER('Conformance Analysis', 'Conformance Analysis'[is_conformant] = 1), 'Conformance Analysis'[journey_duration_minutes])
+  [Non-Conformant Avg Journey Mins] - [Conformant Avg Journey Mins]
   ```
 
 ---
