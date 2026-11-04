@@ -23,11 +23,11 @@
                       "Entity": "Events"
                     }
                   },
-                  "Property": "event_id"
+                  "Property": "activity_name"
                 }
               },
-              "queryRef": "Events.event_id",
-              "nativeQueryRef": "event_id",
+              "queryRef": "Events.activity_name",
+              "nativeQueryRef": "activity_name",
               "active": true
             }
           ]
@@ -36,86 +36,21 @@
           "projections": [
             {
               "field": {
-                "Aggregation": {
+                "Measure": {
                   "Expression": {
-                    "Column": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Entity": "Events"
-                        }
-                      },
-                      "Property": "activity_name"
+                    "SourceRef": {
+                      "Entity": "CareFlow_Measures"
                     }
                   },
-                  "Function": 5
+                  "Property": "Total Events"
                 }
               },
-              "queryRef": "CountNonNull(Events.activity_name)",
-              "nativeQueryRef": "Count of activity_name"
+              "queryRef": "CareFlow_Measures.Total Events",
+              "nativeQueryRef": "Total Events"
             }
           ]
         }
-      },
-      "sortDefinition": {
-        "sort": [
-          {
-            "field": {
-              "Aggregation": {
-                "Expression": {
-                  "Column": {
-                    "Expression": {
-                      "SourceRef": {
-                        "Entity": "Events"
-                      }
-                    },
-                    "Property": "activity_name"
-                  }
-                },
-                "Function": 5
-              }
-            },
-            "direction": "Descending"
-          }
-        ],
-        "isDefaultSort": true
       }
     }
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "afa12f0b9bbc0c00b0dd",
-        "field": {
-          "Aggregation": {
-            "Expression": {
-              "Column": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "Events"
-                  }
-                },
-                "Property": "activity_name"
-              }
-            },
-            "Function": 5
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "135bf3a422134d3c16c6",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "Events"
-              }
-            },
-            "Property": "event_id"
-          }
-        },
-        "type": "Categorical"
-      }
-    ]
   }
 }

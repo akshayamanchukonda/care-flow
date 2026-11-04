@@ -215,8 +215,8 @@ Supported by Tabular Model Definition Language: 📁 **`reports/CareFlow_Analyti
    Investigates the 154 non-conformant visits (30.8% rework rate). Provides visual breakdowns of the 3 reverse loop corridors (Diagnostics ➔ Consult, Treatment ➔ Diagnostics, Triage ➔ Registration), pathway rework proportions, and an individual patient-case audit table.
 5. **Page 5: Department Performance & Workload**
    Evaluates clinical activity volume, patient coverage, and waiting times across all 13 hospital departments (Outpatient Clinic, Emergency, Radiology, General Surgery, Pediatrics, etc.), highlighting operational workload disparities.
-6. **Page 6: Data Quality, Validation & Insights**
-   Demonstrates data governance and pipeline integrity: confirms 100% complete event logs (0 nulls, 0 orphan keys, 0 timestamp inversions), case boundary validations (100% start at Registration, 100% end at Discharge), and presents executive operational recommendations.
+6. **Page 6: Patient Journey Drill-Down & Clinical Audit Explorer**
+   Enables deep administrator investigation into individual patients and visits. Features a dedicated right-hand filter pane with Patient Search Slicer (`slicer_patient_search` for `Visits_Conformance.patient_id`) and Department Slicer (`slicer_dept_p6`). Selecting a patient filters the *Patient Visit Registry*, and selecting an individual visit filters the *Sequential Clinical Event Trail* to show that visit's step-by-step journey, duration, waiting times, and loopback flags without mixing multi-visit data.
 
 ---
 
@@ -236,10 +236,12 @@ All project requirements spanning Weeks 1, 2, and 3 were verified using automate
 | **Week 3: Transition Latency** | Transition Engine (`src/transition_analysis.py`) | 2,530 handovers | Query 11 (2,323) & Query 12 (2,530) match | **PASS** |
 | **Week 3: Duration Parity** | Mathematical Duration Conservation | Exact match | Sample visit V0001 (330.0m = 330.0m) | **PASS** |
 | **Week 3: Conformance** | Conformance Checking (`src/conformance_checking.py`) | 346 / 154 | 346 clean (69.2%), 154 rework (30.8%) | **PASS** |
-| **Final: Power BI PBIP** | Final Report (`reports/CareFlow_Analytics_Final.pbip`) | 6 pages | 6 pages, 24 measures, 0 overlaps | **PASS** |
+| **Week 4: Conformance Engine** | Normative Pathway Logic & Testing (`src/conformance_checking.py`) | 10 Scenarios | 11/11 tests pass, deviations detail, non-compliant summary | **PASS** |
+| **Week 4: Dashboard Polish** | Final Power BI Suite (`reports/CareFlow_Analytics_Final.pbip`) | 6 Pages / Drill-Down | 6 pages, 10 TMDL tables, 28 measures, patient drill-down | **PASS** |
+| **Final: Power BI PBIP** | Final Report (`reports/CareFlow_Analytics_Final.pbip`) | 6 pages | 6 pages, 28 measures, 0 overlaps | **PASS** |
 
 ### Automated Test Execution Evidence
-* **Python Regression Suite:** `82 / 82 tests passing` (`test_cleaning_pipeline`, `test_conformance_checking`, `test_pathway_transitions`, `test_pbip_export`, `test_staging_validation`, `test_standardized_event_log`, `test_transition_analysis`, `test_workflow_inefficiencies`).
+* **Python Regression Suite:** `87 / 87 tests passing` (`test_cleaning_pipeline`, `test_conformance_checking`, `test_pathway_transitions`, `test_pbip_export`, `test_staging_validation`, `test_standardized_event_log`, `test_transition_analysis`, `test_workflow_inefficiencies`).
 * **dbt Cloud Test Suite:** `52 / 52 schema tests passing` in BigQuery.
 * **Layout Bounds & Overlap Validator:** `0 visual overlaps` across all 6 pages (1280 × 720 canvas).
 

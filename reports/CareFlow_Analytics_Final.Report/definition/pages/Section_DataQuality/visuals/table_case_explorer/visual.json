@@ -6,7 +6,7 @@
     "y": 190,
     "z": 110,
     "height": 514,
-    "width": 620,
+    "width": 470,
     "tabOrder": 110
   },
   "visual": {
@@ -23,11 +23,11 @@
                       "Entity": "Visits_Conformance"
                     }
                   },
-                  "Property": "case_id"
+                  "Property": "patient_id"
                 }
               },
-              "queryRef": "Visits_Conformance.case_id",
-              "nativeQueryRef": "case_id"
+              "queryRef": "Visits_Conformance.patient_id",
+              "nativeQueryRef": "patient_id"
             },
             {
               "field": {
@@ -37,11 +37,11 @@
                       "Entity": "Visits_Conformance"
                     }
                   },
-                  "Property": "patient_id"
+                  "Property": "case_id"
                 }
               },
-              "queryRef": "Visits_Conformance.patient_id",
-              "nativeQueryRef": "patient_id"
+              "queryRef": "Visits_Conformance.case_id",
+              "nativeQueryRef": "case_id"
             },
             {
               "field": {
@@ -79,6 +79,20 @@
                       "Entity": "Visits_Conformance"
                     }
                   },
+                  "Property": "primary_deviation"
+                }
+              },
+              "queryRef": "Visits_Conformance.primary_deviation",
+              "nativeQueryRef": "primary_deviation"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Visits_Conformance"
+                    }
+                  },
                   "Property": "journey_duration_minutes"
                 }
               },
@@ -98,6 +112,20 @@
               },
               "queryRef": "Visits_Conformance.rework_loop_count",
               "nativeQueryRef": "rework_loop_count"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Visits_Conformance"
+                    }
+                  },
+                  "Property": "trace_fitness"
+                }
+              },
+              "queryRef": "Visits_Conformance.trace_fitness",
+              "nativeQueryRef": "trace_fitness"
             }
           ]
         }

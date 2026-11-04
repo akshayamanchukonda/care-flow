@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
   "name": "table_event_trail",
   "position": {
-    "x": 648,
+    "x": 502,
     "y": 190,
     "z": 130,
     "height": 514,
-    "width": 616,
+    "width": 472,
     "tabOrder": 130
   },
   "visual": {

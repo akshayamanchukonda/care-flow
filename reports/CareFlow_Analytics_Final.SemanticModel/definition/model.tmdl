@@ -6,7 +6,7 @@ model Model
 		legacyRedirects
 		returnErrorValuesAsNull
 
-annotation PBI_QueryOrder = ["Events","Transitions","Visits_Conformance","Pathway_Benchmark"]
+annotation PBI_QueryOrder = ["Events","Transitions","Visits_Conformance","Pathway_Benchmark","Variants_Summary"]
 
 annotation __PBI_TimeIntelligenceEnabled = 1
 
@@ -16,9 +16,9 @@ ref table Events
 ref table Transitions
 ref table Visits_Conformance
 ref table Pathway_Benchmark
+ref table Variants_Summary
 ref table CareFlow_Measures
 ref table DateTableTemplate_ab813d19-4cc5-49da-9e7a-ac792b0fac70
 ref table LocalDateTable_bb456e7c-b9ef-44b3-9c62-2b733da0c4a0
 ref table LocalDateTable_94222314-39d8-43a1-94e6-21e7993e6fe5
 ref table LocalDateTable_1bafce75-784a-4880-b6e1-5bbfa83168da
-

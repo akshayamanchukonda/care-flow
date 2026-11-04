@@ -4,10 +4,10 @@
   "position": {
     "x": 16,
     "y": 10,
-    "z": 10,
+    "z": 0,
     "height": 50,
     "width": 1248,
-    "tabOrder": 10
+    "tabOrder": 0
   },
   "visual": {
     "visualType": "textbox",
@@ -19,30 +19,27 @@
               {
                 "textRuns": [
                   {
-                    "value": "Data Quality, Validation & Insights",
+                    "value": "Patient Journey Drill-Down & Clinical Investigation Audit",
                     "textStyle": {
-                      "fontFamily": "Segoe UI",
+                      "fontFamily": "Segoe UI Bold",
                       "fontSize": "16pt",
                       "fontWeight": "bold",
-                      "color": "#1E3A8A"
+                      "color": "#1B365D"
                     }
                   }
-                ],
-                "horizontalTextAlignment": "left"
+                ]
               },
               {
                 "textRuns": [
                   {
-                    "value": "Comprehensive data pipeline integrity audit: 100% clean event log (0 nulls, 0 format errors), 0 case boundary errors, 0 orphan keys, and 0 chronological timestamp inversions.",
+                    "value": "Individual Patient & Visit Audit Trail — Filter by Patient ID or Department to Trace End-to-End Care Delivery",
                     "textStyle": {
                       "fontFamily": "Segoe UI",
-                      "fontSize": "9.5pt",
-                      "fontWeight": "normal",
+                      "fontSize": "9pt",
                       "color": "#475569"
                     }
                   }
-                ],
-                "horizontalTextAlignment": "left"
+                ]
               }
             ]
           }

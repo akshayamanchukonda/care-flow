@@ -8,6 +8,11 @@ relationship rel_transitions_visits
 	fromColumn: Transitions.case_id
 	toColumn: Visits_Conformance.case_id
 
+relationship rel_visits_variants
+	crossFilteringBehavior: bothDirections
+	fromColumn: Visits_Conformance.trace_pattern
+	toColumn: Variants_Summary.trace_pattern
+
 relationship 85369408-2b08-4c23-bd7c-64bf1e70d7e4
 	joinOnDateBehavior: datePartOnly
 	fromColumn: Events.event_timestamp
@@ -22,4 +27,3 @@ relationship b48a2b50-213c-439f-baba-ca01602954df
 	joinOnDateBehavior: datePartOnly
 	fromColumn: Transitions.to_timestamp
 	toColumn: LocalDateTable_1bafce75-784a-4880-b6e1-5bbfa83168da.Date
-

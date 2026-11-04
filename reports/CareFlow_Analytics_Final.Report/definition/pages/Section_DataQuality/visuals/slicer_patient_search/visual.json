@@ -1,0 +1,39 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "slicer_patient_search",
+  "position": {
+    "x": 990,
+    "y": 186,
+    "z": 190,
+    "height": 234,
+    "width": 274,
+    "tabOrder": 190
+  },
+  "visual": {
+    "visualType": "slicer",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Visits_Conformance"
+                    }
+                  },
+                  "Property": "patient_id"
+                }
+              },
+              "queryRef": "Visits_Conformance.patient_id",
+              "nativeQueryRef": "patient_id",
+              "active": true
+            }
+          ]
+        }
+      }
+    }
+  }
+}
+

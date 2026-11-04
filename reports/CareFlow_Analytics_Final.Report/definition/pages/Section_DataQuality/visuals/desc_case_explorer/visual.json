@@ -6,7 +6,7 @@
     "y": 148,
     "z": 100,
     "height": 40,
-    "width": 620,
+    "width": 470,
     "tabOrder": 100
   },
   "visual": {
@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Patient Journey Master Validation Explorer",
+                    "value": "Patient Visit Registry (Select Case)",
                     "textStyle": {
                       "fontFamily": "Segoe UI Bold",
                       "fontSize": "10pt",
@@ -33,7 +33,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Case-level verification: patient ID, unit, conformance, duration, and loop count",
+                    "value": "All 500 patient visits with patient entity ID, unit, compliance, and duration",
                     "textStyle": {
                       "fontFamily": "Segoe UI",
                       "fontSize": "7.5pt",

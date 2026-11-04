@@ -20,42 +20,84 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "Visits_Conformance"
+                      "Entity": "Variants_Summary"
                     }
                   },
-                  "Property": "conformance_category"
+                  "Property": "variant_id"
                 }
               },
-              "queryRef": "Visits_Conformance.conformance_category",
-              "nativeQueryRef": "conformance_category"
+              "queryRef": "Variants_Summary.variant_id",
+              "nativeQueryRef": "variant_id"
             },
             {
               "field": {
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "Visits_Conformance"
+                      "Entity": "Variants_Summary"
                     }
                   },
-                  "Property": "rework_loop_count"
+                  "Property": "case_count"
                 }
               },
-              "queryRef": "Visits_Conformance.rework_loop_count",
-              "nativeQueryRef": "rework_loop_count"
+              "queryRef": "Variants_Summary.case_count",
+              "nativeQueryRef": "case_count"
             },
             {
               "field": {
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "Visits_Conformance"
+                      "Entity": "Variants_Summary"
                     }
                   },
                   "Property": "primary_deviation"
                 }
               },
-              "queryRef": "Visits_Conformance.primary_deviation",
+              "queryRef": "Variants_Summary.primary_deviation",
               "nativeQueryRef": "primary_deviation"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Variants_Summary"
+                    }
+                  },
+                  "Property": "rework_loops_per_case"
+                }
+              },
+              "queryRef": "Variants_Summary.rework_loops_per_case",
+              "nativeQueryRef": "rework_loops_per_case"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Variants_Summary"
+                    }
+                  },
+                  "Property": "avg_journey_minutes"
+                }
+              },
+              "queryRef": "Variants_Summary.avg_journey_minutes",
+              "nativeQueryRef": "avg_journey_minutes"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Variants_Summary"
+                    }
+                  },
+                  "Property": "trace_pattern"
+                }
+              },
+              "queryRef": "Variants_Summary.trace_pattern",
+              "nativeQueryRef": "trace_pattern"
             }
           ]
         }

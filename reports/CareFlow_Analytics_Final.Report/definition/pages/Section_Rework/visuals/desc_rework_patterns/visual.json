@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Clinical Deviation Registry",
+                    "value": "Clinical Process Variant & Deviation Registry",
                     "textStyle": {
                       "fontFamily": "Segoe UI Bold",
                       "fontSize": "10pt",
@@ -33,7 +33,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Root-cause classifications, loop counts, and deviation triggers",
+                    "value": "All 11 patient trace variants (V01-V11), case volume, loop counts, and average duration",
                     "textStyle": {
                       "fontFamily": "Segoe UI",
                       "fontSize": "7.5pt",
