@@ -6,7 +6,7 @@
 [![PM4Py 2.7](https://img.shields.io/badge/PM4Py-2.7%20Process%20Mining-2E7D32.svg)](https://pm4py.fit.fraunhofer.de/)
 [![Microsoft Power BI](https://img.shields.io/badge/Power%20BI-PBIP%20Analytics%20Suite-F2C811.svg?logo=power-bi&logoColor=black)](https://powerbi.microsoft.com/)
 [![SQLite 3](https://img.shields.io/badge/SQLite-3.40+-003B57.svg?logo=sqlite&logoColor=white)](https://www.sqlite.org/)
-[![Tests](https://img.shields.io/badge/Unit%20Tests-82%2F82%20Passing-brightgreen.svg)]()
+[![Tests](https://img.shields.io/badge/Unit%20Tests-87%2F87%20Passing-brightgreen.svg)]()
 [![dbt Tests](https://img.shields.io/badge/dbt%20Tests-52%2F52%20Passing-brightgreen.svg)]()
 
 > **Enterprise Healthcare Data Analytics & Process Mining Internship Project**
@@ -22,10 +22,11 @@
 5. [Process Discovery & Clinical Rework Analysis](#process-discovery--clinical-rework-analysis)
 6. [Cloud Pipeline: Google BigQuery & dbt Core](#cloud-pipeline-google-bigquery--dbt-core)
 7. [Power BI Executive & Clinical Dashboard](#power-bi-executive--clinical-dashboard)
-8. [Milestone Deliverables & Verification](#milestone-deliverables--verification)
-9. [Installation & Execution Guide](#installation--execution-guide)
-10. [Repository Structure](#repository-structure)
-11. [Project Limitations & Future Scope](#project-limitations--future-scope)
+8. [Streamlit Interactive Clinical Intelligence Suite](#streamlit-interactive-clinical-intelligence-suite)
+9. [Milestone Deliverables & Verification](#milestone-deliverables--verification)
+10. [Installation & Execution Guide](#installation--execution-guide)
+11. [Repository Structure](#repository-structure)
+12. [Project Limitations & Future Scope](#project-limitations--future-scope)
 
 ---
 
@@ -60,7 +61,7 @@ Hospital emergency and outpatient departments face chronic patient overcrowding,
 2. **Dual-Layer Analytics Architecture:** Build both a local, zero-credential SQLite/Python pipeline for offline reproducibility and a cloud BigQuery/dbt pipeline for scalable enterprise data warehousing.
 3. **Automated Process Discovery:** Reconstruct the As-Is clinical process map using PM4Py Directly-Follows Graphs (DFG), discovering empirical transition frequencies, variant distributions, and reverse rework corridors.
 4. **Queue & Bottleneck Quantification:** Execute SQL and Python statistical models to identify queue spikes, calculate IQR outliers, and evaluate handover latency across all 9 clinical pathways.
-5. **Interactive Executive Reporting:** Deliver a fully interactive, 6-page Microsoft Power BI report (`.pbip`) adhering to clinical visualization standards, equipped with 24 verified DAX measures, explanatory metrics, and zero layout overlaps.
+5. **Interactive Executive Reporting:** Deliver a fully interactive, 6-page Microsoft Power BI report (`.pbip`) adhering to clinical visualization standards, equipped with 28 verified DAX measures across 10 tables, explanatory metrics, and zero layout overlaps.
 
 ---
 
@@ -72,12 +73,12 @@ Data Ingestion & Synthesis ──> Data Warehousing & ETL ──> Process Mining
        [SQLite 3.40]                  [dbt Core 1.13]                [pandas / numpy]          [PBIP / TMDL / DAX]
 ```
 
-* **Programming & Statistical Modeling:** Python 3.10+, `pandas`, `numpy`, `matplotlib`, `unittest`.
+* **Programming & Statistical Modeling:** Python 3.10+, `pandas`, `numpy`, `matplotlib`, `unittest`, `streamlit`, `plotly`.
 * **Relational Database & Local Storage:** SQLite 3 with enforced foreign keys, cascading constraints, and indexed views.
 * **Cloud Data Warehouse:** Google Cloud BigQuery (`care-flow-analytics` project, `asia-south1` region).
 * **Data Transformation & Testing:** dbt Core 1.13 (`dbt-bigquery` adapter) managing staging views, canonical process mining marts, and 52 automated schema tests.
 * **Process Mining Library:** PM4Py 2.7 (Directly-Follows Graph discovery, Petri net token replay, variant extraction).
-* **Business Intelligence:** Microsoft Power BI Desktop (Power BI Project format `.pbip`, Fabric PBIR report metadata, TMDL semantic model, 24 verified DAX measures).
+* **Business Intelligence & Dashboards:** Microsoft Power BI Desktop (Power BI Project format `.pbip`, Fabric PBIR report metadata, TMDL semantic model with 10 tables and 28 verified DAX measures) and interactive Streamlit Clinical Intelligence Suite (`src/dashboard.py`).
 
 ---
 
@@ -220,6 +221,60 @@ Supported by Tabular Model Definition Language: 📁 **`reports/CareFlow_Analyti
 
 ---
 
+## Streamlit Interactive Clinical Intelligence Suite
+
+In addition to the Power BI Desktop project, CareFlow includes an interactive web application built with Streamlit and Plotly:
+📁 **`src/dashboard.py`**
+
+The web suite directly mirrors the 6-page Power BI dashboard, enabling browser-based exploration, dynamic cross-filtering, and granular patient trace investigation without requiring Power BI Desktop licenses.
+
+```powershell
+# Launch the Streamlit dashboard
+streamlit run src/dashboard.py
+```
+
+### 6 Specialized Analytical Tabs
+
+```
+┌────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│                          Streamlit Clinical Intelligence Suite (src/dashboard.py)                     │
+├──────────────────────────────┬──────────────────────────────┬──────────────────────────────────────────┤
+│ Tab 1: 📊 Executive Overview │ Tab 2: 🔄 Patient Journey    │ Tab 3: ⏱️ Operational Bottlenecks        │
+│ • 6 Metric KPI cards         │ • Interactive Sankey diagram │ • Queue wait vs handover latency         │
+│ • Conformance cohort donut   │ • 9 DFG pathway volume bars  │ • Stage queue dwell ranking              │
+│ • 6-Stage throughput volume  │ • 300 DPI PM4Py process map  │ • Duration distributions (IQR)           │
+├──────────────────────────────┼──────────────────────────────┼──────────────────────────────────────────┤
+│ Tab 4: ⚖️ Conformance Variant│ Tab 5: 🏥 Dept Performance   │ Tab 6: 🔍 Patient Drill-Down             │
+│ • Full 11-variant registry   │ • 13 Hospital units compared │ • Patient ID search (P0001–P0420)        │
+│ • Fitness & delay metrics    │ • Median queue wait rankings │ • Encounter selector (V0001–V0500)       │
+│ • 3 Reverse loop corridors   │ • Department audit table     │ • Chronological clinical event trail     │
+└──────────────────────────────┴──────────────────────────────┴──────────────────────────────────────────┘
+```
+
+1. **📊 Executive Overview:**
+   Presents high-level operational benchmarks across 500 patient encounters and 3,030 events: Total Visits (500), Total Events (3,030), Unique Patients (420), Conformance Rate (69.2%), Rework Rate (30.8%), and Average ALOS (253.5 min / 4.23 hrs). Includes an interactive conformance donut chart and stage progression volume bar chart.
+2. **🔄 Patient Journey & Flow:**
+   Provides multi-angle workflow discovery: an interactive Plotly Sankey diagram mapping patient flow across stages, a bar chart of the 9 empirical Directly-Follows Graph (DFG) transitions, the high-resolution 300 DPI PM4Py As-Is process map, and a station-to-station latency benchmark table.
+3. **⏱️ Operational Bottlenecks:**
+   Strictly disambiguates station queue dwell time from handover transit latency. Details stage-level queue wait rankings (`Consultation`: 34.3m, `Diagnostics`: 29.0m), quantifies the +108.4 min (+49.2%) delay penalty incurred by rework, and visualizes length-of-stay distributions with box plots.
+4. **⚖️ Conformance Analysis:**
+   Integrates `conformance_analysis.csv` and `conformance_summary.csv` to catalog all 11 discovered process variants (V01–V11). Contrasts clean pathways (V01, V02) against non-compliant rework pathways (V03–V11), reporting trace fitness and detailing the 3 reverse loop corridors (Diagnostics ➔ Consultation: 116, Treatment ➔ Diagnostics: 29, Triage ➔ Registration: 27).
+5. **🏥 Department Performance:**
+   Evaluates clinical activity volume, patient coverage, and median queue waiting times across all 13 hospital units (Emergency, Radiology, Outpatient Clinic, General Surgery, Pediatrics, etc.), accompanied by a searchable department performance registry.
+6. **🔍 Patient Drill-Down:**
+   Enables fine-grained clinical audit: search for any patient (`P0001`–`P0420`), view all associated visits, select a specific encounter (`V0001`–`V0500`), inspect visit-level KPIs (conformance status, duration, queue time, loop count, fitness, and primary deviation), and inspect that encounter's complete chronological clinical event trail table with exact timestamps and rework flags.
+
+### Multi-Dimensional Sidebar Controls
+* **Department Slicer:** Multi-select filter covering all 13 hospital departments.
+* **Conformance Status Filter:** Filter across All, Conformant (Clean), or Non-Conformant (Rework).
+* **Clinical Pathway Slicer:** Filter by specific DFG handover transitions.
+* **Stage Slicer:** Filter by individual clinical stages.
+* **Arrival Window Slider:** Interactive time-of-day filter (0:00 to 23:00).
+* **Reset Filters Button:** One-click restoration of default global filter state.
+* **Data Transparency Disclosure:** Explanatory sidebar banner clarifying available schema dimensions (`patient_id`, `case_id`, `department`, `activity_name`, `variant_id`) and noting that doctor and demographic attributes are absent in the source data.
+
+---
+
 ## Milestone Deliverables & Verification
 
 All project requirements spanning Weeks 1, 2, and 3 were verified using automated regression scripts:
@@ -271,7 +326,7 @@ pip install -r requirements.txt
 
 ### 2. Run Local Verification & Tests
 ```powershell
-# Run complete 82-test regression test suite
+# Run complete 87-test regression test suite
 $env:PYTHONPATH="."
 python -m unittest discover -s tests -p "test_*.py"
 
@@ -303,6 +358,12 @@ python src/workflow_inefficiencies.py
    ```
 3. All 6 pages load immediately with verified measures, high-contrast visual styling, and complete interactive cross-filtering.
 
+### 5. Launch the Streamlit Interactive Dashboard
+```powershell
+streamlit run src/dashboard.py
+```
+This serves the application locally at `http://localhost:8501`, featuring all 6 interactive clinical tabs, patient drill-down explorer, and dynamic cross-filtering.
+
 ---
 
 ## Repository Structure
@@ -321,7 +382,9 @@ care-flow/
 │   │   └── healthcare_event_log_v2.csv                   (3,030 rows enhanced dataset with loop-backs)
 │   └── processed/
 │       ├── cleaned_healthcare_event_log_v2.csv           (3,030 rows standardized log)
-│       └── visit_transitions_detail.csv                  (2,530 granular handover transitions)
+│       ├── visit_transitions_detail.csv                  (2,530 granular handover transitions)
+│       ├── conformance_analysis.csv                      (500 patient cases classified by variant)
+│       └── conformance_summary.csv                       (11 discovered empirical trace variants)
 │
 ├── database/
 │   └── schema.sql                                        (Relational SQLite DDL schema)
@@ -336,17 +399,20 @@ care-flow/
 ├── reports/
 │   ├── CareFlow_Analytics_Final.pbip                     (Official final 6-page Power BI project)
 │   ├── CareFlow_Analytics_Final.Report/                  (Fabric PBIR visual containers & pages)
-│   ├── CareFlow_Analytics_Final.SemanticModel/           (TMDL semantic model & 24 DAX measures)
+│   ├── CareFlow_Analytics_Final.SemanticModel/           (TMDL semantic model & 28 DAX measures across 10 tables)
 │   ├── power_bi_dashboard_report.md                      (Technical BI architecture & metric guide)
 │   ├── as_is_process_map.png                             (Discovered 9-transition process map)
 │   ├── week1_week2_final_completion_report.md            (Audit & mathematical verification report)
-│   └── week2_process_analysis_summary.md                 (Clinical pathway & variant discovery report)
+│   ├── week2_process_analysis_summary.md                 (Clinical pathway & variant discovery report)
+│   ├── conformance_checking_report.md                    (Trace variant & normative pathway report)
+│   └── week4_task2_dashboard_refinement_report.md        (Week 4 final BI refinement & drill-down report)
 │
 ├── sql/
 │   ├── queries/                                          (Analytical KPI queries 01 through 10)
 │   └── views/                                            (Reusable analytical views)
 │
 ├── src/
+│   ├── dashboard.py                                      (6-tab interactive Streamlit web dashboard)
 │   ├── data_generator.py                                 (Baseline mock data generator)
 │   ├── data_generator_v2.py                              (Enhanced generator with loop-backs)
 │   ├── clean_events_pipeline.py                          (Staging & cleaning ETL pipeline)
@@ -359,7 +425,7 @@ care-flow/
 │   ├── verify_week2.py                                   (Week 2 automated verification runner)
 │   └── verify_week3.py                                   (Week 3 automated verification runner)
 │
-└── tests/                                                (82 automated Python unit regression tests)
+└── tests/                                                (87 automated Python unit regression tests)
     ├── test_cleaning_pipeline.py
     ├── test_conformance_checking.py
     ├── test_pathway_transitions.py
@@ -378,6 +444,7 @@ care-flow/
 1. **Cloud Service Dependencies:** Executing `dbt run` or `dbt test` against Google BigQuery requires active Google Cloud Service Account credentials with BigQuery User permissions. The offline SQLite engine provides full local parity without cloud prerequisites.
 2. **Synthetic Data Boundaries:** While modeled on empirical clinical distributions (Poisson arrival processes, log-normal queue dwell, and triage routing), the dataset is synthetically generated and does not contain Protected Health Information (PHI).
 3. **Power BI Process Map Visuals:** Advanced animated process mining graph visuals from Microsoft AppSource require manual visual placement in Power BI Desktop or a commercial Power Automate Process Mining license. CareFlow resolves this by providing a native, fully data-bound 4-quadrant workflow console directly in PBIP format.
+4. **Demographic and Provider Slicing:** The underlying hospital event logs capture granular operational dynamics (timestamps, stage durations, queue times, and rework loops) across 420 patients and 13 hospital units without recording individual doctor identities or patient demographic attributes (e.g., age, gender). In accordance with strict data integrity standards, these fields are not fabricated; multi-dimensional slicing and drill-down operate strictly on verified schema fields (`department`, `stage`, `pathway`, `conformance_status`, `patient_id`, and `case_id`).
 
 ### Future Enhancements
 * **Real-Time Streaming Ingestion:** Extending the BigQuery ingestion pipeline using Apache Kafka / Google Pub/Sub for real-time patient tracking.
