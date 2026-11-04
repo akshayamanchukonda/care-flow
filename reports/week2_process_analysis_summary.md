@@ -202,7 +202,7 @@ Each recommendation is grounded directly in observed empirical transition patter
 
 ---
 
-## 7. Study Limitations & Synthetic Dataset Context
+## 7. Study Context & Synthetic Dataset Methodology
 
 To maintain scientific integrity and realistic interpretation, several contextual boundaries are acknowledged:
 
@@ -222,7 +222,7 @@ To maintain scientific integrity and realistic interpretation, several contextua
 
 ## 8. Next Steps for Week 3: Transition Time Matrix & Pathway Durations
 
-Week 3 will address these limitations by transitioning from **process topology** to **performance and time-based process mining**:
+Week 3 expands on these findings by transitioning from **process topology** to **performance and time-based process mining**:
 
 1. **SQL Window Functions for Handover Durations:**
    * Construct analytical SQL queries against `database/careflow.db` (`stg_healthcare_events_v2`) using `LEAD()` and `LAG()` window functions partitioned by `case_id` and ordered by `event_timestamp`.

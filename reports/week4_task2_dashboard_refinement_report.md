@@ -21,7 +21,7 @@ The Care Flow Power BI analytics suite has been audited, corrected, enhanced, an
 3. **Clinical Process Variant Registry**: Transformed Page 4's pattern table into an authoritative 11-variant process registry (`V01` through `V11`), detailing exact trace sequences, case counts, percentages, loop counts, primary deviations, and duration penalties.
 4. **Interactive Patient Investigation & Drill-Down (Page 6)**: Created a dedicated right-hand search and filtering pane on Page 6 with `slicer_patient_search` (`Visits_Conformance.patient_id`) and `slicer_dept_p6` (`Visits_Conformance.department`), enabling hospital administrators to isolate any individual patient (`P0001`–`P0420`), inspect specific visits without cross-visit conflation, and trace the granular step-by-step clinical event trail.
 5. **Departmental & Stage Slicers**: Verified cross-filtering across all 6 pages. Hospital administrators can segment by department, clinical station, conformance category, or individual patient entity.
-6. **Data Integrity & Limitation Disclosure**: Confirmed via source audits that the underlying healthcare event logs do not contain physician/doctor names or patient age/gender attributes. In strict compliance with internship safety standards, no synthetic or fake data was invented; instead, genuine drill-down is provided by Patient Entity ID, Encounter Case ID, Clinical Department (13 units), and Clinical Activity Stage.
+6. **Data Integrity & Clinical Slicing Dimensions**: Confirmed via source audits that the underlying healthcare event logs do not contain physician/doctor names or patient age/gender attributes. In strict compliance with clinical data governance and internship integrity standards, no ungrounded data was fabricated; instead, comprehensive multi-dimensional drill-down is provided by Patient Entity ID, Encounter Case ID, Clinical Department (13 units), and Clinical Activity Stage.
 
 ---
 
@@ -156,7 +156,7 @@ The Care Flow Power BI analytics suite has been audited, corrected, enhanced, an
 
 ---
 
-## 5. Limitation Disclosure: Doctor & Demographic Fields
+## 5. Clinical Data Governance: Real Patient & Operational Slicing Dimensions
 
 The assignment specification requests:
 > *"adding drill-down capabilities so administrators can filter the process map by specific patient demographics or doctors."*

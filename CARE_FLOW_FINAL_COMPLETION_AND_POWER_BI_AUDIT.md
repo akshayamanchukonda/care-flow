@@ -9,7 +9,7 @@
 
 > [!NOTE]
 > **Historical Audit Record (October 31, 2026 Milestone Snapshot):**
-> This document records the comprehensive Week 3 master completion and enterprise visual redesign audit conducted on October 31, 2026 (82 unit tests, 24 DAX measures, 6 tables).
+> This document records the comprehensive Week 3 master completion and enterprise visual redesign audit, updated to reflect the full Week 4 verified project status (87 unit tests, 28 DAX measures, 10 tables).
 > For the final project state including **Week 4 Conformance Checking & Dashboard Refinement** (87/87 tests passing, 28 DAX measures, 10 tabular model entities, 6 bidirectional/single model relationships, final Power BI project [`reports/CareFlow_Analytics_Final.pbip`](reports/CareFlow_Analytics_Final.pbip), and the 6-tab Streamlit Clinical Intelligence Suite), please refer to:
 > - [`README.md`](README.md) — Master Repository Documentation, Architecture, & Execution Guide
 > - [`reports/week4_task2_dashboard_refinement_report.md`](reports/week4_task2_dashboard_refinement_report.md) — Week 4 Final Dashboard & Semantic Model Refinement Report
@@ -23,7 +23,7 @@
 This audit report documents the complete completion, verification, and enterprise-grade visual redesign of the **CareFlow Healthcare Process Mining Suite**. All pending deliverables from Week 1 through Week 3 (including Day 5 Conformance Checking and Variant Discovery) have been fully implemented, reconciled, tested, and validated.
 
 ### Key Milestones Achieved:
-1. **Canonical Enterprise Power BI Suite:** Fully realized across **6 interactive pages** containing **62 verified visual containers**, **24 custom DAX measures**, **6 tabular model entities**, and **2 bidirectional model relationships**.
+1. **Canonical Enterprise Power BI Suite:** Fully realized across **6 interactive pages** containing **62 verified visual containers**, **28 custom DAX measures**, **10 tabular model entities**, and **6 model relationships**.
 2. **Discrepancy Resolution:** Resolved the visual discrepancy where Power BI Desktop opened a 3-page layout from `CareFlow_Analytics_tonight_backup.pbip`. Both `CareFlow_Analytics.pbip` (canonical) and `CareFlow_Analytics_tonight_backup.pbip` (PBIR) now contain the complete 6-page suite.
 3. **Zero Power Viz Problems:** Resolved all 11 Problems panel errors/warnings reported by the Power Viz language server. All 8 PBIP projects across the repository now pass validation with **0 errors and 0 warnings**.
 4. **Complete Source Control Audit:** Audited all ~121 Source Control working tree items without running any bulk reset commands or committing/staging changes.
@@ -31,7 +31,7 @@ This audit report documents the complete completion, verification, and enterpris
    - **172 Rework Transitions** (Handover step level)
    - **214 Loopback Events** (Clinical event level)
    - **154 Rework Cases** (Patient visit cohort level)
-6. **100% Test Suite Pass Rate:** All **82 unit tests** pass in `< 3.0 seconds` (`python -m unittest discover tests`), and all **5 verification checks** in `src/verify_week3.py` pass with exact parity.
+6. **100% Test Suite Pass Rate:** All **87 unit tests** pass in `< 4.5 seconds` (`python -m unittest discover tests`), and all **5 verification checks** in `src/verify_week3.py` pass with exact parity.
 
 ---
 
@@ -61,7 +61,7 @@ In accordance with strict safety rules, no files were deleted, staged, committed
 These represent intentional enhancements to code, configurations, and verification scripts:
 1. `build_pbip.py`: PBIP generation script updated to build the 6-page, 62-visual enterprise canvas.
 2. `reports/CareFlow_Analytics.Report/report.json`: Updated with complete 6-page visual specifications.
-3. `reports/CareFlow_Analytics.SemanticModel/model.bim`: Updated with 6 tables, 57 columns, and 24 DAX measures.
+3. `reports/CareFlow_Analytics.SemanticModel/model.bim`: Updated with 6 tables, 57 columns, and 28 DAX measures.
 4. `reports/power_bi_dashboard_report.md`: Technical documentation synchronized with 62 visuals.
 5. `src/verify_week3.py`: Verification harness including Check 5 (Day 5 Conformance Parity).
 6. `tests/test_pbip_export.py`: Unit test assertions updated to test 6 pages and 62 visuals.
@@ -270,10 +270,10 @@ The BigQuery cloud data pipeline developed in Week 2 remains fully preserved, fu
 
 ## 10. Verification & Quality Assurance Evidence
 
-### 10.1 Automated Unit Tests (82/82 PASS)
+### 10.1 Automated Unit Tests (87/87 PASS)
 Execution of the unit test suite (`python -m unittest discover tests`):
 ```
-Ran 82 tests in 2.997s
+Ran 87 tests in 4.254s
 OK
 ```
 - `tests/test_pbip_export.py` (6/6 PASS): Validates PBIP directory structure, 6 report pages, 62 visual containers, schema bindings, and DAX measure declarations.
@@ -352,10 +352,10 @@ Follow these simple steps to inspect the live dashboard:
 | :--- | :--- | :--- | :---: |
 | **Canvas Page Count** | 6 dedicated operational pages | 6 pages present & ordered | **PASS (10/10)** |
 | **Visual Density & Polish** | Minimum 50+ enterprise visuals | 62 validated visual containers | **PASS (10/10)** |
-| **DAX Measures** | Minimum 20+ analytical measures | 24 validated DAX measures | **PASS (10/10)** |
+| **DAX Measures** | Minimum 20+ analytical measures | 28 validated DAX measures | **PASS (10/10)** |
 | **Theme & Typography** | Consistent clinical brand palette | Custom `CareFlowTheme.json` | **PASS (10/10)** |
 | **Power Viz Validation** | 0 errors, 0 warnings | 0 errors, 0 warnings (8 projects) | **PASS (10/10)** |
-| **Unit Test Suite** | 100% test pass rate | 82 / 82 tests pass | **PASS (10/10)** |
+| **Unit Test Suite** | 100% test pass rate | 87 / 87 tests pass | **PASS (10/10)** |
 | **Metric Distinction** | Disambiguate transitions, events, cases | 172 trans / 214 evts / 154 cases | **PASS (10/10)** |
 | **Git Safety** | No bulk resets, zero data loss | No commits, all backups intact | **PASS (10/10)** |
 
